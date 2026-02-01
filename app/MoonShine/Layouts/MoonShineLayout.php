@@ -9,6 +9,16 @@ use MoonShine\ColorManager\Palettes\PurplePalette;
 use MoonShine\ColorManager\ColorManager;
 use MoonShine\Contracts\ColorManager\ColorManagerContract;
 use MoonShine\Contracts\ColorManager\PaletteContract;
+use App\MoonShine\Resources\ServiceCategory\ServiceCategoryResource;
+use MoonShine\MenuManager\MenuItem;
+use App\MoonShine\Resources\ServiceSubcategory\ServiceSubcategoryResource;
+use App\MoonShine\Resources\Service\ServiceResource;
+use App\MoonShine\Resources\ProjectCategory\ProjectCategoryResource;
+use App\MoonShine\Resources\Project\ProjectResource;
+use App\MoonShine\Resources\PortfolioCategory\PortfolioCategoryResource;
+use App\MoonShine\Resources\PortfolioItem\PortfolioItemResource;
+use App\MoonShine\Resources\Page\PageResource;
+use App\MoonShine\Resources\SiteSetting\SiteSettingResource;
 
 final class MoonShineLayout extends AppLayout
 {
@@ -28,6 +38,15 @@ final class MoonShineLayout extends AppLayout
     {
         return [
             ...parent::menu(),
+            MenuItem::make(ServiceCategoryResource::class, 'Категории услуг'),
+            MenuItem::make(ServiceSubcategoryResource::class, 'ServiceSubcategories'),
+            MenuItem::make(ServiceResource::class, 'Services'),
+            MenuItem::make(ProjectCategoryResource::class, 'ProjectCategories'),
+            MenuItem::make(ProjectResource::class, 'Projects'),
+            MenuItem::make(PortfolioCategoryResource::class, 'PortfolioCategories'),
+            MenuItem::make(PortfolioItemResource::class, 'PortfolioItems'),
+            MenuItem::make(PageResource::class, 'Pages'),
+            MenuItem::make(SiteSettingResource::class, 'SiteSettings'),
         ];
     }
 
