@@ -4,12 +4,23 @@ namespace App\Models;
 
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Database\Eloquent\Relations\MorphOne;
-use App\Models\SeoMeta;
+use App\Models\Traits\Seoable;
 
 class Page extends Model
 {
-    public function seo(): MorphOne
-    {
-        return $this->morphOne(SeoMeta::class, 'seoable');
-    }
+    use Seoable;
+
+    protected $fillable = [
+        'key',
+        'title',
+        'content',
+        'show_in_menu',
+        'menu_title',
+        'menu_order',
+    ];
+
+    protected $casts = [
+        'seo' => 'array',
+    ];
+
 }

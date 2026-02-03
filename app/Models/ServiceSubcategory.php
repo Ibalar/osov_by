@@ -18,6 +18,14 @@ class ServiceSubcategory extends Model
         'title',
         'slug',
         'sort_order',
+        'is_active',
+        'project_category_id',
+        'seo',
+    ];
+
+    protected $casts = [
+        'is_active' => 'boolean',
+        'seo' => 'array',
     ];
 
     /* -----------------------------------------------------------------
@@ -31,6 +39,12 @@ class ServiceSubcategory extends Model
     public function category()
     {
         return $this->belongsTo(ServiceCategory::class, 'service_category_id');
+    }
+
+    // Связь с категорией проектов
+    public function projectCategory()
+    {
+        return $this->belongsTo(\App\Models\ProjectCategory::class, 'project_category_id');
     }
 
     /**
@@ -63,4 +77,6 @@ class ServiceSubcategory extends Model
     {
         return $query->where('slug', $slug);
     }
+
+
 }

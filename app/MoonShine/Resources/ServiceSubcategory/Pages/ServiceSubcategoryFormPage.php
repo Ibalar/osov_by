@@ -4,8 +4,10 @@ declare(strict_types=1);
 
 namespace App\MoonShine\Resources\ServiceSubcategory\Pages;
 
+use App\MoonShine\Resources\ProjectCategory\ProjectCategoryResource;
 use App\MoonShine\Resources\ServiceCategory\ServiceCategoryResource;
 use MoonShine\Laravel\Fields\Relationships\BelongsTo;
+use MoonShine\Laravel\Fields\Relationships\BelongsToMany;
 use MoonShine\Laravel\Fields\Slug;
 use MoonShine\Laravel\Pages\Crud\FormPage;
 use MoonShine\Contracts\UI\ComponentContract;
@@ -53,6 +55,9 @@ class ServiceSubcategoryFormPage extends FormPage
                         fn(Slug $field) => $field->from('title')->live(),
                         fn(Slug $field) => $field->readonly()
                     ),
+                BelongsTo::make('Категория проектов', 'projectCategory', resource: ProjectCategoryResource::class)
+                    ->nullable()
+                    ->sortable(),
                 Number::make('Сортировка', 'sort_order')->default(0),
             ]),
         ];

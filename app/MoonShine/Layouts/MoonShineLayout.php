@@ -49,7 +49,7 @@ final class MoonShineLayout extends AppLayout
             ]),
             MenuItem::make(PortfolioCategoryResource::class, 'PortfolioCategories'),
             MenuItem::make(PortfolioItemResource::class, 'PortfolioItems'),
-            MenuItem::make(PageResource::class, 'Pages'),
+            MenuItem::make(PageResource::class, 'Страницы'),
             MenuItem::make(SiteSettingResource::class, 'SiteSettings'),
             ...parent::menu(),
         ];

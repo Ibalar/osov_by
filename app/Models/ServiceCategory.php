@@ -18,6 +18,14 @@ class ServiceCategory extends Model
         'slug',
         'description',
         'sort_order',
+        'is_active',
+        'project_category_id',
+        'seo',
+    ];
+
+    protected $casts = [
+        'is_active' => 'boolean',
+        'seo' => 'array',
     ];
 
     /* -----------------------------------------------------------------
@@ -70,4 +78,10 @@ class ServiceCategory extends Model
     {
         return $query->where('slug', $slug);
     }
+
+    public function projectCategory()
+    {
+        return $this->belongsTo(\App\Models\ProjectCategory::class, 'project_category_id');
+    }
+
 }

@@ -6,11 +6,14 @@ namespace App\MoonShine\Resources\Page\Pages;
 
 use MoonShine\Laravel\Pages\Crud\DetailPage;
 use MoonShine\Contracts\UI\ComponentContract;
+use MoonShine\UI\Components\Collapse;
 use MoonShine\UI\Components\Table\TableBuilder;
 use MoonShine\Contracts\UI\FieldContract;
 use App\MoonShine\Resources\Page\PageResource;
 use MoonShine\Support\ListOf;
 use MoonShine\UI\Fields\ID;
+use MoonShine\UI\Fields\Text;
+use MoonShine\UI\Fields\Textarea;
 use Throwable;
 
 
@@ -26,6 +29,18 @@ class PageDetailPage extends DetailPage
     {
         return [
             ID::make(),
+            Text::make('Ключ', 'key'),
+            Text::make('Заголовок', 'title'),
+
+            Textarea::make('Контент', 'content')
+                ->rows(10),
+
+            Collapse::make('SEO', [
+                Text::make('Meta title', 'seo.title'),
+                Text::make('H1', 'seo.h1'),
+                Textarea::make('Description', 'seo.description'),
+                Textarea::make('Keywords', 'seo.keywords'),
+            ]),
         ];
     }
 

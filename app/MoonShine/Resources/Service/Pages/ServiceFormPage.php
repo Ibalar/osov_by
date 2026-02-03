@@ -45,7 +45,7 @@ class ServiceFormPage extends FormPage
                     ->when(
                         fn() => $this->getResource()->isCreateFormPage(),
                         fn(Text $field) => $field->reactive(),
-                        fn(Text $field) => $field // без reactive при редактировании
+                        fn(Text $field) => $field
                     )
                     ->required(),
                 Slug::make('Slug')
@@ -56,6 +56,9 @@ class ServiceFormPage extends FormPage
                         fn(Slug $field) => $field->from('title')->live(),
                         fn(Slug $field) => $field->readonly()
                     ),
+
+                Textarea::make('Краткое описание', 'excerpt')
+                    ->hint('Будет отображаться на главной странице и в блоке популярных услуг'),
                 Textarea::make('Описание', 'description')->nullable(),
 
                 Number::make('Цена', 'price')

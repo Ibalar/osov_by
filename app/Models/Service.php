@@ -22,7 +22,9 @@ class Service extends Model
         'description',
         'price',
         'is_popular',
+        'excerpt',
         'sort_order',
+        'seo',
     ];
 
     /**
@@ -54,10 +56,10 @@ class Service extends Model
         return $this->hasOneThrough(
             ServiceCategory::class,
             ServiceSubcategory::class,
-            'id',                  // Foreign key on subcategories
-            'id',                  // Foreign key on categories
-            'service_subcategory_id', // Local key on services
-            'service_category_id'     // Local key on subcategories
+            'service_category_id',   // FK в подкатегории
+            'id',                    // ID категории
+            'service_subcategory_id',// FK на подкатегорию в сервисе
+            'id'                     // PK подкатегории
         );
     }
 

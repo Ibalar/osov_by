@@ -20,8 +20,10 @@ class PageResource extends ModelResource
 {
     protected string $model = Page::class;
 
-    protected string $title = 'Pages';
-    
+    protected string $title = 'Страницы';
+
+    protected string $column = 'title';
+
     /**
      * @return list<class-string<PageContract>>
      */
@@ -33,4 +35,23 @@ class PageResource extends ModelResource
             PageDetailPage::class,
         ];
     }
+
+    protected function rules(mixed $item): array
+    {
+        return [
+            'key' => ['required', 'string', 'unique:pages,key,' . $item?->id],
+            'title' => ['required', 'string'],
+
+            'menu_title' => ['nullable', 'string'],
+            'menu_order' => ['nullable', 'integer'],
+
+            // SEO
+            'seo.title' => ['nullable', 'string', 'max:255'],
+            'seo.h1' => ['nullable', 'string', 'max:255'],
+            'seo.description' => ['nullable', 'string'],
+            'seo.keywords' => ['nullable', 'string'],
+        ];
+    }
+
+
 }

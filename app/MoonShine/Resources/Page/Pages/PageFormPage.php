@@ -4,6 +4,7 @@ declare(strict_types=1);
 
 namespace App\MoonShine\Resources\Page\Pages;
 
+use App\MoonShine\Fields\SeoFields;
 use MoonShine\Laravel\Pages\Crud\FormPage;
 use MoonShine\Contracts\UI\ComponentContract;
 use MoonShine\Contracts\UI\FormBuilderContract;
@@ -12,8 +13,14 @@ use MoonShine\Contracts\UI\FieldContract;
 use MoonShine\Contracts\Core\TypeCasts\DataWrapperContract;
 use App\MoonShine\Resources\Page\PageResource;
 use MoonShine\Support\ListOf;
+use MoonShine\UI\Components\Tabs;
+use MoonShine\UI\Components\Tabs\Tab;
 use MoonShine\UI\Fields\ID;
 use MoonShine\UI\Components\Layout\Box;
+use MoonShine\UI\Fields\Number;
+use MoonShine\UI\Fields\Switcher;
+use MoonShine\UI\Fields\Text;
+use MoonShine\UI\Fields\Textarea;
 use Throwable;
 
 
@@ -28,8 +35,28 @@ class PageFormPage extends FormPage
     protected function fields(): iterable
     {
         return [
-            Box::make([
-                ID::make(),
+            Tabs::make([
+                Tab::make('Основное', [
+                    ID::make(),
+                    Text::make('Ключ страницы', 'key')
+                        ->required()
+                        ->hint('home, about, contacts'),
+
+                    Text::make('Заголовок', 'title')
+                        ->required(),
+
+                    Switcher::make('Показывать в меню', 'show_in_menu'),
+
+                    Text::make('Заголовок в меню', 'menu_title')
+                        ->hint('Если не заполнено — будет использован заголовок страницы'),
+
+                    Number::make('Порядок в меню', 'menu_order')
+                        ->default(0),
+
+                    Textarea::make('Контент', 'content'),
+                ]),
+
+                Tab::make('SEO', SeoFields::make()),
             ]),
         ];
     }

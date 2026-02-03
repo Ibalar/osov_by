@@ -13,6 +13,7 @@ use MoonShine\UI\Components\Metrics\Wrapped\Metric;
 use MoonShine\UI\Fields\ID;
 use App\MoonShine\Resources\Page\PageResource;
 use MoonShine\Support\ListOf;
+use MoonShine\UI\Fields\Text;
 use Throwable;
 
 
@@ -30,6 +31,11 @@ class PageIndexPage extends IndexPage
     {
         return [
             ID::make(),
+            Text::make('Ключ', 'key')
+                ->sortable(),
+
+            Text::make('Заголовок', 'title')
+                ->sortable(),
         ];
     }
 
