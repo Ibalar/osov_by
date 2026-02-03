@@ -20,8 +20,10 @@ class ProjectResource extends ModelResource
 {
     protected string $model = Project::class;
 
-    protected string $title = 'Projects';
-    
+    protected string $title = 'Проекты';
+
+    protected string $column = 'title';
+
     /**
      * @return list<class-string<PageContract>>
      */
@@ -31,6 +33,18 @@ class ProjectResource extends ModelResource
             ProjectIndexPage::class,
             ProjectFormPage::class,
             ProjectDetailPage::class,
+        ];
+    }
+
+    protected function rules(mixed $item): array
+    {
+        return [
+            'title' => ['required', 'string', 'max:255'],
+
+            'seo.title' => ['nullable', 'string', 'max:255'],
+            'seo.h1' => ['nullable', 'string', 'max:255'],
+            'seo.description' => ['nullable', 'string'],
+            'seo.keywords' => ['nullable', 'string'],
         ];
     }
 }

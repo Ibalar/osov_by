@@ -37,7 +37,11 @@ class ServiceCategoryFormPage extends FormPage
             Box::make([
                 ID::make(),
                 Text::make('Название', 'title')
-                    ->reactive()
+                    ->when(
+                        fn() => $this->getResource()->isCreateFormPage(),
+                        fn(Text $field) => $field->reactive(),
+                        fn(Text $field) => $field // без reactive при редактировании
+                    )
                     ->required(),
                 Slug::make('Slug')
                     ->unique()

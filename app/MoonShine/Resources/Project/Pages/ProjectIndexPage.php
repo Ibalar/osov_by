@@ -4,6 +4,9 @@ declare(strict_types=1);
 
 namespace App\MoonShine\Resources\Project\Pages;
 
+use App\MoonShine\Resources\ProjectCategory\ProjectCategoryResource;
+use MoonShine\Laravel\Fields\Relationships\BelongsTo;
+use MoonShine\Laravel\Fields\Slug;
 use MoonShine\Laravel\Pages\Crud\IndexPage;
 use MoonShine\Contracts\UI\ComponentContract;
 use MoonShine\UI\Components\Table\TableBuilder;
@@ -13,6 +16,10 @@ use MoonShine\UI\Components\Metrics\Wrapped\Metric;
 use MoonShine\UI\Fields\ID;
 use App\MoonShine\Resources\Project\ProjectResource;
 use MoonShine\Support\ListOf;
+use MoonShine\UI\Fields\Image;
+use MoonShine\UI\Fields\Number;
+use MoonShine\UI\Fields\Switcher;
+use MoonShine\UI\Fields\Text;
 use Throwable;
 
 
@@ -30,6 +37,23 @@ class ProjectIndexPage extends IndexPage
     {
         return [
             ID::make(),
+            Image::make('Обложка', 'cover_image')->disk('public'),
+            Text::make('Название', 'title')->sortable(),
+            Slug::make('Slug')->sortable(),
+
+            BelongsTo::make(
+                'Категория',
+                'category',
+                resource: ProjectCategoryResource::class
+            ),
+
+            Number::make('Площадь, м²', 'area')->sortable(),
+            Number::make('Этажи', 'floors')->sortable(),
+            Number::make('Комнаты', 'rooms')->sortable(),
+
+            Number::make('Цена', 'price')->sortable(),
+
+            Switcher::make('На главной', 'show_on_home'),
         ];
     }
 

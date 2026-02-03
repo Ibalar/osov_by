@@ -4,6 +4,9 @@ declare(strict_types=1);
 
 namespace App\MoonShine\Resources\ServiceSubcategory\Pages;
 
+use App\MoonShine\Resources\ServiceCategory\ServiceCategoryResource;
+use MoonShine\Laravel\Fields\Relationships\BelongsTo;
+use MoonShine\Laravel\Fields\Slug;
 use MoonShine\Laravel\Pages\Crud\DetailPage;
 use MoonShine\Contracts\UI\ComponentContract;
 use MoonShine\UI\Components\Table\TableBuilder;
@@ -11,6 +14,8 @@ use MoonShine\Contracts\UI\FieldContract;
 use App\MoonShine\Resources\ServiceSubcategory\ServiceSubcategoryResource;
 use MoonShine\Support\ListOf;
 use MoonShine\UI\Fields\ID;
+use MoonShine\UI\Fields\Number;
+use MoonShine\UI\Fields\Text;
 use Throwable;
 
 
@@ -26,6 +31,10 @@ class ServiceSubcategoryDetailPage extends DetailPage
     {
         return [
             ID::make(),
+            Text::make('Название', 'title'),
+            Slug::make('Slug'),
+            BelongsTo::make('Категория', 'category', resource: ServiceCategoryResource::class),
+            Number::make('Сортировка', 'sort_order'),
         ];
     }
 

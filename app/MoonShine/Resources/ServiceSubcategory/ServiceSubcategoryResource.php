@@ -20,8 +20,10 @@ class ServiceSubcategoryResource extends ModelResource
 {
     protected string $model = ServiceSubcategory::class;
 
-    protected string $title = 'ServiceSubcategories';
-    
+    protected string $title = 'Подкатегории услуг';
+
+    protected string $column = 'title';
+
     /**
      * @return list<class-string<PageContract>>
      */

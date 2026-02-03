@@ -4,6 +4,9 @@ declare(strict_types=1);
 
 namespace App\MoonShine\Resources\Service\Pages;
 
+use App\MoonShine\Resources\ServiceSubcategory\ServiceSubcategoryResource;
+use MoonShine\Laravel\Fields\Relationships\BelongsTo;
+use MoonShine\Laravel\Fields\Slug;
 use MoonShine\Laravel\Pages\Crud\FormPage;
 use MoonShine\Contracts\UI\ComponentContract;
 use MoonShine\Contracts\UI\FormBuilderContract;
@@ -14,6 +17,10 @@ use App\MoonShine\Resources\Service\ServiceResource;
 use MoonShine\Support\ListOf;
 use MoonShine\UI\Fields\ID;
 use MoonShine\UI\Components\Layout\Box;
+use MoonShine\UI\Fields\Number;
+use MoonShine\UI\Fields\Switcher;
+use MoonShine\UI\Fields\Text;
+use MoonShine\UI\Fields\Textarea;
 use Throwable;
 
 
@@ -30,6 +37,34 @@ class ServiceFormPage extends FormPage
         return [
             Box::make([
                 ID::make(),
+                BelongsTo::make('Подкатегория', 'subcategory', resource: ServiceSubcategoryResource::class)
+                    ->searchable()
+                    ->required(),
+
+                Text::make('Название', 'title')
+                    ->when(
+                        fn() => $this->getResource()->isCreateFormPage(),
+                        fn(Text $field) => $field->reactive(),
+                        fn(Text $field) => $field // без reactive при редактировании
+                    )
+                    ->required(),
+                Slug::make('Slug')
+                    ->unique()
+                    ->locked()
+                    ->when(
+                        fn() => $this->getResource()->isCreateFormPage(),
+                        fn(Slug $field) => $field->from('title')->live(),
+                        fn(Slug $field) => $field->readonly()
+                    ),
+                Textarea::make('Описание', 'description')->nullable(),
+
+                Number::make('Цена', 'price')
+                    ->min(0)
+                    ->step(1),
+
+                Switcher::make('Популярная услуга', 'is_popular'),
+
+                Number::make('Сортировка', 'sort_order')->default(0),
             ]),
         ];
     }

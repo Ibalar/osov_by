@@ -5,6 +5,8 @@ namespace App\Models;
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Database\Eloquent\Builder;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
+use Illuminate\Database\Eloquent\Relations\MorphOne;
+use App\Models\SeoMeta;
 
 class Service extends Model
 {
@@ -103,5 +105,10 @@ class Service extends Model
         }
 
         return number_format($this->price, 0, '.', ' ') . ' BYN';
+    }
+
+    public function seo(): MorphOne
+    {
+        return $this->morphOne(SeoMeta::class, 'seoable');
     }
 }

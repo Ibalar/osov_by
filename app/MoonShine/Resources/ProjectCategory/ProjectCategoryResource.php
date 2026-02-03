@@ -20,8 +20,10 @@ class ProjectCategoryResource extends ModelResource
 {
     protected string $model = ProjectCategory::class;
 
-    protected string $title = 'ProjectCategories';
-    
+    protected string $title = 'Категории проектов';
+
+    protected string $column = 'title';
+
     /**
      * @return list<class-string<PageContract>>
      */

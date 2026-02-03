@@ -4,6 +4,9 @@ declare(strict_types=1);
 
 namespace App\MoonShine\Resources\Service\Pages;
 
+use App\MoonShine\Resources\ServiceSubcategory\ServiceSubcategoryResource;
+use MoonShine\Laravel\Fields\Relationships\BelongsTo;
+use MoonShine\Laravel\Fields\Slug;
 use MoonShine\Laravel\Pages\Crud\IndexPage;
 use MoonShine\Contracts\UI\ComponentContract;
 use MoonShine\UI\Components\Table\TableBuilder;
@@ -13,6 +16,9 @@ use MoonShine\UI\Components\Metrics\Wrapped\Metric;
 use MoonShine\UI\Fields\ID;
 use App\MoonShine\Resources\Service\ServiceResource;
 use MoonShine\Support\ListOf;
+use MoonShine\UI\Fields\Number;
+use MoonShine\UI\Fields\Switcher;
+use MoonShine\UI\Fields\Text;
 use Throwable;
 
 
@@ -30,6 +36,11 @@ class ServiceIndexPage extends IndexPage
     {
         return [
             ID::make(),
+            Text::make('Название', 'title')->sortable(),
+            Slug::make('Slug')->sortable(),
+            BelongsTo::make('Подкатегория', 'subcategory', resource: ServiceSubcategoryResource::class),
+            Switcher::make('Популярная', 'is_popular'),
+            Number::make('Сортировка', 'sort_order')->sortable(),
         ];
     }
 
