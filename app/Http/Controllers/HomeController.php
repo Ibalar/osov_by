@@ -24,12 +24,13 @@ class HomeController extends Controller
         $popularServices = Service::query()
             ->where('is_popular', true)
             ->with([
-                'category.projectCategory',
-                'subcategory'
+                'parentCategory.projectCategory',
+                'subcategory.category.projectCategory',
             ])
             ->orderBy('sort_order')
             ->limit(6)
             ->get();
+
 
         /**
          * Готовые проекты (для главной)

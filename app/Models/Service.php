@@ -12,11 +12,7 @@ class Service extends Model
     use HasFactory;
     use Seoable;
 
-    /**
-     * Массово заполняемые поля
-     */
     protected $fillable = [
-        'service_subcategory_id',
         'title',
         'slug',
         'excerpt',
@@ -24,18 +20,19 @@ class Service extends Model
         'price',
         'is_popular',
         'sort_order',
+
+        // связи
+        'service_category_id',
+        'service_subcategory_id',
     ];
 
-    /**
-     * Приведение типов
-     */
     protected $casts = [
         'is_popular' => 'boolean',
         'price'      => 'decimal:2',
     ];
 
     /* -----------------------------------------------------------------
-     |  Relationships
+     | Relationships
      | -----------------------------------------------------------------
      */
 
@@ -48,63 +45,67 @@ class Service extends Model
     }
 
     /**
-     * Категория услуги (через подкатегорию)
+     * Родительская категория (прямая)
+     * ❗ НУЖНА для MoonShine
      */
-    public function category()
+    public function parentCategory()
     {
-        return $this->hasOneThrough(
-            ServiceCategory::class,
-            ServiceSubcategory::class,
-            'id',                   // PK подкатегории
-            'id',                   // PK категории
-            'service_subcategory_id', // FK в services
-            'service_category_id'     // FK в subcategories
-        );
+        return $this->belongsTo(ServiceCategory::class, 'service_category_id');
+    }
+
+    /**
+     * Универсальная категория (через подкатегорию или напрямую)
+     */
+    public function getCategoryAttribute(): ?ServiceCategory
+    {
+        return $this->subcategory?->category ?? $this->parentCategory;
     }
 
     /* -----------------------------------------------------------------
-     |  Scopes
+     | Helpers
      | -----------------------------------------------------------------
      */
 
-    /**
-     * Только популярные услуги
+    public function getHasSubcategoryAttribute(): bool
+    {
+        return !is_null($this->service_subcategory_id);
+    }
+
+    public function getHasDirectCategoryAttribute(): bool
+    {
+        return is_null($this->service_subcategory_id)
+            && !is_null($this->service_category_id);
+    }
+
+    /* -----------------------------------------------------------------
+     | Scopes
+     | -----------------------------------------------------------------
      */
+
     public function scopePopular(Builder $query): Builder
     {
         return $query->where('is_popular', true);
     }
 
-    /**
-     * Сортировка по sort_order
-     */
     public function scopeOrdered(Builder $query): Builder
     {
         return $query->orderBy('sort_order')->orderBy('id');
     }
 
-    /**
-     * По slug
-     */
     public function scopeBySlug(Builder $query, string $slug): Builder
     {
         return $query->where('slug', $slug);
     }
 
     /* -----------------------------------------------------------------
-     |  Accessors
+     | Accessors
      | -----------------------------------------------------------------
      */
 
-    /**
-     * Форматированная цена
-     */
     public function getFormattedPriceAttribute(): ?string
     {
-        if (!$this->price) {
-            return null;
-        }
-
-        return number_format($this->price, 0, '.', ' ') . ' BYN';
+        return $this->price
+            ? number_format($this->price, 0, '.', ' ') . ' BYN'
+            : null;
     }
 }

@@ -62,10 +62,10 @@ class ServiceController extends Controller
         ]);
 
         $services = Service::query()
-            ->whereHas('category', fn ($query) => $query
-                ->where('service_categories.id', $category->id)
-                ->where('service_categories.is_active', true)
-            )
+            ->where(function ($q) use ($category) {
+                $q->whereHas('subcategory', fn($q) => $q->where('service_category_id', $category->id))
+                    ->orWhere('service_category_id', $category->id);
+            })
             ->orderBy('sort_order')
             ->get();
 

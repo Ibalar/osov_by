@@ -5,6 +5,7 @@ declare(strict_types=1);
 namespace App\MoonShine\Resources\Service\Pages;
 
 use App\MoonShine\Fields\SeoFields;
+use App\MoonShine\Resources\ServiceCategory\ServiceCategoryResource;
 use App\MoonShine\Resources\ServiceSubcategory\ServiceSubcategoryResource;
 use MoonShine\Laravel\Fields\Relationships\BelongsTo;
 use MoonShine\Laravel\Fields\Slug;
@@ -43,8 +44,14 @@ class ServiceFormPage extends FormPage
                 Tab::make('Основное', [
                     ID::make(),
                     BelongsTo::make('Подкатегория', 'subcategory', resource: ServiceSubcategoryResource::class)
+                        ->nullable()
                         ->searchable()
-                        ->required(),
+                        ->hint('Выбирайте подкатегорию, если услуга относится к ней'),
+
+                    BelongsTo::make('Категория (родительская)', 'parentCategory', resource: ServiceCategoryResource::class)
+                        ->nullable()
+                        ->searchable()
+                        ->hint('Выбирайте, если услуга относится напрямую к категории, а не к подкатегории'),
 
                     Text::make('Название', 'title')
                         ->when(
@@ -78,6 +85,17 @@ class ServiceFormPage extends FormPage
                 Tab::make('SEO', SeoFields::make()),
             ]),
         ];
+    }
+
+    protected function beforeSave(): void
+    {
+        if ($this->getItem()->service_subcategory_id) {
+            $this->getItem()->service_category_id = null;
+        }
+
+        if ($this->getItem()->service_category_id) {
+            $this->getItem()->service_subcategory_id = null;
+        }
     }
 
     protected function buttons(): ListOf
