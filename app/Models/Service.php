@@ -2,15 +2,15 @@
 
 namespace App\Models;
 
+use App\Models\Traits\Seoable;
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Database\Eloquent\Builder;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
-use Illuminate\Database\Eloquent\Relations\MorphOne;
-use App\Models\SeoMeta;
 
 class Service extends Model
 {
     use HasFactory;
+    use Seoable;
 
     /**
      * Массово заполняемые поля
@@ -19,12 +19,11 @@ class Service extends Model
         'service_subcategory_id',
         'title',
         'slug',
+        'excerpt',
         'description',
         'price',
         'is_popular',
-        'excerpt',
         'sort_order',
-        'seo',
     ];
 
     /**
@@ -32,7 +31,7 @@ class Service extends Model
      */
     protected $casts = [
         'is_popular' => 'boolean',
-        'price' => 'decimal:2',
+        'price'      => 'decimal:2',
     ];
 
     /* -----------------------------------------------------------------
@@ -56,10 +55,10 @@ class Service extends Model
         return $this->hasOneThrough(
             ServiceCategory::class,
             ServiceSubcategory::class,
-            'service_category_id',   // FK в подкатегории
-            'id',                    // ID категории
-            'service_subcategory_id',// FK на подкатегорию в сервисе
-            'id'                     // PK подкатегории
+            'id',                   // PK подкатегории
+            'id',                   // PK категории
+            'service_subcategory_id', // FK в services
+            'service_category_id'     // FK в subcategories
         );
     }
 
@@ -107,10 +106,5 @@ class Service extends Model
         }
 
         return number_format($this->price, 0, '.', ' ') . ' BYN';
-    }
-
-    public function seo(): MorphOne
-    {
-        return $this->morphOne(SeoMeta::class, 'seoable');
     }
 }

@@ -43,6 +43,27 @@ class Breadcrumbs
                 ];
                 break;
 
+            case 'services.subcategory':
+                $subcategory = $params['subcategory'];
+                $category = $subcategory->category;
+
+                $breadcrumbs[] = [
+                    'title' => 'Услуги',
+                    'url' => route('services.index'),
+                ];
+
+                if ($category) {
+                    $breadcrumbs[] = [
+                        'title' => $category->title,
+                        'url' => route('services.category', $category->slug),
+                    ];
+                }
+
+                $breadcrumbs[] = [
+                    'title' => $subcategory->title,
+                ];
+                break;
+
             case 'services.show':
                 $service = $params['service'];
 

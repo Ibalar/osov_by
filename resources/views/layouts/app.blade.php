@@ -91,7 +91,7 @@
 {{-- Header --}}
 @include('partials.header')
 
-<x-page-header />
+@include('partials.page-header')
 
 
 

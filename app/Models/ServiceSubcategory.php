@@ -2,6 +2,7 @@
 
 namespace App\Models;
 
+use App\Models\Traits\Seoable;
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Database\Eloquent\Builder;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
@@ -9,6 +10,7 @@ use Illuminate\Database\Eloquent\Factories\HasFactory;
 class ServiceSubcategory extends Model
 {
     use HasFactory;
+    use Seoable;
 
     /**
      * Массово заполняемые поля
@@ -17,6 +19,9 @@ class ServiceSubcategory extends Model
         'service_category_id',
         'title',
         'slug',
+        'description',
+        'image',
+        'faq',
         'sort_order',
         'is_active',
         'project_category_id',

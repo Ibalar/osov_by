@@ -2,6 +2,7 @@
 
 namespace App\Models;
 
+use App\Models\Traits\Seoable;
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Database\Eloquent\Builder;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
@@ -9,6 +10,7 @@ use Illuminate\Database\Eloquent\Factories\HasFactory;
 class ServiceCategory extends Model
 {
     use HasFactory;
+    use Seoable;
 
     /**
      * Массово заполняемые поля
@@ -17,15 +19,18 @@ class ServiceCategory extends Model
         'title',
         'slug',
         'description',
+        'image',
+        'faq',
         'sort_order',
         'is_active',
         'project_category_id',
-        'seo',
     ];
 
+    /**
+     * Приведение типов
+     */
     protected $casts = [
         'is_active' => 'boolean',
-        'seo' => 'array',
     ];
 
     /* -----------------------------------------------------------------
@@ -51,17 +56,33 @@ class ServiceCategory extends Model
         return $this->hasManyThrough(
             Service::class,
             ServiceSubcategory::class,
-            'service_category_id', // Foreign key on subcategories
-            'service_subcategory_id', // Foreign key on services
-            'id', // Local key on categories
-            'id'  // Local key on subcategories
+            'service_category_id',    // FK в подкатегории
+            'service_subcategory_id', // FK в сервисе
+            'id',                     // PK категории
+            'id'                      // PK подкатегории
         );
+    }
+
+    /**
+     * Связанная категория проектов
+     */
+    public function projectCategory()
+    {
+        return $this->belongsTo(\App\Models\ProjectCategory::class, 'project_category_id');
     }
 
     /* -----------------------------------------------------------------
      |  Scopes
      | -----------------------------------------------------------------
      */
+
+    /**
+     * Только активные категории
+     */
+    public function scopeActive(Builder $query): Builder
+    {
+        return $query->where('is_active', true);
+    }
 
     /**
      * Сортировка
@@ -78,10 +99,4 @@ class ServiceCategory extends Model
     {
         return $query->where('slug', $slug);
     }
-
-    public function projectCategory()
-    {
-        return $this->belongsTo(\App\Models\ProjectCategory::class, 'project_category_id');
-    }
-
 }

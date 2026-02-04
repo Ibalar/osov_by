@@ -16,20 +16,20 @@ class ServiceController extends Controller
      */
     public function index()
     {
-        $page = Page::query()
-            ->where('key', 'services')
-            ->first();
+        $page = Page::query()->where('key', 'services')->first();
 
         $categories = ServiceCategory::query()
             ->where('is_active', true)
             ->with([
-                'subcategories' => function ($q) {
-                    $q->where('is_active', true)
-                        ->orderBy('sort_order');
-                }
+                'subcategories' => fn($q) => $q->where('is_active', true)->orderBy('sort_order')
             ])
             ->orderBy('sort_order')
             ->get();
+
+        $breadcrumbs = [
+            ['title' => 'Главная', 'url' => route('home')],
+            ['title' => 'Услуги', 'url' => ''],
+        ];
 
         return view('services.index', [
             'page' => $page,
@@ -39,8 +39,13 @@ class ServiceController extends Controller
             'seoTitle' => $page?->seo_title ?? 'Услуги',
             'seoDescription' => $page?->seo_description,
             'seoKeywords' => $page?->seo_keywords,
+
+            // Для page-header
+            'pageTitle' => $page?->title ?? 'Услуги',
+            'breadcrumbs' => $breadcrumbs,
         ]);
     }
+
 
     /**
      * Страница категории услуг
@@ -50,44 +55,62 @@ class ServiceController extends Controller
     {
         abort_unless($category->is_active, 404);
 
+        $category->load([
+            'subcategories' => fn ($q) => $q
+                ->where('is_active', true)
+                ->orderBy('sort_order'),
+        ]);
+
         $services = Service::query()
-            ->whereHas('category', function ($query) use ($category) {
-                $query->where('service_categories.id', $category->id)
-                ->where('service_categories.is_active', true);
-            })
+            ->whereHas('category', fn ($query) => $query
+                ->where('service_categories.id', $category->id)
+                ->where('service_categories.is_active', true)
+            )
             ->orderBy('sort_order')
             ->get();
+
+        $breadcrumbs = [
+            ['title' => 'Главная', 'url' => route('home')],
+            ['title' => 'Услуги', 'url' => route('services.index')],
+            ['title' => $category->title],
+        ];
 
         return view('services.category', [
             'category' => $category,
             'services' => $services,
-            'seo' => $category->seo ?? null,
 
             // SEO
             'seoTitle' => $category->seo_title ?? $category->title,
             'seoDescription' => $category->seo_description,
             'seoKeywords' => $category->seo_keywords,
+
+            // Page header
+            'pageTitle' => $category->title,
+            'breadcrumbs' => $breadcrumbs,
         ]);
     }
+
+
 
     /**
      * Страница подкатегории
      * /services/{subcategory}
      */
-    public function subcategory(ServiceSubcategory $subcategory)
+    public function subcategory(ServiceCategory $category, ServiceSubcategory $subcategory)
     {
-        abort_unless($subcategory->is_active, 404);
+        abort_unless(
+            $subcategory->is_active &&
+            $subcategory->service_category_id === $category->id,
+            404
+        );
 
         $services = Service::query()
-            ->whereHas('subcategory', function ($query) use ($subcategory) {
-                $query->where('service_subcategories.id', $subcategory->id) // явно
-                ->where('service_subcategories.is_active', true); // если есть
-            })
+            ->where('service_subcategory_id', $subcategory->id)
             ->orderBy('sort_order')
             ->get();
 
-
         return view('services.subcategory', [
+            'category' => $category,
             'subcategory' => $subcategory,
             'services' => $services,
 
@@ -98,6 +121,8 @@ class ServiceController extends Controller
         ]);
     }
 
+
+
     /**
      * Страница услуги
      * /services/{service}
@@ -106,6 +131,14 @@ class ServiceController extends Controller
     {
         abort_unless($service->is_active, 404);
 
+        $breadcrumbs = [
+            ['title' => 'Главная', 'url' => route('home')],
+            ['title' => 'Услуги', 'url' => route('services.index')],
+            ['title' => $service->category->title ?? 'Категория', 'url' => route('services.category', $service->category->slug ?? '')],
+            ['title' => $service->subcategory->title ?? 'Подкатегория', 'url' => route('services.subcategory', $service->subcategory->slug ?? '')],
+            ['title' => $service->title, 'url' => ''],
+        ];
+
         return view('services.show', [
             'service' => $service,
 
@@ -113,6 +146,11 @@ class ServiceController extends Controller
             'seoTitle' => $service->seo_title ?? $service->title,
             'seoDescription' => $service->seo_description,
             'seoKeywords' => $service->seo_keywords,
+
+            // Для page-header
+            'pageTitle' => $service->title,
+            'breadcrumbs' => $breadcrumbs,
         ]);
     }
+
 }

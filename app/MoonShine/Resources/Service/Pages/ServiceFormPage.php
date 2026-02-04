@@ -4,6 +4,7 @@ declare(strict_types=1);
 
 namespace App\MoonShine\Resources\Service\Pages;
 
+use App\MoonShine\Fields\SeoFields;
 use App\MoonShine\Resources\ServiceSubcategory\ServiceSubcategoryResource;
 use MoonShine\Laravel\Fields\Relationships\BelongsTo;
 use MoonShine\Laravel\Fields\Slug;
@@ -15,6 +16,8 @@ use MoonShine\Contracts\UI\FieldContract;
 use MoonShine\Contracts\Core\TypeCasts\DataWrapperContract;
 use App\MoonShine\Resources\Service\ServiceResource;
 use MoonShine\Support\ListOf;
+use MoonShine\UI\Components\Tabs;
+use MoonShine\UI\Components\Tabs\Tab;
 use MoonShine\UI\Fields\ID;
 use MoonShine\UI\Components\Layout\Box;
 use MoonShine\UI\Fields\Number;
@@ -35,39 +38,44 @@ class ServiceFormPage extends FormPage
     protected function fields(): iterable
     {
         return [
-            Box::make([
-                ID::make(),
-                BelongsTo::make('Подкатегория', 'subcategory', resource: ServiceSubcategoryResource::class)
-                    ->searchable()
-                    ->required(),
 
-                Text::make('Название', 'title')
-                    ->when(
-                        fn() => $this->getResource()->isCreateFormPage(),
-                        fn(Text $field) => $field->reactive(),
-                        fn(Text $field) => $field
-                    )
-                    ->required(),
-                Slug::make('Slug')
-                    ->unique()
-                    ->locked()
-                    ->when(
-                        fn() => $this->getResource()->isCreateFormPage(),
-                        fn(Slug $field) => $field->from('title')->live(),
-                        fn(Slug $field) => $field->readonly()
-                    ),
+            Tabs::make([
+                Tab::make('Основное', [
+                    ID::make(),
+                    BelongsTo::make('Подкатегория', 'subcategory', resource: ServiceSubcategoryResource::class)
+                        ->searchable()
+                        ->required(),
 
-                Textarea::make('Краткое описание', 'excerpt')
-                    ->hint('Будет отображаться на главной странице и в блоке популярных услуг'),
-                Textarea::make('Описание', 'description')->nullable(),
+                    Text::make('Название', 'title')
+                        ->when(
+                            fn() => $this->getResource()->isCreateFormPage(),
+                            fn(Text $field) => $field->reactive(),
+                            fn(Text $field) => $field
+                        )
+                        ->required(),
+                    Slug::make('Slug')
+                        ->unique()
+                        ->locked()
+                        ->when(
+                            fn() => $this->getResource()->isCreateFormPage(),
+                            fn(Slug $field) => $field->from('title')->live(),
+                            fn(Slug $field) => $field->readonly()
+                        ),
 
-                Number::make('Цена', 'price')
-                    ->min(0)
-                    ->step(1),
+                    Textarea::make('Краткое описание', 'excerpt')
+                        ->hint('Будет отображаться на главной странице и в блоке популярных услуг'),
+                    Textarea::make('Описание', 'description')->nullable(),
 
-                Switcher::make('Популярная услуга', 'is_popular'),
+                    Number::make('Цена', 'price')
+                        ->min(0)
+                        ->step(1),
 
-                Number::make('Сортировка', 'sort_order')->default(0),
+                    Switcher::make('Популярная услуга', 'is_popular'),
+
+                    Number::make('Сортировка', 'sort_order')->default(0),
+                ]),
+                // 🔥 SEO-блок
+                Tab::make('SEO', SeoFields::make()),
             ]),
         ];
     }

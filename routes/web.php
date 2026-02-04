@@ -11,18 +11,22 @@ use Illuminate\Support\Facades\Route;
 Route::get('/', HomeController::class)->name('home');
 
 Route::prefix('services')->group(function () {
+
     Route::get('/', [ServiceController::class, 'index'])
         ->name('services.index');
 
     Route::get('/category/{category:slug}', [ServiceController::class, 'category'])
         ->name('services.category');
 
-    Route::get('/{subcategory:slug}', [ServiceController::class, 'subcategory'])
-        ->name('services.subcategory');
+    Route::get(
+        '/category/{category:slug}/{subcategory:slug}',
+        [ServiceController::class, 'subcategory']
+    )->name('services.subcategory');
 
     Route::get('/item/{service:slug}', [ServiceController::class, 'show'])
         ->name('services.show');
 });
+
 
 Route::prefix('projects')->group(function () {
     Route::get('/', [ProjectController::class, 'index'])
