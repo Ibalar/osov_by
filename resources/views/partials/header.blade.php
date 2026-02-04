@@ -1,4 +1,4 @@
-<header class="main-header main-header-prime">
+<header class="main-header {{ Route::is('home') ? 'main-header-prime' : '' }}">
     <div class="header-sticky">
         <nav class="navbar navbar-expand-lg">
             <div class="container-fluid">

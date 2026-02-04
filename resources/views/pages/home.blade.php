@@ -1,7 +1,5 @@
 @extends('layouts.app')
 
-@section('title', $seo->title ?? $page->title)
-
 @section('content')
     <!-- Hero Section Start -->
     <div class="hero-prime">

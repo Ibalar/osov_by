@@ -5,6 +5,7 @@ namespace App\Providers;
 use Illuminate\Support\ServiceProvider;
 use Illuminate\Support\Facades\View;
 use App\Models\ServiceCategory;
+use App\Support\Breadcrumbs;
 
 class ViewServiceProvider extends ServiceProvider
 {
@@ -22,7 +23,7 @@ class ViewServiceProvider extends ServiceProvider
     public function boot(): void
     {
         /**
-         * Данные для header
+         * Данные ТОЛЬКО для header
          */
         View::composer('partials.header', function ($view) {
             $view->with(
@@ -36,6 +37,19 @@ class ViewServiceProvider extends ServiceProvider
                     ->orderBy('sort_order')
                     ->get()
             );
+        });
+
+        /**
+         * Глобальные данные для всех страниц
+         */
+        View::composer('*', function ($view) {
+
+            $seoTitle = $view->getData()['seoTitle'] ?? null;
+
+            $view->with([
+                'pageTitle'   => $seoTitle,
+                'breadcrumbs' => Breadcrumbs::generate(),
+            ]);
         });
     }
 }

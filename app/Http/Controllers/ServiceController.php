@@ -61,6 +61,7 @@ class ServiceController extends Controller
         return view('services.category', [
             'category' => $category,
             'services' => $services,
+            'seo' => $category->seo ?? null,
 
             // SEO
             'seoTitle' => $category->seo_title ?? $category->title,

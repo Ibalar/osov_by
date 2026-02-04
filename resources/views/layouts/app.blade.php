@@ -8,6 +8,12 @@
     <meta name="viewport"
           content="width=device-width, initial-scale=1.0, maximum-scale=1">
 
+    @php
+        $seoTitle = $seoTitle ?? null;
+        $seoDescription = $seoDescription ?? null;
+        $seoKeywords = $seoKeywords ?? null;
+    @endphp
+
     {{-- SEO --}}
     <title>
         {{ $seoTitle ?? config('app.name') }}
@@ -84,6 +90,9 @@
 
 {{-- Header --}}
 @include('partials.header')
+
+<x-page-header />
+
 
 
 
