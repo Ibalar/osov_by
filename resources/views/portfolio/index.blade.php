@@ -1,19 +1,9 @@
 @extends('layouts.app')
 
 @section('content')
-    <!-- Portfolio Gallery Section Start -->
-    <div class="our-amenities-prime bg-section">
+
+    <div class="page-gallery">
         <div class="container">
-            <div class="row section-row">
-                <div class="col-lg-12">
-                    <!-- Section Title Start -->
-                    <div class="section-title section-title-center">
-                        <span class="section-sub-title wow fadeInUp fs-6">Наши работы</span>
-                        <h2 class="text-anime-style-3" data-cursor="-opaque">Портфолио выполненных проектов</h2>
-                    </div>
-                    <!-- Section Title End -->
-                </div>
-            </div>
 
             <!-- Categories Filter Start -->
             @if($categories->isNotEmpty())
@@ -35,37 +25,34 @@
             @endif
             <!-- Categories Filter End -->
 
-            <!-- Gallery Grid Start -->
             @if($images->isNotEmpty())
-                <div class="gallery-items row wow fadeInUp">
+                <div class="row gallery-items page-gallery-box">
                     @foreach($images as $image)
                         @if(is_array($image))
-                            <div class="col-xl-4 col-md-6 mb-4">
-                                <a href="{{ $image['url'] }}" class="portfolio-item photo-gallery">
-                                    <figure class="reveal">
-                                        <img src="{{ $image['url'] }}"
-                                             alt="{{ $image['title'] }}"
-                                             loading="lazy">
-                                        @if(!empty($image['title']))
-                                            <div class="portfolio-item-info">
-                                                <h3>{{ $image['title'] }}</h3>
-                                                @if(!empty($image['category']))
-                                                    <span>{{ $image['category'] }}</span>
-                                                @endif
-                                            </div>
-                                        @endif
-                                    </figure>
-                                </a>
+                            <div class="col-lg-4 col-6">
+                                <div class="photo-gallery wow fadeInUp" data-wow-delay="0.2s">
+                                    <a href="{{ $image['url'] }}" data-cursor-text="Смотреть">
+                                        <figure class="image-anime">
+                                            <img src="{{ $image['url'] }}"
+                                                 alt="{{ $image['title'] }}"
+                                                 loading="lazy">
+                                        </figure>
+                                    </a>
+                                </div>
+
                             </div>
                         @else
-                            <div class="col-xl-4 col-md-6 mb-4">
-                                <a href="{{ $image }}" class="portfolio-item photo-gallery">
-                                    <figure class="reveal">
-                                        <img src="{{ $image }}"
-                                             alt="Portfolio image"
-                                             loading="lazy">
-                                    </figure>
-                                </a>
+                            <div class="col-lg-4 col-6">
+                                <div class="photo-gallery wow fadeInUp" data-wow-delay="0.2s">
+                                    <a href="{{ $image }}" data-cursor-text="Смотреть">
+                                        <figure class="image-anime">
+                                            <img src="{{ $image }}"
+                                                 alt="Portfolio image"
+                                                 loading="lazy">
+                                        </figure>
+                                    </a>
+                                </div>
+
                             </div>
                         @endif
                     @endforeach
@@ -92,7 +79,10 @@
                 </div>
             @endif
             <!-- Pagination End -->
+
+
         </div>
     </div>
-    <!-- Portfolio Gallery Section End -->
+
+
 @endsection
