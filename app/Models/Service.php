@@ -20,6 +20,7 @@ class Service extends Model
         'price',
         'is_popular',
         'sort_order',
+        'is_active',
 
         // связи
         'service_category_id',
@@ -29,6 +30,7 @@ class Service extends Model
     protected $casts = [
         'is_popular' => 'boolean',
         'price'      => 'decimal:2',
+        'is_active'  => 'boolean',
     ];
 
     /* -----------------------------------------------------------------

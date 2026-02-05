@@ -30,6 +30,7 @@ class Project extends Model
         'rooms',
         'price',
         'show_on_home',
+        'is_active',
     ];
 
     /**
@@ -42,6 +43,7 @@ class Project extends Model
         'gallery'      => 'array',
         'price'        => 'decimal:2',
         'show_on_home' => 'boolean',
+        'is_active'    => 'boolean',
     ];
 
     /* -----------------------------------------------------------------
