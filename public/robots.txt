@@ -1,2 +1,11 @@
 User-agent: *
-Disallow:
+Allow: /
+
+Disallow: /admin
+Disallow: /login
+Disallow: /api/
+
+Sitemap: https://example.com/sitemap.xml
+
+# Crawl-delay
+Crawl-delay: 1
