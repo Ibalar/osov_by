@@ -32,6 +32,9 @@ Route::prefix('projects')->group(function () {
     Route::get('/', [ProjectController::class, 'index'])
         ->name('projects.index');
 
+    Route::get('/category/{category:slug}', [ProjectController::class, 'category'])
+        ->name('projects.category');
+
     Route::get('/{project:slug}', [ProjectController::class, 'show'])
         ->name('projects.show');
 });

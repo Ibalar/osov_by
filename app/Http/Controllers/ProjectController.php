@@ -9,10 +9,6 @@ use App\Models\ProjectCategory;
 
 class ProjectController extends Controller
 {
-    /**
-     * Страница /projects
-     * Каталог проектов + описание
-     */
     public function index(Request $request)
     {
         $page = Page::query()
@@ -93,6 +89,49 @@ class ProjectController extends Controller
             'seoTitle' => $project->seo_title ?? $project->title,
             'seoDescription' => $project->seo_description,
             'seoKeywords' => $project->seo_keywords,
+        ]);
+    }
+
+    /**
+     * Страница категории проектов
+     * /projects/category/{category}
+     */
+    public function category(ProjectCategory $category)
+    {
+        abort_unless($category->is_active, 404);
+
+        $page = Page::query()->where('key', 'projects')->first();
+
+        $projects = Project::query()
+            ->where('is_active', true)
+            ->where('project_category_id', $category->id)
+            ->orderByDesc('created_at')
+            ->paginate(12)
+            ->withQueryString();
+
+        $categories = ProjectCategory::query()
+            ->where('is_active', true)
+            ->orderBy('sort_order')
+            ->get();
+
+        return view('projects.index', [
+            'page' => $page,
+            'projects' => $projects,
+            'categories' => $categories,
+            'currentCategory' => $category,
+
+            // SEO
+            'seoTitle' => $category->seo_title ?? $category->title,
+            'seoDescription' => $category->seo_description,
+            'seoKeywords' => $category->seo_keywords,
+
+            // Для page-header
+            'pageTitle' => $category->title,
+            'breadcrumbs' => [
+                ['title' => 'Главная', 'url' => route('home')],
+                ['title' => 'Проекты', 'url' => route('projects.index')],
+                ['title' => $category->title],
+            ],
         ]);
     }
 }

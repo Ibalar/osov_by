@@ -90,9 +90,59 @@ class Breadcrumbs
                 ];
                 break;
 
+            case 'projects.category':
+                $breadcrumbs[] = [
+                    'title' => 'Проекты',
+                    'url' => route('projects.index'),
+                ];
+                $breadcrumbs[] = [
+                    'title' => $params['category']->title ?? 'Категория',
+                ];
+                break;
+
+            case 'projects.show':
+                $project = $params['project'];
+                $breadcrumbs[] = [
+                    'title' => 'Проекты',
+                    'url' => route('projects.index'),
+                ];
+                if ($project->category) {
+                    $breadcrumbs[] = [
+                        'title' => $project->category->title,
+                        'url' => route('projects.category', $project->category->slug),
+                    ];
+                }
+                $breadcrumbs[] = [
+                    'title' => $project->title,
+                ];
+                break;
+
             case 'portfolio.index':
                 $breadcrumbs[] = [
                     'title' => 'Портфолио',
+                ];
+                break;
+
+            case 'portfolio.show':
+                $item = $params['item'];
+                $breadcrumbs[] = [
+                    'title' => 'Портфолио',
+                    'url' => route('portfolio.index'),
+                ];
+                if ($item->category) {
+                    $breadcrumbs[] = [
+                        'title' => $item->category->title,
+                    ];
+                }
+                $breadcrumbs[] = [
+                    'title' => $item->title,
+                ];
+                break;
+
+            case 'page.show':
+                $page = $params['page'];
+                $breadcrumbs[] = [
+                    'title' => $page->title,
                 ];
                 break;
 
