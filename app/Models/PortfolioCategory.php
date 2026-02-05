@@ -14,6 +14,13 @@ class PortfolioCategory extends Model
     protected $fillable = [
         'title',
         'slug',
+        'description',
+        'is_active',
+        'sort_order',
+    ];
+
+    protected $casts = [
+        'is_active' => 'boolean',
     ];
 
     /*

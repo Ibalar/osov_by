@@ -43,6 +43,6 @@ Route::prefix('portfolio')->group(function () {
     Route::get('/', [PortfolioController::class, 'index'])
         ->name('portfolio.index');
 
-    Route::get('/{portfolio}', [PortfolioController::class, 'show'])
+    Route::get('/{item:slug}', [PortfolioController::class, 'show'])
         ->name('portfolio.show');
 });

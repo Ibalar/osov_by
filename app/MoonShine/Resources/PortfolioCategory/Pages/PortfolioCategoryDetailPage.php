@@ -11,6 +11,11 @@ use MoonShine\Contracts\UI\FieldContract;
 use App\MoonShine\Resources\PortfolioCategory\PortfolioCategoryResource;
 use MoonShine\Support\ListOf;
 use MoonShine\UI\Fields\ID;
+use MoonShine\UI\Fields\Text;
+use MoonShine\UI\Fields\Textarea;
+use MoonShine\UI\Fields\Switcher;
+use MoonShine\UI\Fields\Number;
+use App\MoonShine\Fields\SeoFields;
 use Throwable;
 
 
@@ -26,6 +31,18 @@ class PortfolioCategoryDetailPage extends DetailPage
     {
         return [
             ID::make(),
+
+            Text::make('Название', 'title'),
+
+            Text::make('Slug', 'slug'),
+
+            Textarea::make('Описание', 'description'),
+
+            Switcher::make('Активна', 'is_active'),
+
+            Number::make('Порядок сортировки', 'sort_order'),
+
+            ...SeoFields::make(),
         ];
     }
 

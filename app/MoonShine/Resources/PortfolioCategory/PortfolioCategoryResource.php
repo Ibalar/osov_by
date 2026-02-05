@@ -20,7 +20,13 @@ class PortfolioCategoryResource extends ModelResource
 {
     protected string $model = PortfolioCategory::class;
 
-    protected string $title = 'PortfolioCategories';
+    protected string $title = 'Категории портфолио';
+
+    protected string $column = 'title';
+
+    protected ?string $sortColumn = 'sort_order';
+
+    protected ?string $sortDirection = 'asc';
     
     /**
      * @return list<class-string<PageContract>>

@@ -13,7 +13,12 @@ use MoonShine\Contracts\Core\TypeCasts\DataWrapperContract;
 use App\MoonShine\Resources\PortfolioCategory\PortfolioCategoryResource;
 use MoonShine\Support\ListOf;
 use MoonShine\UI\Fields\ID;
+use MoonShine\UI\Fields\Text;
+use MoonShine\UI\Fields\Textarea;
+use MoonShine\UI\Fields\Switcher;
+use MoonShine\UI\Fields\Number;
 use MoonShine\UI\Components\Layout\Box;
+use App\MoonShine\Fields\SeoFields;
 use Throwable;
 
 
@@ -28,9 +33,29 @@ class PortfolioCategoryFormPage extends FormPage
     protected function fields(): iterable
     {
         return [
-            Box::make([
-                ID::make(),
+            Box::make('Основная информация', [
+                ID::make()
+                    ->sortable(),
+
+                Text::make('Название', 'title')
+                    ->required(),
+
+                Text::make('Slug', 'slug')
+                    ->required()
+                    ->hint('URL-адрес категории (латиница, цифры и дефисы)'),
+
+                Textarea::make('Описание', 'description')
+                    ->hint('Описание категории'),
+
+                Switcher::make('Активна', 'is_active')
+                    ->default(true),
+
+                Number::make('Порядок сортировки', 'sort_order')
+                    ->default(0)
+                    ->hint('Чем меньше число, тем выше в списке'),
             ]),
+
+            Box::make('SEO', SeoFields::make()),
         ];
     }
 
@@ -46,7 +71,13 @@ class PortfolioCategoryFormPage extends FormPage
 
     protected function rules(DataWrapperContract $item): array
     {
-        return [];
+        return [
+            'title' => ['required', 'string', 'max:255'],
+            'slug' => ['required', 'string', 'max:255', 'regex:/^[a-z0-9-]+$/', 'unique:portfolio_categories,slug,' . ($item->getKey() ?? 'NULL')],
+            'description' => ['nullable', 'string'],
+            'is_active' => ['boolean'],
+            'sort_order' => ['integer', 'min:0'],
+        ];
     }
 
     /**
