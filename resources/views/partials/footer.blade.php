@@ -10,8 +10,8 @@
                             <img src="{{ asset('images/icon-mail-white.svg') }}" alt="">
                         </div>
                         <div class="footer-contact-item-content-prime">
-                            <h3>Email Address</h3>
-                            <p><a href="mailto:info@domainname.com">info@domainname.com</a></p>
+                            <h3>Email</h3>
+                            <p><a href="mailto:info@osov.by">info@osov.by</a></p>
                         </div>
                     </div>
                     <!-- Footer Contact Item End -->
@@ -22,8 +22,8 @@
                             <img src="{{ asset('images/icon-phone-white.svg') }}" alt="">
                         </div>
                         <div class="footer-contact-item-content-prime">
-                            <h3>Phone Number</h3>
-                            <p><a href="tel:+123456789">+91 12345 6789</a></p>
+                            <h3>Телефон</h3>
+                            <p><a href="tel:+375333196451">+375 (33) 319-64-51</a></p>
                         </div>
                     </div>
                     <!-- Footer Contact Item End -->
@@ -34,8 +34,8 @@
                             <img src="{{ asset('images/icon-location-white.svg') }}" alt="">
                         </div>
                         <div class="footer-contact-item-content-prime">
-                            <h3>Our Location</h3>
-                            <p>2118 Thornridge Cir Syracuse</p>
+                            <h3>Адрес</h3>
+                            <p>г. Минск, ул. Примерная, 123</p>
                         </div>
                     </div>
                     <!-- Footer Contact Item End -->
@@ -48,24 +48,24 @@
                 <div class="about-footer-prime">
                     <!-- Footer Logo Start -->
                     <div class="footer-logo-prime">
-                        <img src="{{ asset('images/logo.svg') }}" alt="">
+                        <img src="{{ asset('images/logo.svg') }}" alt="{{ config('app.name') }}">
                     </div>
                     <!-- Footer Logo End -->
 
                     <!-- About Footer Content Start -->
                     <div class="about-footer-content-prime">
-                        <p>Experience modern urban living with thoughtfully designed apartments, premium amenities, and a vibrant community.</p>
+                        <p>Строительство домов под ключ с гарантией результата. Более 8 лет опыта на рынке недвижимости Беларуси. Качественные материалы, профессиональная команда и индивидуальный подход к каждому клиенту.</p>
                     </div>
                     <!-- About Footer Content End -->
 
                     <!-- Footer Social Links Start -->
                     <div class="footer-social-links-prime">
-                        <h3>Follow Us On Socials:</h3>
+                        <h3>Мы в социальных сетях:</h3>
                         <ul>
-                            <li><a href="#"><i class="fa-brands fa-facebook-f"></i></a></li>
-                            <li><a href="#"><i class="fa-brands fa-dribbble"></i></a></li>
-                            <li><a href="#"><i class="fa-brands fa-instagram"></i></a></li>
-                            <li><a href="#"><i class="fa-brands fa-linkedin-in"></i></a></li>
+                            <li><a href="#" target="_blank" rel="noopener noreferrer"><i class="fa-brands fa-facebook-f"></i></a></li>
+                            <li><a href="#" target="_blank" rel="noopener noreferrer"><i class="fa-brands fa-instagram"></i></a></li>
+                            <li><a href="#" target="_blank" rel="noopener noreferrer"><i class="fa-brands fa-linkedin-in"></i></a></li>
+                            <li><a href="#" target="_blank" rel="noopener noreferrer"><i class="fa-brands fa-youtube"></i></a></li>
                         </ul>
                     </div>
                     <!-- Footer Social Links End -->
@@ -78,37 +78,39 @@
                 <div class="footer-links-box-prime">
                     <!-- Footer Links Start -->
                     <div class="footer-links-prime">
-                        <h3>Quick Links</h3>
+                        <h3>Навигация</h3>
                         <ul>
-                            <li><a href="index-3.html">Home</a></li>
-                            <li><a href="about.html">About Us</a></li>
-                            <li><a href="amenities.html">Amenities</a></li>
-                            <li><a href="projects.html">Projects</a></li>
-                            <li><a href="contact.html">Contact Us</a></li>
+                            <li><a href="{{ route('home') }}">Главная</a></li>
+                            <li><a href="{{ route('services.index') }}">Услуги</a></li>
+                            <li><a href="{{ route('projects.index') }}">Проекты</a></li>
+                            <li><a href="{{ route('portfolio.index') }}">Портфолио</a></li>
+                            <li><a href="{{ route('page.show', 'about') }}">О нас</a></li>
+                            <li><a href="{{ route('page.show', 'contacts') }}">Контакты</a></li>
                         </ul>
                     </div>
                     <!-- Footer Links End -->
 
                     <!-- Footer Links Start -->
                     <div class="footer-links-prime">
-                        <h3>Our Amenities</h3>
+                        <h3>Наши услуги</h3>
                         <ul>
-                            <li><a href="amenity-single.html">Yoga & Meditation Zone</a></li>
-                            <li><a href="amenity-single.html">Secure Parking Area</a></li>
-                            <li><a href="amenity-single.html">Children's Play Area</a></li>
-                            <li><a href="amenity-single.html">Fitness Center</a></li>
-                            <li><a href="amenity-single.html">Jogging & Walking Track</a></li>
+                            <li><a href="{{ route('services.index') }}">Строительство домов</a></li>
+                            <li><a href="{{ route('services.index') }}">Ремонт и отделка</a></li>
+                            <li><a href="{{ route('services.index') }}">Проектирование</a></li>
+                            <li><a href="{{ route('services.index') }}">Ландшафтный дизайн</a></li>
+                            <li><a href="{{ route('services.index') }}">Инженерные системы</a></li>
                         </ul>
                     </div>
                     <!-- Footer Links End -->
 
                     <!-- Footer Links Start -->
                     <div class="footer-links-prime footer-newsletter-form-prime">
-                        <h3>Our Newsletter</h3>
-                        <p>Stay connected with us and be the first to receive updates about apartments.</p>
+                        <h3>Подпишитесь на новости</h3>
+                        <p>Получайте последние новости о проектах и акциях</p>
                         <form id="newslettersForm" action="#" method="POST">
+                            @csrf
                             <div class="form-group">
-                                <input type="email" name="mail" class="form-control" id="mail" placeholder="Enter Your E-mail " required="">
+                                <input type="email" name="mail" class="form-control" id="mail" placeholder="Введите ваш email" required="">
                                 <button type="submit" class="newsletter-btn-prime"><i class="fa-regular fa-paper-plane"></i></button>
                             </div>
                         </form>
@@ -123,15 +125,15 @@
                 <div class="footer-copyright-prime">
                     <!-- Footer Copyright Text Start -->
                     <div class="footer-copyright-text-prime">
-                        <p>Copyright © 2026 All Rights Reserved.</p>
+                        <p>Copyright © {{ date('Y') }} Все права защищены.</p>
                     </div>
                     <!-- Footer Copyright Text Start -->
 
                     <!-- Footer Privacy Policy Start -->
                     <div class="footer-privacy-policy-prime">
                         <ul>
-                            <li><a href="#">Privacy Policy</a></li>
-                            <li><a href="#">Terms & Conditions</a></li>
+                            <li><a href="{{ route('page.show', 'privacy') }}">Политика конфиденциальности</a></li>
+                            <li><a href="{{ route('page.show', 'terms') }}">Условия использования</a></li>
                         </ul>
                     </div>
                     <!-- Footer Privacy Policy End -->
