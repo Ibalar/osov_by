@@ -164,7 +164,6 @@
                                             <a href="{{ route('projects.category', $service->category->projectCategory->slug) }}" class="btn-default">
                                                 проекты
                                             </a>
-                                        @else
                                         @endif
                                     </div>
                                 </div>
