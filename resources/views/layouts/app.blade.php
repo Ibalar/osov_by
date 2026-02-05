@@ -57,27 +57,33 @@
     <meta name="twitter:image" content="{{ $ogImage ?? asset('images/og-image-default.jpg') }}">
 
     {{-- Structured Data (Organization) --}}
+    @php
+        $organizationSchema = [
+            '@context' => 'https://schema.org',
+            '@type' => 'Organization',
+            'name' => 'OSOV',
+            'url' => url('/'),
+            'logo' => asset('images/logo.png'),
+            'description' => 'Строительство домов под ключ с гарантией результата. Более 8 лет опыта на рынке недвижимости Беларуси.',
+            'address' => [
+                '@type' => 'PostalAddress',
+                'streetAddress' => 'ул. Примерная, 123',
+                'addressLocality' => 'Минск',
+                'addressCountry' => 'BY',
+            ],
+            'contactPoint' => [
+                '@type' => 'ContactPoint',
+                'telephone' => '+375-33-319-64-51',
+                'contactType' => 'customer service',
+            ],
+        ];
+    @endphp
+
     <script type="application/ld+json">
-    {
-        "@context": "https://schema.org",
-        "@type": "Organization",
-        "name": "OSOV",
-        "url": "{{ url('/') }}",
-        "logo": "{{ asset('images/logo.png') }}",
-        "description": "Строительство домов под ключ с гарантией результата. Более 8 лет опыта на рынке недвижимости Беларуси.",
-        "address": {
-            "@type": "PostalAddress",
-            "streetAddress": "ул. Примерная, 123",
-            "addressLocality": "Минск",
-            "addressCountry": "BY"
-        },
-        "contactPoint": {
-            "@type": "ContactPoint",
-            "telephone": "+375-33-319-64-51",
-            "contactType": "customer service"
-        }
-    }
+        @json($organizationSchema)
     </script>
+
+
 
     {{-- Favicon --}}
     <link rel="shortcut icon"
