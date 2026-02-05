@@ -4,9 +4,13 @@ declare(strict_types=1);
 
 namespace App\MoonShine\Resources\PortfolioItem\Pages;
 
+use App\MoonShine\Resources\PortfolioCategory\PortfolioCategoryResource;
+use MoonShine\Laravel\Fields\Relationships\BelongsTo;
+use MoonShine\Laravel\Fields\Slug;
 use MoonShine\Laravel\Pages\Crud\FormPage;
 use MoonShine\Contracts\UI\ComponentContract;
 use MoonShine\Contracts\UI\FormBuilderContract;
+use MoonShine\TinyMce\Fields\TinyMce;
 use MoonShine\UI\Components\FormBuilder;
 use MoonShine\Contracts\UI\FieldContract;
 use MoonShine\Contracts\Core\TypeCasts\DataWrapperContract;
@@ -15,12 +19,10 @@ use MoonShine\Support\ListOf;
 use MoonShine\UI\Fields\ID;
 use MoonShine\UI\Fields\Text;
 use MoonShine\UI\Fields\Textarea;
-use MoonShine\UI\Fields\TinyMce;
 use MoonShine\UI\Fields\Switcher;
 use MoonShine\UI\Fields\Number;
 use MoonShine\UI\Fields\Image;
 use MoonShine\UI\Fields\File;
-use MoonShine\UI\Fields\Relationships\BelongsTo;
 use MoonShine\UI\Components\Layout\Box;
 use MoonShine\UI\Components\Layout\Column;
 use MoonShine\UI\Components\Layout\Grid;
@@ -45,15 +47,24 @@ class PortfolioItemFormPage extends FormPage
                         ID::make()
                             ->sortable(),
 
-                        BelongsTo::make('Категория', 'category', resource: 'portfolio_category')
+                        BelongsTo::make('Категория', 'category', resource: PortfolioCategoryResource::class)
                             ->required(),
 
                         Text::make('Название', 'title')
+                            ->when(
+                                fn() => $this->getResource()->isCreateFormPage(),
+                                fn(Text $field) => $field->reactive(),
+                                fn(Text $field) => $field
+                            )
                             ->required(),
-
-                        Text::make('Slug', 'slug')
-                            ->required()
-                            ->hint('URL-адрес проекта (латиница, цифры и дефисы)'),
+                        Slug::make('Slug')
+                            ->unique()
+                            ->locked()
+                            ->when(
+                                fn() => $this->getResource()->isCreateFormPage(),
+                                fn(Slug $field) => $field->from('title')->live(),
+                                fn(Slug $field) => $field->readonly()
+                            ),
 
                         Textarea::make('Краткое описание', 'excerpt')
                             ->hint('Используется в превью проекта'),
@@ -80,10 +91,11 @@ class PortfolioItemFormPage extends FormPage
                         Image::make('Обложка', 'cover_image')
                             ->disk('public')
                             ->dir('portfolio')
+                            ->removable()
                             ->allowedExtensions(['jpg', 'jpeg', 'png', 'webp'])
                             ->hint('Основное изображение проекта'),
 
-                        File::make('Галерея', 'images')
+                        Image::make('Галерея', 'images')
                             ->disk('public')
                             ->dir('portfolio/gallery')
                             ->multiple()
@@ -115,7 +127,7 @@ class PortfolioItemFormPage extends FormPage
             'excerpt' => ['nullable', 'string'],
             'description' => ['nullable', 'string'],
             'content' => ['nullable', 'string'],
-            'cover_image' => ['nullable', 'string'],
+            'cover_image' => ['nullable', 'image'],
             'images' => ['nullable', 'array'],
             'is_active' => ['boolean'],
             'sort_order' => ['integer', 'min:0'],

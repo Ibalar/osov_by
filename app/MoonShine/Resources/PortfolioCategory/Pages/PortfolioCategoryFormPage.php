@@ -4,6 +4,7 @@ declare(strict_types=1);
 
 namespace App\MoonShine\Resources\PortfolioCategory\Pages;
 
+use MoonShine\Laravel\Fields\Slug;
 use MoonShine\Laravel\Pages\Crud\FormPage;
 use MoonShine\Contracts\UI\ComponentContract;
 use MoonShine\Contracts\UI\FormBuilderContract;
@@ -38,11 +39,20 @@ class PortfolioCategoryFormPage extends FormPage
                     ->sortable(),
 
                 Text::make('Название', 'title')
+                    ->when(
+                        fn() => $this->getResource()->isCreateFormPage(),
+                        fn(Text $field) => $field->reactive(),
+                        fn(Text $field) => $field
+                    )
                     ->required(),
-
-                Text::make('Slug', 'slug')
-                    ->required()
-                    ->hint('URL-адрес категории (латиница, цифры и дефисы)'),
+                Slug::make('Slug')
+                    ->unique()
+                    ->locked()
+                    ->when(
+                        fn() => $this->getResource()->isCreateFormPage(),
+                        fn(Slug $field) => $field->from('title')->live(),
+                        fn(Slug $field) => $field->readonly()
+                    ),
 
                 Textarea::make('Описание', 'description')
                     ->hint('Описание категории'),

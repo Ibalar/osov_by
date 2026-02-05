@@ -24,10 +24,6 @@ class PortfolioCategoryResource extends ModelResource
 
     protected string $column = 'title';
 
-    protected ?string $sortColumn = 'sort_order';
-
-    protected ?string $sortDirection = 'asc';
-    
     /**
      * @return list<class-string<PageContract>>
      */

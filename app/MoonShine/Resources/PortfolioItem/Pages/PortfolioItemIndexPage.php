@@ -4,6 +4,8 @@ declare(strict_types=1);
 
 namespace App\MoonShine\Resources\PortfolioItem\Pages;
 
+use App\MoonShine\Resources\PortfolioCategory\PortfolioCategoryResource;
+use MoonShine\Laravel\Fields\Relationships\BelongsTo;
 use MoonShine\Laravel\Pages\Crud\IndexPage;
 use MoonShine\Contracts\UI\ComponentContract;
 use MoonShine\UI\Components\Table\TableBuilder;
@@ -15,7 +17,6 @@ use MoonShine\UI\Fields\Text;
 use MoonShine\UI\Fields\Switcher;
 use MoonShine\UI\Fields\Number;
 use MoonShine\UI\Fields\Image;
-use MoonShine\UI\Fields\Relationships\BelongsTo;
 use App\MoonShine\Resources\PortfolioItem\PortfolioItemResource;
 use MoonShine\Support\ListOf;
 use Throwable;
@@ -43,7 +44,7 @@ class PortfolioItemIndexPage extends IndexPage
             Text::make('Название', 'title')
                 ->sortable(),
 
-            BelongsTo::make('Категория', 'category', resource: 'portfolio_category'),
+            BelongsTo::make('Категория', 'category', resource: PortfolioCategoryResource::class),
 
             Switcher::make('Активен', 'is_active')
                 ->sortable(),
