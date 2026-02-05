@@ -10107,3 +10107,118 @@ header.main-header.main-header-prime .slicknav_menu{
         width: calc(100% - 13.33px);
     }
 }
+/************************************/
+/***   Portfolio Gallery css      ***/
+/************************************/
+
+.portfolio-filter {
+text-align: center;
+margin-bottom: 40px;
+}
+
+.portfolio-filter a {
+display: inline-block;
+padding: 10px 25px;
+margin: 5px;
+border: 2px solid var(--primary-color);
+border-radius: 30px;
+text-decoration: none;
+color: var(--primary-color);
+font-weight: 500;
+transition: all 0.3s ease;
+cursor: pointer;
+}
+
+.portfolio-filter a:hover,
+.portfolio-filter a.active {
+background-color: var(--primary-color);
+color: #fff;
+}
+
+.gallery-items .portfolio-item {
+position: relative;
+display: block;
+height: 100%;
+margin-bottom: 30px;
+overflow: hidden;
+border-radius: 20px;
+}
+
+.gallery-items .portfolio-item figure {
+display: block;
+margin: 0;
+position: relative;
+overflow: hidden;
+border-radius: 20px;
+}
+
+.gallery-items .portfolio-item img {
+width: 100%;
+aspect-ratio: 1 / 1.22;
+object-fit: cover;
+border-radius: 20px;
+transition: transform 0.5s ease;
+}
+
+.gallery-items .portfolio-item:hover img {
+transform: scale(1.05);
+}
+
+.portfolio-item-info {
+position: absolute;
+bottom: 0;
+left: 0;
+right: 0;
+background: linear-gradient(to top, rgba(26, 26, 26, 0.9), transparent);
+padding: 30px 20px 20px;
+color: #fff;
+border-radius: 0 0 20px 20px;
+opacity: 0;
+transform: translateY(20px);
+transition: all 0.3s ease;
+}
+
+.portfolio-item:hover .portfolio-item-info {
+opacity: 1;
+transform: translateY(0);
+}
+
+.portfolio-item-info h3 {
+margin: 0 0 5px;
+font-size: 18px;
+font-weight: 600;
+}
+
+.portfolio-item-info span {
+font-size: 14px;
+opacity: 0.8;
+}
+
+.portfolio-pagination {
+text-align: center;
+}
+
+.portfolio-pagination .pagination {
+justify-content: center;
+gap: 5px;
+}
+
+.portfolio-pagination .page-link {
+border: 2px solid var(--primary-color);
+color: var(--primary-color);
+border-radius: 8px;
+margin: 0 3px;
+padding: 8px 16px;
+transition: all 0.3s ease;
+}
+
+.portfolio-pagination .page-link:hover {
+background-color: var(--primary-color);
+color: #fff;
+}
+
+.portfolio-pagination .page-item.active .page-link {
+background-color: var(--primary-color);
+color: #fff;
+border-color: var(--primary-color);
+}
