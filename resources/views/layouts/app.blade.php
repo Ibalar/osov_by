@@ -182,8 +182,5 @@
 {{-- Скрипты конкретных страниц --}}
 @stack('scripts')
 
-
-@stack('scripts')
-
 </body>
 </html>
