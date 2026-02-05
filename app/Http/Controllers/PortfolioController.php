@@ -6,11 +6,12 @@ use App\Models\Page;
 use App\Models\PortfolioItem;
 use App\Models\PortfolioCategory;
 use Illuminate\Http\Request;
+use Illuminate\Pagination\LengthAwarePaginator;
 
 class PortfolioController extends Controller
 {
     /**
-     * Список работ
+     * Список работ - галерея изображений
      */
     public function index(Request $request)
     {
@@ -18,9 +19,7 @@ class PortfolioController extends Controller
             ->where('key', 'portfolio')
             ->first();
 
-        $query = PortfolioItem::query()
-            ->where('is_active', true)
-            ->with('category');
+        $query = PortfolioItem::query()->with('category');
 
         if ($request->filled('category')) {
             $query->whereHas('category', function ($q) use ($request) {
@@ -30,48 +29,99 @@ class PortfolioController extends Controller
 
         $items = $query
             ->orderByDesc('created_at')
-            ->paginate(12)
-            ->withQueryString();
-
-        $categories = PortfolioCategory::query()
-            ->where('is_active', true)
-            ->orderBy('sort_order')
             ->get();
+
+        $images = $this->buildImageCollection($items);
+
+        $perPage = 15;
+        $currentPage = $request->input('page', 1);
+        $paginatedImages = new LengthAwarePaginator(
+            $images->forPage($currentPage, $perPage),
+            $images->count(),
+            $perPage,
+            $currentPage,
+            ['path' => $request->url(), 'query' => $request->query()]
+        );
+
+        $categories = PortfolioCategory::query()->orderBy('title')->get();
 
         return view('portfolio.index', [
             'page' => $page,
             'items' => $items,
+            'images' => $paginatedImages,
             'categories' => $categories,
 
+            // Page header
+            'pageTitle' => $page?->seo?->h1 ?? $page?->title ?? 'Портфолио',
+            'breadcrumbs' => [
+                ['title' => 'Главная', 'url' => route('home')],
+                ['title' => 'Портфолио'],
+            ],
+
             // SEO
-            'seoTitle' => $page?->seo_title ?? 'Портфолио',
-            'seoDescription' => $page?->seo_description,
-            'seoKeywords' => $page?->seo_keywords,
+            'seoTitle' => $page?->seo?->title ?? $page?->seo_title ?? 'Портфолио',
+            'seoDescription' => $page?->seo?->description ?? $page?->seo_description,
+            'seoKeywords' => $page?->seo?->keywords ?? $page?->seo_keywords,
         ]);
     }
 
     /**
-     * Страница работы
+     * Страница работы - галерея изображений одной работы
      */
     public function show(PortfolioItem $item)
     {
-        abort_unless($item->is_active, 404);
+        $images = collect($item->gallery_images ?? []);
 
-        $related = PortfolioItem::query()
-            ->where('is_active', true)
-            ->where('portfolio_category_id', $item->portfolio_category_id)
-            ->where('id', '!=', $item->id)
-            ->limit(4)
-            ->get();
+        $perPage = 15;
+        $currentPage = request()->input('page', 1);
+        $paginatedImages = new LengthAwarePaginator(
+            $images->forPage($currentPage, $perPage),
+            $images->count(),
+            $perPage,
+            $currentPage,
+            ['path' => request()->url()]
+        );
+
+        $itemTitle = $item->seo?->h1 ?? $item->title;
 
         return view('portfolio.show', [
             'item' => $item,
-            'related' => $related,
+            'images' => $paginatedImages,
+
+            // Page header
+            'pageTitle' => $itemTitle,
+            'breadcrumbs' => [
+                ['title' => 'Главная', 'url' => route('home')],
+                ['title' => 'Портфолио', 'url' => route('portfolio.index')],
+                ['title' => $itemTitle],
+            ],
 
             // SEO
-            'seoTitle' => $item->seo_title ?? $item->title,
-            'seoDescription' => $item->seo_description,
-            'seoKeywords' => $item->seo_keywords,
+            'seoTitle' => $item->seo?->title ?? $item->seo_title ?? $item->title,
+            'seoDescription' => $item->seo?->description ?? $item->seo_description,
+            'seoKeywords' => $item->seo?->keywords ?? $item->seo_keywords,
         ]);
+    }
+
+    /**
+     * Построить плоскую коллекцию изображений из элементов портфолио
+     */
+    private function buildImageCollection($items): \Illuminate\Support\Collection
+    {
+        $images = collect();
+
+        foreach ($items as $item) {
+            $itemImages = $item->gallery_images ?? [];
+            foreach ($itemImages as $imageUrl) {
+                $images->push([
+                    'url' => $imageUrl,
+                    'title' => $item->title,
+                    'item_id' => $item->id,
+                    'category' => $item->category?->title,
+                ]);
+            }
+        }
+
+        return $images;
     }
 }

@@ -3,7 +3,9 @@
 namespace App\Models;
 
 use Illuminate\Database\Eloquent\Model;
-use App\Traits\Seoable;
+use Illuminate\Database\Eloquent\Relations\MorphOne;
+use App\Models\SeoMeta;
+use App\Models\Traits\Seoable;
 
 class PortfolioCategory extends Model
 {
@@ -12,15 +14,6 @@ class PortfolioCategory extends Model
     protected $fillable = [
         'title',
         'slug',
-        'description',
-        'is_active',
-        'sort_order',
-        'seo',
-    ];
-
-    protected $casts = [
-        'is_active' => 'boolean',
-        'seo' => 'array',
     ];
 
     /*
@@ -35,5 +28,10 @@ class PortfolioCategory extends Model
             PortfolioItem::class,
             'portfolio_category_id'
         );
+    }
+
+    public function seo(): MorphOne
+    {
+        return $this->morphOne(SeoMeta::class, 'seoable');
     }
 }
