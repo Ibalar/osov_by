@@ -89,6 +89,8 @@ class ProjectController extends Controller
             'seoTitle' => $project->seo_title ?? $project->title,
             'seoDescription' => $project->seo_description,
             'seoKeywords' => $project->seo_keywords,
+            'ogImage' => $project->cover_image_url ?? asset('images/og-image-default.jpg'),
+            'canonicalUrl' => route('projects.show', $project->slug),
         ]);
     }
 
@@ -124,6 +126,8 @@ class ProjectController extends Controller
             'seoTitle' => $category->seo_title ?? $category->title,
             'seoDescription' => $category->seo_description,
             'seoKeywords' => $category->seo_keywords,
+            'ogImage' => $category->image ? asset('storage/' . $category->image) : asset('images/og-image-default.jpg'),
+            'canonicalUrl' => route('projects.category', $category->slug),
 
             // Для page-header
             'pageTitle' => $category->title,

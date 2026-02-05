@@ -27,6 +27,14 @@
 
     <meta name="author" content="WebArt.by">
 
+    {{-- Canonical URL --}}
+    @if(!empty($canonicalUrl))
+        <link rel="canonical" href="{{ $canonicalUrl }}">
+    @endif
+
+    {{-- Robots meta --}}
+    <meta name="robots" content="{{ $robots ?? 'index, follow' }}">
+
     {{-- Open Graph --}}
     <meta property="og:title"
           content="{{ $seoTitle ?? config('app.name') }}">
@@ -36,6 +44,40 @@
 
     <meta property="og:type" content="website">
     <meta property="og:url" content="{{ url()->current() }}">
+
+    {{-- Open Graph Image --}}
+    <meta property="og:image" content="{{ $ogImage ?? asset('images/og-image-default.jpg') }}">
+    <meta property="og:image:width" content="1200">
+    <meta property="og:image:height" content="630">
+
+    {{-- Twitter Card --}}
+    <meta name="twitter:card" content="summary_large_image">
+    <meta name="twitter:title" content="{{ $seoTitle ?? config('app.name') }}">
+    <meta name="twitter:description" content="{{ $seoDescription ?? '' }}">
+    <meta name="twitter:image" content="{{ $ogImage ?? asset('images/og-image-default.jpg') }}">
+
+    {{-- Structured Data (Organization) --}}
+    <script type="application/ld+json">
+    {
+        "@context": "https://schema.org",
+        "@type": "Organization",
+        "name": "OSOV",
+        "url": "{{ url('/') }}",
+        "logo": "{{ asset('images/logo.png') }}",
+        "description": "Строительство домов под ключ с гарантией результата. Более 8 лет опыта на рынке недвижимости Беларуси.",
+        "address": {
+            "@type": "PostalAddress",
+            "streetAddress": "ул. Примерная, 123",
+            "addressLocality": "Минск",
+            "addressCountry": "BY"
+        },
+        "contactPoint": {
+            "@type": "ContactPoint",
+            "telephone": "+375-33-319-64-51",
+            "contactType": "customer service"
+        }
+    }
+    </script>
 
     {{-- Favicon --}}
     <link rel="shortcut icon"

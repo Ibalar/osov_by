@@ -74,6 +74,67 @@ class PortfolioController extends Controller
     }
 
     /**
+     * Страница категории портфолио
+     */
+    public function category(PortfolioCategory $category)
+    {
+        abort_unless($category->is_active, 404);
+
+        $page = Page::query()->where('key', 'portfolio')->first();
+
+        $query = PortfolioItem::query()
+            ->with('category')
+            ->where('is_active', true)
+            ->where('portfolio_category_id', $category->id);
+
+        $items = $query
+            ->orderBy('sort_order', 'asc')
+            ->orderByDesc('created_at')
+            ->get();
+
+        $images = $this->buildImageCollection($items);
+
+        $perPage = 15;
+        $currentPage = request()->input('page', 1);
+        $paginatedImages = new LengthAwarePaginator(
+            $images->forPage($currentPage, $perPage),
+            $images->count(),
+            $perPage,
+            $currentPage,
+            ['path' => request()->url(), 'query' => request()->query()]
+        );
+
+        $categories = PortfolioCategory::query()
+            ->where('is_active', true)
+            ->orderBy('sort_order', 'asc')
+            ->orderBy('title', 'asc')
+            ->get();
+
+        return view('portfolio.index', [
+            'page' => $page,
+            'items' => $items,
+            'images' => $paginatedImages,
+            'categories' => $categories,
+            'currentCategory' => $category,
+
+            // Page header
+            'pageTitle' => $category->seo?->h1 ?? $category->title ?? 'Портфолио',
+            'breadcrumbs' => [
+                ['title' => 'Главная', 'url' => route('home')],
+                ['title' => 'Портфолио', 'url' => route('portfolio.index')],
+                ['title' => $category->title],
+            ],
+
+            // SEO
+            'seoTitle' => $category->seo?->title ?? $category->seo_title ?? $category->title,
+            'seoDescription' => $category->seo?->description ?? $category->seo_description,
+            'seoKeywords' => $category->seo?->keywords ?? $category->seo_keywords,
+            'ogImage' => $category->image ? asset('storage/' . $category->image) : asset('images/og-image-default.jpg'),
+            'canonicalUrl' => route('portfolio.category', $category->slug),
+        ]);
+    }
+
+    /**
      * Страница работы - галерея изображений одной работы
      */
     public function show(PortfolioItem $item)
@@ -108,6 +169,8 @@ class PortfolioController extends Controller
             'seoTitle' => $item->seo?->title ?? $item->seo_title ?? $item->title,
             'seoDescription' => $item->seo?->description ?? $item->seo_description,
             'seoKeywords' => $item->seo?->keywords ?? $item->seo_keywords,
+            'ogImage' => $item->cover_image_url ?? asset('images/og-image-default.jpg'),
+            'canonicalUrl' => route('portfolio.show', $item->slug),
         ]);
     }
 

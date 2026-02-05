@@ -5,6 +5,7 @@ use App\Http\Controllers\PageController;
 use App\Http\Controllers\PortfolioController;
 use App\Http\Controllers\ProjectController;
 use App\Http\Controllers\ServiceController;
+use App\Http\Controllers\SitemapController;
 use Illuminate\Support\Facades\Route;
 
 
@@ -46,6 +47,12 @@ Route::prefix('portfolio')->group(function () {
     Route::get('/', [PortfolioController::class, 'index'])
         ->name('portfolio.index');
 
+    Route::get('/category/{category:slug}', [PortfolioController::class, 'category'])
+        ->name('portfolio.category');
+
     Route::get('/{item:slug}', [PortfolioController::class, 'show'])
         ->name('portfolio.show');
 });
+
+Route::get('/sitemap.xml', [SitemapController::class, 'index'])
+    ->name('sitemap');

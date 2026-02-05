@@ -83,6 +83,8 @@ class ServiceController extends Controller
             'seoTitle' => $category->seo_title ?? $category->title,
             'seoDescription' => $category->seo_description,
             'seoKeywords' => $category->seo_keywords,
+            'ogImage' => $category->image ? asset('storage/' . $category->image) : asset('images/og-image-default.jpg'),
+            'canonicalUrl' => route('services.category', $category->slug),
 
             // Page header
             'pageTitle' => $category->title,
@@ -118,6 +120,8 @@ class ServiceController extends Controller
             'seoTitle' => $subcategory->seo_title ?? $subcategory->title,
             'seoDescription' => $subcategory->seo_description,
             'seoKeywords' => $subcategory->seo_keywords,
+            'ogImage' => $subcategory->image ? asset('storage/' . $subcategory->image) : asset('images/og-image-default.jpg'),
+            'canonicalUrl' => route('services.subcategory', [$category->slug, $subcategory->slug]),
         ]);
     }
 
@@ -146,6 +150,8 @@ class ServiceController extends Controller
             'seoTitle' => $service->seo_title ?? $service->title,
             'seoDescription' => $service->seo_description,
             'seoKeywords' => $service->seo_keywords,
+            'ogImage' => asset('images/og-image-default.jpg'),
+            'canonicalUrl' => route('services.show', $service->slug),
 
             // Для page-header
             'pageTitle' => $service->title,

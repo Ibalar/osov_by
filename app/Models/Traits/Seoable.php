@@ -4,6 +4,7 @@ namespace App\Models\Traits;
 
 use App\Models\SeoMeta;
 use Illuminate\Database\Eloquent\Relations\MorphOne;
+use Illuminate\Support\Str;
 
 trait Seoable
 {
@@ -57,12 +58,33 @@ trait Seoable
 
     public function getOgTitleAttribute(): string
     {
-        return $this->seo_title;
+        return $this->seo['title']
+            ?? $this->seo_title
+            ?? $this->title
+            ?? config('app.name');
     }
 
     public function getOgDescriptionAttribute(): ?string
     {
-        return $this->seo_description;
+        return $this->seo['description']
+            ?? $this->seo_description
+            ?? $this->seo_description;
+    }
+
+    public function getOgImageAttribute(): ?string
+    {
+        // Для проектов и портфолио - использовать cover_image
+        if (method_exists($this, 'getCoverImageUrlAttribute')) {
+            return $this->cover_image_url;
+        }
+
+        // Для категорий с изображением
+        if (!empty($this->image)) {
+            return asset('storage/' . $this->image);
+        }
+
+        // Default OG image
+        return asset('images/og-image-default.jpg');
     }
 
 }
