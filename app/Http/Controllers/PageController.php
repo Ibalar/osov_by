@@ -9,9 +9,11 @@ class PageController extends Controller
 {
     public function show(Page $page)
     {
-        abort_unless($page->is_active ?? true, 404); // is_active может не существовать в таблице
+        abort_unless($page->is_active ?? true, 404);
 
-        return view('pages.show', [
+        $view = view()->exists("pages.{$page->key}") ? "pages.{$page->key}" : "pages.show";
+
+        return view($view, [
             'page' => $page,
 
             // SEO
