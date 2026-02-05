@@ -6,11 +6,11 @@
                 {{-- Logo --}}
                 @if(Route::is('home'))
                     <p class="navbar-brand">
-                        <img src="{{ asset('images/logo.png') }}" alt="{{ config('app.name') }}">
+                        <img src="{{ asset($siteSettings->logo_path) }}" alt="{{ config('app.name') }}">
                     </p>
                 @else
                     <a class="navbar-brand" href="{{ route('home') }}">
-                        <img src="{{ asset('images/logo-dark.png') }}" alt="{{ config('app.name') }}">
+                        <img src="{{ asset($siteSettings->logo_dark_path) }}" alt="{{ config('app.name') }}">
                     </a>
                 @endif
 
@@ -90,8 +90,8 @@
 
                 {{-- Header phone --}}
                 <div class="header-btn">
-                    <a href="tel:+375333196451" class="btn-default {{ Route::is('home') ? '' : 'btn-highlighted' }}">
-                        +375 (33) 319-64-51
+                    <a href="tel:{{ preg_replace('/[^0-9+]/', '', $siteSettings->phone) }}" class="btn-default {{ Route::is('home') ? '' : 'btn-highlighted' }}">
+                        {{ $siteSettings->phone }}
                     </a>
                 </div>
 
