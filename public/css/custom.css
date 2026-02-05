@@ -39,7 +39,7 @@
 31. 404 Error Page css
 32.	Responsive css
 33. Home - Version 2 css
-34. Home - Version 3 css 
+34. Home - Version 3 css
 -------------------------------------------------------------------------------------- */
 
 /************************************/
@@ -215,7 +215,7 @@ a:focus{
 
 .btn-default{
 	position: relative;
-	display: inline-block;  
+	display: inline-block;
 	font-size: 16px;
 	font-weight: 600;
 	line-height: 1em;
@@ -253,7 +253,7 @@ a:focus{
 	transform: translateY(-50%) rotate(45deg);
 }
 
-.btn-default::after{ 
+.btn-default::after{
 	content: '';
     position: absolute;
     top: 0;
@@ -408,7 +408,7 @@ a:focus{
 }
 
 .section-row .section-title{
-	margin-bottom: 0; 
+	margin-bottom: 0;
 }
 
 .section-row .section-title.section-title-center{
@@ -432,7 +432,7 @@ a:focus{
 }
 
 .section-title-content p:last-child{
-	margin-bottom: 0;	
+	margin-bottom: 0;
 }
 
 .section-title{
@@ -925,7 +925,7 @@ header.main-header .header-sticky.active{
 
 .company-supports-slider{
 	padding: 0 2.083vw;
-} 
+}
 
 .company-supports-logo{
 	text-align: center;
@@ -974,7 +974,7 @@ header.main-header .header-sticky.active{
     z-index: 1;
 }
 
-.amenity-item.active::before, 
+.amenity-item.active::before,
 .amenity-item:hover::before{
     transform: translate(0%, -100%);
 }
@@ -2182,7 +2182,7 @@ header.main-header .header-sticky.active{
     margin-bottom: 30px;
 }
 
-.post-featured-image a, 
+.post-featured-image a,
 .post-featured-image figure{
     display: block;
     border-radius: 20px;
@@ -2286,7 +2286,7 @@ header.main-header .header-sticky.active{
 }
 
 .contact-us-circle a:hover img{
-	animation-play-state: paused;	
+	animation-play-state: paused;
 }
 
 @keyframes infiniterotate{
@@ -3157,8 +3157,8 @@ header.main-header .header-sticky.active{
 	color: var(--white-color);
 }
 
-.faq-accordion .accordion-item .accordion-body{  
-    background-color: transparent;  
+.faq-accordion .accordion-item .accordion-body{
+    background-color: transparent;
     padding: 18px 24px;
 }
 
@@ -3587,7 +3587,7 @@ header.main-header .header-sticky.active{
     transition: all 0.3s ease-in-out;
 }
 
-.page-pagination ul li.active a, 
+.page-pagination ul li.active a,
 .page-pagination ul li a:hover{
     background: var(--accent-color);
 	color: var(--white-color);
@@ -3623,7 +3623,7 @@ header.main-header .header-sticky.active{
 }
 
 .post-image figure{
-	display: block;	
+	display: block;
 	border-radius: 20px;
 	overflow: hidden;
 }
@@ -4462,7 +4462,7 @@ header.main-header .header-sticky.active{
 /************************************/
 
 .page-contact-us{
-	padding: 100px 0 50px; 
+	padding: 100px 0 50px;
 }
 
 .contact-us-content{
@@ -4623,7 +4623,7 @@ header.main-header .header-sticky.active{
 /************************************/
 
 @media only screen and (max-width: 1850px){
-	
+
 	.bg-section{
 		width: calc(100% - 30px);
 	}
@@ -4661,7 +4661,7 @@ header.main-header .header-sticky.active{
 	.section-content-btn .section-btn{
 		margin-top: 20px;
 	}
-	
+
 	.section-title-content{
         margin-top: 10px;
     }
@@ -4971,7 +4971,7 @@ header.main-header .header-sticky.active{
 	.btn-default::before{
 		right: 15px;
 	}
-	
+
 	header.main-header{
 		top: 0px;
 		right: 0;
@@ -4982,7 +4982,7 @@ header.main-header .header-sticky.active{
 		width: 100%;
 		border-radius: 0;
 	}
-	
+
 	header.main-header .header-sticky.active{
 		width: 100%;
 		left: 0;
@@ -5018,7 +5018,7 @@ header.main-header .header-sticky.active{
 	.section-row{
 		margin-bottom: 40px;
 	}
-	
+
 	.section-title{
 		margin-bottom: 30px;
 	}
@@ -5073,7 +5073,7 @@ header.main-header .header-sticky.active{
 	.company-supports-slider-box{
 		margin-top: 40px;
 	}
-	
+
 	.company-supports-content{
 		margin-bottom: 20px;
 	}
@@ -5197,7 +5197,7 @@ header.main-header .header-sticky.active{
 	.our-projects{
 		padding: 50px 0;
 	}
-	
+
 	.project-item-image img{
 		aspect-ratio: 1 / 1.08;
 	}
@@ -5322,7 +5322,7 @@ header.main-header .header-sticky.active{
         left: 20px;
 		padding: 15px;
     }
-	
+
 	.approach-body-item{
 		padding: 20px;
 	}
@@ -5413,7 +5413,7 @@ header.main-header .header-sticky.active{
 	.amenity-entry ul li::before{
 		font-size: 16px;
 	}
-	
+
 	.page-blog{
 		padding: 50px 0;
 	}
@@ -5421,48 +5421,48 @@ header.main-header .header-sticky.active{
 	.page-pagination{
 		margin-top: 10px;
 	}
-	
+
     .page-single-post{
         padding: 50px 0;
     }
-    
+
     .post-image{
         margin-bottom: 20px;
     }
-    
+
     .post-entry h2{
         font-size: 38px;
     }
-    
+
     .post-entry p{
         margin-bottom: 15px;
     }
-    
+
     .post-entry ol li,
     .post-entry ul li{
 		font-size: 16px;
         margin-bottom: 10px;
     }
-    
+
     .post-entry blockquote{
         background-position: 20px 20px;
         background-size: 40px;
         padding: 20px 20px 20px 70px;
         margin-bottom: 20px;
     }
-    
+
     .post-entry blockquote p{
         font-size: 18px;
     }
-    
+
     .post-tags{
         margin-bottom: 20px;
     }
-    
+
     .post-tags .tag-links a{
         padding: 12px 15px;
     }
-    
+
     .post-social-sharing ul{
         text-align: left;
     }
@@ -5571,7 +5571,7 @@ header.main-header .header-sticky.active{
 	.error-page{
 		padding: 50px 0px;
 	}
-	
+
 	.error-page-image{
 		margin-bottom: 20px;
 	}
@@ -5679,7 +5679,7 @@ header.main-header .header-sticky.active{
 	.company-supports-logo img{
 		max-width: 160px;
 		height: 34px;
-	}	
+	}
 
 	.amenity-item{
         padding: 20px;
@@ -5693,7 +5693,7 @@ header.main-header .header-sticky.active{
 	.amenity-item-content p{
 		margin-top: 10px;
 	}
-	
+
 	.apartments-plan-item{
         padding: 20px;
     }
@@ -5866,7 +5866,7 @@ header.main-header .header-sticky.active{
 	.testimonial-item-content p{
 		font-size: 16px;
 	}
-	
+
 	.testimonial-author-content{
         margin-top: 20px;
         padding-top: 20px;
@@ -6093,7 +6093,7 @@ header.main-header .header-sticky.active{
 	.post-entry h2{
 		font-size: 26px;
 	}
-	
+
 	.tag-links{
 		font-size: 18px;
 	}
@@ -6869,7 +6869,7 @@ header.main-header .header-sticky.active{
 .what-we-image-box{
 	position: relative;
 	margin-left: 20px;
-	padding: 0 35px 35px 70px; 
+	padding: 0 35px 35px 70px;
 }
 
 .what-we-image-box:before{
@@ -7082,7 +7082,7 @@ header.main-header .header-sticky.active{
 
 .testimonial-author-image-moon figure{
 	display: block;
-	max-width: 60px;	
+	max-width: 60px;
 	border-radius: 50%;
 	margin: 0 auto;
 }
@@ -7360,7 +7360,7 @@ header.main-header .header-sticky.active{
 		max-width: 700px;
 		margin: 0 auto;
 	}
-	
+
 	.faqs-content-moon{
 		position: initial;
 		margin: 0 0 30px 0;
@@ -7369,7 +7369,7 @@ header.main-header .header-sticky.active{
 	.testimonial-item-moon{
 		transform: scale(1);
 	}
-	
+
 	.our-testimonials-moon .section-footer-text{
 		margin-top: 40px;
 	}
@@ -7668,7 +7668,7 @@ header.main-header .header-sticky.active{
 	.why-choose-counter-item-moon{
 		width: 100%;
 	}
-	
+
 	.why-choose-counter-item-content-moon h2{
         font-size: 28px;
     }
@@ -8460,7 +8460,7 @@ header.main-header.main-header-prime .slicknav_menu{
 }
 
 .contact-us-circle-prime a:hover img{
-	animation-play-state: paused;	
+	animation-play-state: paused;
 }
 
 .what-we-image-box-2-prime{
@@ -9077,7 +9077,7 @@ header.main-header.main-header-prime .slicknav_menu{
 
 .testimonial-author-image-prime figure{
 	display: block;
-	max-width: 50px;	
+	max-width: 50px;
 	border-radius: 50%;
 	margin: 0 auto;
 }
@@ -9493,7 +9493,7 @@ header.main-header.main-header-prime .slicknav_menu{
 		height: auto;
 		aspect-ratio: 1 / 0.65;
 	}
-	
+
 	.about-image-content-box-prime{
 		max-width: 840px;
 		margin: 0 auto 30px;
@@ -9510,7 +9510,7 @@ header.main-header.main-header-prime .slicknav_menu{
 	.amenity-item-prime{
 		min-height: auto;
 	}
-	
+
 	.what-we-do-image-box-prime{
 		max-width: 750px;
 		margin: 0 auto 30px;
@@ -9533,7 +9533,7 @@ header.main-header.main-header-prime .slicknav_menu{
 		width: 100%;
 		order: 2;
 	}
-	
+
 	.why-choose-image-prime figure{
 		max-width: 650px;
 		margin: 0 auto;
@@ -9588,7 +9588,7 @@ header.main-header.main-header-prime .slicknav_menu{
 	header.main-header.main-header-prime{
 		margin-top: 15px;
 	}
-	
+
 	header.main-header.main-header-prime .header-sticky{
 		margin: 0;
 	}
@@ -9619,7 +9619,7 @@ header.main-header.main-header-prime .slicknav_menu{
 		width: 45px;
 		height: 45px;
 	}
-	
+
 	.hero-body-item-list-prime{
 		margin-top: 30px;
 		padding-top: 30px;
@@ -9645,7 +9645,7 @@ header.main-header.main-header-prime .slicknav_menu{
 		margin-top: 30px;
 		padding-top: 30px;
 	}
-	
+
 	.our-amenities-prime{
 		background-position: top -40px right -40px;
         background-size: 250px auto;
@@ -9692,7 +9692,7 @@ header.main-header.main-header-prime .slicknav_menu{
 	.why-choose-image-prime figure img{
 		margin-bottom: -50px;
 	}
-	
+
 	.our-team-prime{
 		padding: 50px 0;
 	}
@@ -9822,7 +9822,7 @@ header.main-header.main-header-prime .slicknav_menu{
 }
 
 @media only screen and (max-width: 767px){
-	
+
 	.hero-content-prime{
 		padding: 30px 15px;
     }
@@ -9882,7 +9882,7 @@ header.main-header.main-header-prime .slicknav_menu{
 	.about-image-box-prime{
 		width: 100%;
 	}
-	
+
 	.about-counter-item-content-prime h2{
 		font-size: 26px;
 	}
@@ -10194,31 +10194,107 @@ font-size: 14px;
 opacity: 0.8;
 }
 
+/* Стили пагинации портфолио */
 .portfolio-pagination {
-text-align: center;
+    text-align: center;
+    margin-top: 40px;
 }
 
 .portfolio-pagination .pagination {
-justify-content: center;
-gap: 5px;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    flex-wrap: wrap;
+    gap: 8px;
+    padding: 0;
+    margin: 0;
+    list-style: none;
+}
+
+.portfolio-pagination .page-item {
+    display: inline-flex;
 }
 
 .portfolio-pagination .page-link {
-border: 2px solid var(--primary-color);
-color: var(--primary-color);
-border-radius: 8px;
-margin: 0 3px;
-padding: 8px 16px;
-transition: all 0.3s ease;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    min-width: 44px;
+    height: 44px;
+    padding: 8px 14px;
+    border: 2px solid var(--primary-color) !important;
+    color: var(--primary-color) !important;
+    background-color: transparent !important;
+    border-radius: 8px !important;
+    font-weight: 600;
+    font-size: 14px;
+    text-decoration: none;
+    transition: all 0.3s ease;
+    cursor: pointer;
 }
 
 .portfolio-pagination .page-link:hover {
-background-color: var(--primary-color);
-color: #fff;
+    background-color: var(--primary-color) !important;
+    color: #fff !important;
+    border-color: var(--primary-color) !important;
+}
+
+.portfolio-pagination .page-link:focus {
+    outline: none;
+    box-shadow: 0 0 0 3px rgba(0, 123, 255, 0.25);
 }
 
 .portfolio-pagination .page-item.active .page-link {
-background-color: var(--primary-color);
-color: #fff;
-border-color: var(--primary-color);
+    background-color: var(--primary-color) !important;
+    color: #fff !important;
+    border-color: var(--primary-color) !important;
+    cursor: default;
+}
+
+.portfolio-pagination .page-item.disabled .page-link {
+    opacity: 0.5;
+    cursor: not-allowed;
+    background-color: transparent !important;
+    color: var(--primary-color) !important;
+    border-color: var(--primary-color) !important;
+}
+
+.portfolio-pagination .page-item.disabled .page-link:hover {
+    background-color: transparent !important;
+    color: var(--primary-color) !important;
+    opacity: 0.5;
+}
+
+/* SVG иконки в пагинации */
+.portfolio-pagination .page-link svg {
+    width: 16px;
+    height: 16px;
+}
+
+/* Мобильная адаптация */
+@media (max-width: 576px) {
+    .portfolio-pagination {
+        margin-top: 30px;
+    }
+
+    .portfolio-pagination .pagination {
+        gap: 6px;
+    }
+
+    .portfolio-pagination .page-link {
+        min-width: 38px;
+        height: 38px;
+        padding: 6px 10px;
+        font-size: 13px;
+        border-radius: 6px !important;
+    }
+}
+
+/* Планшеты */
+@media (min-width: 577px) and (max-width: 768px) {
+    .portfolio-pagination .page-link {
+        min-width: 40px;
+        height: 40px;
+        padding: 6px 12px;
+    }
 }
