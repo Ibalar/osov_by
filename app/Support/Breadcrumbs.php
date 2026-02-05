@@ -79,6 +79,16 @@ class Breadcrumbs
                     ];
                 }
 
+                if ($service->subcategory) {
+                    $breadcrumbs[] = [
+                        'title' => $service->subcategory->title,
+                        'url' => route('services.subcategory', [
+                            'category' => $service->category->slug,
+                            'subcategory' => $service->subcategory->slug
+                        ]),
+                    ];
+                }
+
                 $breadcrumbs[] = [
                     'title' => $service->title,
                 ];
@@ -141,9 +151,22 @@ class Breadcrumbs
 
             case 'page.show':
                 $page = $params['page'];
-                $breadcrumbs[] = [
-                    'title' => $page->title,
-                ];
+                switch($page->key) {
+                    case 'about':
+                        $breadcrumbs[] = [
+                            'title' => 'О нас',
+                        ];
+                        break;
+                    case 'contacts':
+                        $breadcrumbs[] = [
+                            'title' => 'Контакты',
+                        ];
+                        break;
+                    default:
+                        $breadcrumbs[] = [
+                            'title' => $page->title,
+                        ];
+                }
                 break;
 
             default:
