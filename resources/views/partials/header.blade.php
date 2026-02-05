@@ -6,11 +6,11 @@
                 {{-- Logo --}}
                 @if(Route::is('home'))
                     <p class="navbar-brand">
-                        <img src="{{ asset($siteSettings->logo_path) }}" alt="{{ config('app.name') }}">
+                        <img src="{{ asset('storage/' . $siteSettings->logo_path) }}" alt="{{ config('app.name') }}">
                     </p>
                 @else
                     <a class="navbar-brand" href="{{ route('home') }}">
-                        <img src="{{ asset($siteSettings->logo_dark_path) }}" alt="{{ config('app.name') }}">
+                        <img src="{{ asset('storage/' . $siteSettings->logo_dark_path) }}" alt="{{ config('app.name') }}">
                     </a>
                 @endif
 

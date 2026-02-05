@@ -12,8 +12,15 @@ use MoonShine\Contracts\UI\FieldContract;
 use MoonShine\Contracts\Core\TypeCasts\DataWrapperContract;
 use App\MoonShine\Resources\SiteSetting\SiteSettingResource;
 use MoonShine\Support\ListOf;
+use MoonShine\UI\Components\Heading;
+use MoonShine\UI\Fields\Email;
 use MoonShine\UI\Fields\ID;
 use MoonShine\UI\Components\Layout\Box;
+use MoonShine\UI\Fields\Image;
+use MoonShine\UI\Fields\Json;
+use MoonShine\UI\Fields\Position;
+use MoonShine\UI\Fields\Text;
+use MoonShine\UI\Fields\Textarea;
 use Throwable;
 
 
@@ -30,6 +37,41 @@ class SiteSettingFormPage extends FormPage
         return [
             Box::make([
                 ID::make(),
+                Heading::make('Контактные данные'),
+
+                Text::make('Телефон', 'phone')
+                    ->placeholder('+375 (xx) xxx-xx-xx'),
+
+                Email::make('Email', 'email'),
+
+                Textarea::make('Адрес', 'address'),
+
+                Heading::make('Социальные сети'),
+
+                Json::make('Соцсети', 'social_links')
+                    ->fields([
+                        Position::make(),
+                        Text::make('key'),
+                        Text::make('value'),
+                    ])
+                    ->hint('Формат: key = название, value = ссылка'),
+
+                Heading::make('Логотипы'),
+
+                Image::make('Логотип (светлый)', 'logo_path')
+                    ->disk('public')
+                    ->dir('site')
+                    ->allowedExtensions(['jpg', 'jpeg', 'png', 'webp']),
+
+                Image::make('Логотип (тёмный)', 'logo_dark_path')
+                    ->disk('public')
+                    ->dir('site')
+                    ->allowedExtensions(['jpg', 'jpeg', 'png', 'webp']),
+
+                Image::make('Логотип в футере', 'logo_footer_path')
+                    ->disk('public')
+                    ->dir('site')
+                    ->allowedExtensions(['jpg', 'jpeg', 'png', 'webp', 'svg']),
             ]),
         ];
     }

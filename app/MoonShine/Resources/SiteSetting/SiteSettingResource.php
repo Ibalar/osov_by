@@ -20,8 +20,11 @@ class SiteSettingResource extends ModelResource
 {
     protected string $model = SiteSetting::class;
 
-    protected string $title = 'SiteSettings';
-    
+    protected string $title = 'Настройки сайта';
+
+    protected bool $createInModal = false;
+    protected bool $editInModal = false;
+
     /**
      * @return list<class-string<PageContract>>
      */
@@ -32,5 +35,15 @@ class SiteSettingResource extends ModelResource
             SiteSettingFormPage::class,
             SiteSettingDetailPage::class,
         ];
+    }
+
+    public function canCreate(): bool
+    {
+        return false;
+    }
+
+    public function canDelete(): bool
+    {
+        return false;
     }
 }

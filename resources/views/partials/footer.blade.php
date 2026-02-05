@@ -48,7 +48,7 @@
                 <div class="about-footer-prime">
                     <!-- Footer Logo Start -->
                     <div class="footer-logo-prime">
-                        <img src="{{ asset($siteSettings->logo_footer_path) }}" alt="{{ config('app.name') }}">
+                        <img src="{{ asset('storage/' . $siteSettings->logo_footer_path) }}" alt="{{ config('app.name') }}">
                     </div>
                     <!-- Footer Logo End -->
 
@@ -58,25 +58,7 @@
                     </div>
                     <!-- About Footer Content End -->
 
-                    <!-- Footer Social Links Start -->
-                    <div class="footer-social-links-prime">
-                        <h3>Мы в социальных сетях:</h3>
-                        <ul>
-                            @if(!empty($siteSettings->social_links['facebook']))
-                                <li><a href="{{ $siteSettings->social_links['facebook'] }}" target="_blank" rel="noopener noreferrer"><i class="fa-brands fa-facebook-f"></i></a></li>
-                            @endif
-                            @if(!empty($siteSettings->social_links['instagram']))
-                                <li><a href="{{ $siteSettings->social_links['instagram'] }}" target="_blank" rel="noopener noreferrer"><i class="fa-brands fa-instagram"></i></a></li>
-                            @endif
-                            @if(!empty($siteSettings->social_links['linkedin']))
-                                <li><a href="{{ $siteSettings->social_links['linkedin'] }}" target="_blank" rel="noopener noreferrer"><i class="fa-brands fa-linkedin-in"></i></a></li>
-                            @endif
-                            @if(!empty($siteSettings->social_links['youtube']))
-                                <li><a href="{{ $siteSettings->social_links['youtube'] }}" target="_blank" rel="noopener noreferrer"><i class="fa-brands fa-youtube"></i></a></li>
-                            @endif
-                        </ul>
-                    </div>
-                    <!-- Footer Social Links End -->
+
                 </div>
                 <!-- About Footer End -->
             </div>

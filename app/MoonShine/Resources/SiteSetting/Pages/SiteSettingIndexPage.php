@@ -10,9 +10,11 @@ use MoonShine\UI\Components\Table\TableBuilder;
 use MoonShine\Contracts\UI\FieldContract;
 use MoonShine\Laravel\QueryTags\QueryTag;
 use MoonShine\UI\Components\Metrics\Wrapped\Metric;
+use MoonShine\UI\Fields\Email;
 use MoonShine\UI\Fields\ID;
 use App\MoonShine\Resources\SiteSetting\SiteSettingResource;
 use MoonShine\Support\ListOf;
+use MoonShine\UI\Fields\Text;
 use Throwable;
 
 
@@ -30,6 +32,9 @@ class SiteSettingIndexPage extends IndexPage
     {
         return [
             ID::make(),
+            Text::make('Телефон', 'phone'),
+            Email::make('Email', 'email'),
+            Text::make('Адрес', 'address'),
         ];
     }
 
