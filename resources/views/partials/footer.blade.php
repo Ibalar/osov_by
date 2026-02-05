@@ -11,7 +11,7 @@
                         </div>
                         <div class="footer-contact-item-content-prime">
                             <h3>Email</h3>
-                            <p><a href="mailto:info@osov.by">info@osov.by</a></p>
+                            <p><a href="mailto:{{ $siteSettings->email }}">{{ $siteSettings->email }}</a></p>
                         </div>
                     </div>
                     <!-- Footer Contact Item End -->
@@ -23,7 +23,7 @@
                         </div>
                         <div class="footer-contact-item-content-prime">
                             <h3>Телефон</h3>
-                            <p><a href="tel:+375333196451">+375 (33) 319-64-51</a></p>
+                            <p><a href="tel:{{ preg_replace('/[^0-9+]/', '', $siteSettings->phone) }}">{{ $siteSettings->phone }}</a></p>
                         </div>
                     </div>
                     <!-- Footer Contact Item End -->
@@ -35,7 +35,7 @@
                         </div>
                         <div class="footer-contact-item-content-prime">
                             <h3>Адрес</h3>
-                            <p>г. Минск, ул. Примерная, 123</p>
+                            <p>{{ $siteSettings->address }}</p>
                         </div>
                     </div>
                     <!-- Footer Contact Item End -->
@@ -48,7 +48,7 @@
                 <div class="about-footer-prime">
                     <!-- Footer Logo Start -->
                     <div class="footer-logo-prime">
-                        <img src="{{ asset('images/logo.svg') }}" alt="{{ config('app.name') }}">
+                        <img src="{{ asset($siteSettings->logo_footer_path) }}" alt="{{ config('app.name') }}">
                     </div>
                     <!-- Footer Logo End -->
 
@@ -62,10 +62,18 @@
                     <div class="footer-social-links-prime">
                         <h3>Мы в социальных сетях:</h3>
                         <ul>
-                            <li><a href="#" target="_blank" rel="noopener noreferrer"><i class="fa-brands fa-facebook-f"></i></a></li>
-                            <li><a href="#" target="_blank" rel="noopener noreferrer"><i class="fa-brands fa-instagram"></i></a></li>
-                            <li><a href="#" target="_blank" rel="noopener noreferrer"><i class="fa-brands fa-linkedin-in"></i></a></li>
-                            <li><a href="#" target="_blank" rel="noopener noreferrer"><i class="fa-brands fa-youtube"></i></a></li>
+                            @if(!empty($siteSettings->social_links['facebook']))
+                                <li><a href="{{ $siteSettings->social_links['facebook'] }}" target="_blank" rel="noopener noreferrer"><i class="fa-brands fa-facebook-f"></i></a></li>
+                            @endif
+                            @if(!empty($siteSettings->social_links['instagram']))
+                                <li><a href="{{ $siteSettings->social_links['instagram'] }}" target="_blank" rel="noopener noreferrer"><i class="fa-brands fa-instagram"></i></a></li>
+                            @endif
+                            @if(!empty($siteSettings->social_links['linkedin']))
+                                <li><a href="{{ $siteSettings->social_links['linkedin'] }}" target="_blank" rel="noopener noreferrer"><i class="fa-brands fa-linkedin-in"></i></a></li>
+                            @endif
+                            @if(!empty($siteSettings->social_links['youtube']))
+                                <li><a href="{{ $siteSettings->social_links['youtube'] }}" target="_blank" rel="noopener noreferrer"><i class="fa-brands fa-youtube"></i></a></li>
+                            @endif
                         </ul>
                     </div>
                     <!-- Footer Social Links End -->

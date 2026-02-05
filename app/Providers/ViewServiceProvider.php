@@ -5,6 +5,7 @@ namespace App\Providers;
 use Illuminate\Support\ServiceProvider;
 use Illuminate\Support\Facades\View;
 use App\Models\ServiceCategory;
+use App\Models\SiteSetting;
 use App\Support\Breadcrumbs;
 
 class ViewServiceProvider extends ServiceProvider
@@ -37,6 +38,15 @@ class ViewServiceProvider extends ServiceProvider
                     ->orderBy('sort_order')
                     ->get()
             );
+
+            $view->with('siteSettings', SiteSetting::getInstance());
+        });
+
+        /**
+         * Данные ТОЛЬКО для footer
+         */
+        View::composer('partials.footer', function ($view) {
+            $view->with('siteSettings', SiteSetting::getInstance());
         });
 
         /**
