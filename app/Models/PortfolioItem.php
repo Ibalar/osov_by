@@ -14,12 +14,19 @@ class PortfolioItem extends Model
     protected $fillable = [
         'portfolio_category_id',
         'title',
+        'slug',
+        'excerpt',
         'description',
+        'content',
+        'cover_image',
         'images',
+        'is_active',
+        'sort_order',
     ];
 
     protected $casts = [
         'images' => 'array',
+        'is_active' => 'boolean',
     ];
 
     /*
@@ -54,18 +61,40 @@ class PortfolioItem extends Model
 
     public function getGalleryImagesAttribute(): array
     {
-        return collect($this->images ?? [])
+        $gallery = collect();
+        
+        // Add cover image first if exists
+        if (!empty($this->cover_image)) {
+            $gallery->push($this->cover_image);
+        }
+        
+        // Then add all images from the gallery
+        $images = $this->images ?? [];
+        foreach ($images as $image) {
+            $gallery->push($image);
+        }
+        
+        return $gallery
             ->map(fn ($image) => $this->normalizeImageUrl($image))
             ->filter()
+            ->unique()
+            ->values()
             ->toArray();
     }
 
     public function getCoverImageUrlAttribute(): ?string
     {
+        // First check cover_image field
+        if (!empty($this->cover_image)) {
+            return $this->normalizeImageUrl($this->cover_image);
+        }
+        
+        // Fallback to first image in gallery
         $images = $this->images ?? [];
         if (!empty($images) && isset($images[0])) {
             return $this->normalizeImageUrl($images[0]);
         }
+        
         return null;
     }
 

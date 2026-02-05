@@ -11,6 +11,9 @@ use MoonShine\Contracts\UI\FieldContract;
 use MoonShine\Laravel\QueryTags\QueryTag;
 use MoonShine\UI\Components\Metrics\Wrapped\Metric;
 use MoonShine\UI\Fields\ID;
+use MoonShine\UI\Fields\Text;
+use MoonShine\UI\Fields\Switcher;
+use MoonShine\UI\Fields\Number;
 use App\MoonShine\Resources\PortfolioCategory\PortfolioCategoryResource;
 use MoonShine\Support\ListOf;
 use Throwable;
@@ -29,7 +32,20 @@ class PortfolioCategoryIndexPage extends IndexPage
     protected function fields(): iterable
     {
         return [
-            ID::make(),
+            ID::make()
+                ->sortable(),
+
+            Text::make('Название', 'title')
+                ->sortable(),
+
+            Text::make('Slug', 'slug')
+                ->sortable(),
+
+            Switcher::make('Активна', 'is_active')
+                ->sortable(),
+
+            Number::make('Порядок', 'sort_order')
+                ->sortable(),
         ];
     }
 

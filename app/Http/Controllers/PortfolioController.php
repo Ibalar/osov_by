@@ -19,15 +19,19 @@ class PortfolioController extends Controller
             ->where('key', 'portfolio')
             ->first();
 
-        $query = PortfolioItem::query()->with('category');
+        $query = PortfolioItem::query()
+            ->with('category')
+            ->where('is_active', true);
 
         if ($request->filled('category')) {
             $query->whereHas('category', function ($q) use ($request) {
-                $q->where('slug', $request->category);
+                $q->where('slug', $request->category)
+                    ->where('is_active', true);
             });
         }
 
         $items = $query
+            ->orderBy('sort_order', 'asc')
             ->orderByDesc('created_at')
             ->get();
 
@@ -43,7 +47,11 @@ class PortfolioController extends Controller
             ['path' => $request->url(), 'query' => $request->query()]
         );
 
-        $categories = PortfolioCategory::query()->orderBy('title')->get();
+        $categories = PortfolioCategory::query()
+            ->where('is_active', true)
+            ->orderBy('sort_order', 'asc')
+            ->orderBy('title', 'asc')
+            ->get();
 
         return view('portfolio.index', [
             'page' => $page,

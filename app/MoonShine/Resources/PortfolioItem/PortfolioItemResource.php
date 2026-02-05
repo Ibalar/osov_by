@@ -20,7 +20,13 @@ class PortfolioItemResource extends ModelResource
 {
     protected string $model = PortfolioItem::class;
 
-    protected string $title = 'PortfolioItems';
+    protected string $title = 'Портфолио';
+
+    protected string $column = 'title';
+
+    protected ?string $sortColumn = 'sort_order';
+
+    protected ?string $sortDirection = 'asc';
     
     /**
      * @return list<class-string<PageContract>>
