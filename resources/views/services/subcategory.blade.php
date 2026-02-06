@@ -25,40 +25,54 @@
                     
                     <!-- Services List -->
                     @if($services->isNotEmpty())
-                        <div class="services-list mb-5">
-                            <h2 class="text-anime-style-3 mb-4">Наши услуги:</h2>
-                            
-                            <div class="row">
-                                @foreach($services as $service)
-                                    <div class="col-lg-6 mb-4">
-                                        <div class="service-item wow fadeInUp">
-                                            <div class="service-item-content">
-                                                <h3>
-                                                    <a href="{{ route('services.show', $service->slug) }}">
-                                                        {{ $service->title }}
-                                                    </a>
-                                                </h3>
-                                                
-                                                @if($service->excerpt)
-                                                    <p>{{ $service->excerpt }}</p>
-                                                @endif
-                                                
-                                                @if($service->formatted_price)
-                                                    <div class="service-item-price">
-                                                        {{ $service->formatted_price }}
+                        <div class="our-amenities-prime bg-section" style="margin-top: 4rem;">
+                            <div class="container">
+                                <div class="row section-row">
+                                    <div class="col-lg-12">
+                                        <!-- Section Title Start -->
+                                        <div class="section-title">
+                                            <span class="section-sub-title wow fadeInUp fs-6">Наши услуги</span>
+                                            <h2 class="text-anime-style-3" data-cursor="-opaque">Услуги в подкатегории «{{ $subcategory->title }}»</h2>
+                                        </div>
+                                        <!-- Section Title End -->
+                                    </div>
+                                </div>
+
+                                <div class="row">
+                                    @foreach($services as $service)
+                                        <div class="col-xl-4 col-md-6">
+                                            <div class="amenity-item-prime wow fadeInUp">
+
+                                                <div class="amenity-item-body-prime">
+
+                                                    <div class="amenity-item-content-prime">
+                                                        <h2>
+                                                            <a href="{{ route('services.show', $service->slug) }}">
+                                                                {{ $service->title }}
+                                                            </a>
+                                                        </h2>
+                                                        <p>{{ $service->excerpt }}</p>
                                                     </div>
-                                                @endif
-                                                
-                                                <div class="service-item-footer">
-                                                    <a href="{{ route('services.show', $service->slug) }}" 
-                                                       class="btn-default btn-highlighted">
-                                                        Подробнее
-                                                    </a>
+
+                                                    <div class="amenity-item-footer-prime">
+                                                        <div class="hero-content-btn wow fadeInUp" data-wow-delay="0.4s">
+                                                            <a href="{{ route('services.show', $service->slug) }}" class="btn-default btn-highlighted">
+                                                                подробнее
+                                                            </a>
+
+                                                            @if($service->category?->projectCategory)
+                                                                <a href="{{ route('projects.category', $service->category->projectCategory->slug) }}" class="btn-default">
+                                                                    проекты
+                                                                </a>
+                                                            @endif
+                                                        </div>
+                                                    </div>
+
                                                 </div>
                                             </div>
                                         </div>
-                                    </div>
-                                @endforeach
+                                    @endforeach
+                                </div>
                             </div>
                         </div>
                     @else
