@@ -133,15 +133,38 @@ class ServiceController extends Controller
      */
     public function show(Service $service)
     {
+        $service->load(['subcategory', 'parentCategory']);
+
+        \Log::info('Service requested: ' . $service->slug . ', is_active: ' . ($service->is_active ? 'true' : 'false'));
         abort_unless($service->is_active, 404);
+
+        // Категория
+        $categoryLink = $service->category ? route('services.category', $service->category->slug) : '';
+
+        // Подкатегория (требует два параметра: category и subcategory)
+        $subcategoryLink = null;
+        if ($service->subcategory && $service->category) {
+            $subcategoryLink = route('services.subcategory', [
+                'category' => $service->category->slug,
+                'subcategory' => $service->subcategory->slug
+            ]);
+        }
 
         $breadcrumbs = [
             ['title' => 'Главная', 'url' => route('home')],
             ['title' => 'Услуги', 'url' => route('services.index')],
-            ['title' => $service->category->title ?? 'Категория', 'url' => route('services.category', $service->category->slug ?? '')],
-            ['title' => $service->subcategory->title ?? 'Подкатегория', 'url' => route('services.subcategory', $service->subcategory->slug ?? '')],
-            ['title' => $service->title, 'url' => ''],
+            ['title' => $service->category->title ?? 'Категория', 'url' => $categoryLink],
         ];
+
+        // Добавлять подкатегорию только если она есть
+        if ($service->subcategory) {
+            $breadcrumbs[] = [
+                'title' => $service->subcategory->title,
+                'url' => $subcategoryLink ?? ''
+            ];
+        }
+
+        $breadcrumbs[] = ['title' => $service->title, 'url' => ''];
 
         return view('services.show', [
             'service' => $service,
