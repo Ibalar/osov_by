@@ -26,6 +26,7 @@ use MoonShine\UI\Components\Layout\Box;
 use MoonShine\UI\Fields\Image;
 use MoonShine\UI\Fields\Json;
 use MoonShine\UI\Fields\Number;
+use MoonShine\UI\Fields\Switcher;
 use MoonShine\UI\Fields\Text;
 use Throwable;
 
@@ -65,6 +66,7 @@ class ServiceSubcategoryFormPage extends FormPage
                     BelongsTo::make('Категория проектов', 'projectCategory', resource: ProjectCategoryResource::class)
                         ->nullable()
                         ->sortable(),
+                    Switcher::make('Активность', 'is_active'),
                     Number::make('Сортировка', 'sort_order')->default(0),
                     TinyMce::make('Описание', 'description')->nullable(),
                     Image::make('Изображение', 'image')

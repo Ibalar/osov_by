@@ -78,6 +78,7 @@ class ServiceFormPage extends FormPage
                         ->step(1),
 
                     Switcher::make('Популярная услуга', 'is_popular'),
+                    Switcher::make('Активность', 'is_active'),
 
                     Number::make('Сортировка', 'sort_order')->default(0),
                 ]),
