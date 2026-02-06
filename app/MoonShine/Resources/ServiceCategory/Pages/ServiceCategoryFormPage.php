@@ -19,6 +19,7 @@ use MoonShine\Contracts\UI\FieldContract;
 use MoonShine\Contracts\Core\TypeCasts\DataWrapperContract;
 use App\MoonShine\Resources\ServiceCategory\ServiceCategoryResource;
 use MoonShine\Support\ListOf;
+use MoonShine\UI\Components\Layout\Flex;
 use MoonShine\UI\Components\Tabs;
 use MoonShine\UI\Components\Tabs\Tab;
 use MoonShine\UI\Fields\ID;
@@ -49,34 +50,48 @@ class ServiceCategoryFormPage extends FormPage
             Tabs::make([
                 Tab::make('Основное', [
                     ID::make(),
-                    Text::make('Название', 'title')
-                        ->when(
-                            fn() => $this->getResource()->isCreateFormPage(),
-                            fn(Text $field) => $field->reactive(),
-                            fn(Text $field) => $field // без reactive при редактировании
-                        )
-                        ->required(),
-                    Slug::make('Slug')
-                        ->unique()
-                        ->locked()
-                        ->when(
-                            fn() => $this->getResource()->isCreateFormPage(),
-                            fn(Slug $field) => $field->from('title')->live(),
-                            fn(Slug $field) => $field->readonly()
-                        ),
-                    BelongsTo::make('Категория проектов', 'projectCategory', resource: ProjectCategoryResource::class)
-                        ->nullable()
-                        ->sortable(),
-                    TinyMce::make('Описание', 'description')
-                        ->addPlugins(['table', 'lists', 'link', 'image', 'media'])
-                        ->nullable(),
-                    Number::make('Сортировка', 'sort_order')->default(0),
+                    Flex::make([
+                        Text::make('Название', 'title')
+                            ->when(
+                                fn() => $this->getResource()->isCreateFormPage(),
+                                fn(Text $field) => $field->reactive(),
+                                fn(Text $field) => $field // без reactive при редактировании
+                            )
+                            ->required(),
+                        Slug::make('Slug')
+                            ->unique()
+                            ->locked()
+                            ->when(
+                                fn() => $this->getResource()->isCreateFormPage(),
+                                fn(Slug $field) => $field->from('title')->live(),
+                                fn(Slug $field) => $field->readonly()
+                            ),
+                    ])
+                        ->unwrap(),
+
+                    Flex::make([
+                        BelongsTo::make('Категория проектов', 'projectCategory', resource: ProjectCategoryResource::class)
+                            ->nullable()
+                            ->sortable(),
+                        Number::make('Сортировка', 'sort_order')->default(0),
+                    ])
+                        ->unwrap(),
+
+
+                    Switcher::make('Активность', 'is_active'),
+
                     Image::make('Изображение', 'image')
                         ->dir('services/categories')
                         ->disk('public')
                         ->allowedExtensions(['jpg', 'jpeg', 'png', 'webp'])
                         ->nullable(),
-
+                ]),
+                Tab::make('Описание', [
+                    TinyMce::make('Описание', 'description')
+                        ->addPlugins(['table', 'lists', 'link', 'image', 'media'])
+                        ->nullable(),
+                ]),
+                Tab::make('Вопрос-ответ', [
                     Json::make('Вопрос–ответ', 'faq')
                         ->fields([
                             Text::make('Вопрос', 'question')->required(),

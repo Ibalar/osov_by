@@ -6,15 +6,6 @@
         <div class="container">
             <div class="row">
                 <div class="col-lg-12">
-                    <!-- Post Featured Image Start -->
-                    @if(!empty($category->image))
-                        <div class="post-image">
-                            <figure class="image-anime reveal">
-                                <img src="{{ asset('storage/' . $category->image) }}" alt="{{ $category->title }}">
-                            </figure>
-                        </div>
-                    @endif
-                    <!-- Post Featured Image Start -->
 
                     <!-- Post Single Content Start -->
 

@@ -1,97 +1,77 @@
 @extends('layouts.app')
 
 @section('content')
-    <div class="our-amenities-prime bg-section">
+
+    <div class="page-amenities">
         <div class="container">
-            
-            <!-- Page Description -->
-            @if($page?->description)
-                <div class="row section-row mb-5">
-                    <div class="col-lg-12">
-                        <div class="section-title section-title-center">
-                            <div class="post-content">
-                                <div class="post-entry">
-                                    {!! $page->description !!}
-                                </div>
-                            </div>
-                        </div>
-                    </div>
-                </div>
-            @endif
-            
-            <!-- Services Categories Grid -->
             @if($categories->isNotEmpty())
-                <div class="row">
+                <div class="row amenity-item-list">
                     @foreach($categories as $category)
-                        <div class="col-xl-4 col-md-6 mb-4">
-                            <div class="service-category-card wow fadeInUp">
-                                @if($category->image)
-                                    <div class="service-category-image">
-                                        <a href="{{ route('services.category', $category->slug) }}">
-                                            <figure class="image-anime">
-                                                <img src="{{ asset('storage/' . $category->image) }}" 
-                                                     alt="{{ $category->title }}"
-                                                     loading="lazy">
-                                            </figure>
-                                        </a>
-                                    </div>
-                                @endif
-                                
-                                <div class="service-category-content">
-                                    <h3>
-                                        <a href="{{ route('services.category', $category->slug) }}">
-                                            {{ $category->title }}
-                                        </a>
-                                    </h3>
-                                    
-                                    @if($category->description)
-                                        <p>{!! Str::limit(strip_tags($category->description), 120) !!}</p>
-                                    @endif
-                                    
-                                    <!-- Subcategories List -->
-                                    @if($category->subcategories->isNotEmpty())
-                                        <div class="service-subcategories">
-                                            <h4>Разделы:</h4>
-                                            <ul>
-                                                @foreach($category->subcategories as $subcategory)
-                                                    <li>
-                                                        <a href="{{ route('services.subcategory', ['category' => $category->slug, 'subcategory' => $subcategory->slug]) }}">
-                                                            {{ $subcategory->title }}
-                                                        </a>
-                                                    </li>
-                                                @endforeach
-                                            </ul>
-                                        </div>
-                                    @endif
-                                    
-                                    <div class="service-category-footer">
-                                        <a href="{{ route('services.category', $category->slug) }}" 
-                                           class="btn-default btn-highlighted">
-                                            Подробнее
-                                        </a>
-                                        
-                                        @if($category->projectCategory)
-                                            <a href="{{ route('projects.category', $category->projectCategory->slug) }}" 
-                                               class="btn-default">
-                                                Проекты
+                    <div class="col-xl-4 col-md-6">
+                        <!-- Amenity Item Start -->
+                        <div class="amenity-item {{ $loop->first ? 'active' : '' }} wow fadeInUp">
+                            <!-- Amenity Item Image Start -->
+                            @if($category->image)
+                                <div class="amenity-item-image">
+                                    <figure>
+                                        <img src="{{ asset('storage/' . $category->image) }}"
+                                             alt="{{ $category->title }}"
+                                             loading="lazy">
+                                    </figure>
+                                </div>
+                            @endif
+                            <!-- Amenity Item Image End -->
+
+                            <!-- Amenity Item Content Box Start -->
+                            <div class="amenity-item-content-box">
+                                <!-- Amenity Item Header Start -->
+                                <div class="amenity-item-header">
+                                    <div class="amenity-item-content">
+                                        <h2>
+                                            <a href="{{ route('services.category', $category->slug) }}">
+                                                {{ $category->title }}
                                             </a>
+                                        </h2>
+                                    </div>
+                                </div>
+                                <!-- Amenity Item Header End -->
+
+                                <!-- Amenity Item Body Start -->
+                                <div class="amenity-item-body">
+                                    <!-- Amenity Item Content Start -->
+                                    <div class="amenity-item-content">
+                                        @if($category->description)
+                                            <p>{!! Str::limit(strip_tags($category->description), 120) !!}</p>
                                         @endif
                                     </div>
+                                    <!-- Amenity Item Content End -->
+
+                                    <!-- Amenity Item Button Start -->
+                                    <div class="amenity-item-btn">
+                                        <a href="{{ route('services.category', $category->slug) }}"
+                                           class="readmore-btn">
+                                            Подробнее
+                                        </a>
+                                    </div>
+                                    <!-- Amenity Item Button End -->
                                 </div>
+                                <!-- Amenity Item Body End -->
                             </div>
+                            <!-- Amenity Item Content Box End -->
                         </div>
+                        <!-- Amenity Item End -->
+                    </div>
                     @endforeach
                 </div>
-            @else
-                <div class="row">
-                    <div class="col-lg-12">
-                        <div class="section-title section-title-center">
-                            <p class="wow fadeInUp">Услуги пока не добавлены.</p>
+                @else
+                    <div class="row">
+                        <div class="col-lg-12">
+                            <div class="section-title section-title-center">
+                                <p class="wow fadeInUp">Услуги пока не добавлены.</p>
+                            </div>
                         </div>
                     </div>
-                </div>
-            @endif
-            
+                @endif
         </div>
     </div>
 @endsection

@@ -16,6 +16,7 @@ return [
         . 'fullscreen preview print visualblocks visualchars code | help',
 
     'options' => [
+        'file_manager' => 'laravel-filemanager',
         // Разрешить любые теги и атрибуты, чтобы не обрезались классы и data-атрибуты
         'valid_elements' => '*[*]',
         'extended_valid_elements' => 'div[class|id|data-wow-delay],p[class|data-wow-delay],h2[class|data-wow-delay],ul,li',

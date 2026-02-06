@@ -7,7 +7,7 @@ use App\Http\Controllers\ProjectController;
 use App\Http\Controllers\ServiceController;
 use App\Http\Controllers\SitemapController;
 use Illuminate\Support\Facades\Route;
-
+use UniSharp\LaravelFilemanager\Lfm;
 
 Route::get('/', HomeController::class)->name('home');
 
@@ -56,3 +56,8 @@ Route::prefix('portfolio')->group(function () {
 
 Route::get('/sitemap.xml', [SitemapController::class, 'index'])
     ->name('sitemap');
+
+
+Route::prefix('laravel-filemanager')->group(function () {
+    Lfm::routes();
+});
