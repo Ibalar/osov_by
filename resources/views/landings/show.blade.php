@@ -290,4 +290,86 @@
         </div>
     </section>
     @endif
+
+    {{-- Facility Section --}}
+    @if($landingPage->facility_text)
+    <section class="facility">
+        <div class="container">
+            <h2 class="title one">{{ $landingPage->facility_title ?? 'Наши преимущества' }}</h2>
+            <div class="facility__content">
+                {!! $landingPage->facility_text !!}
+            </div>
+        </div>
+    </section>
+    @endif
+
+    {{-- Reviews Section --}}
+    @if(!empty($landingPage->reviews))
+    <section id="gratitude" class="gratitude">
+        <div class="container">
+            <h2 class="title one">{{ $landingPage->reviews_title ?? 'Отзывы клиентов' }}</h2>
+            <div class="gratitude-slider" id="gratitude-slider">
+                @foreach($landingPage->reviews as $review)
+                <div class="gratitude__item">
+                    <div class="gratitude__content">
+                        <div class="gratitude__text">
+                            {!! $review['text'] ?? '' !!}
+                        </div>
+                        <div class="gratitude__author">
+                            <h4>{{ $review['name'] ?? '' }}</h4>
+                            @if(isset($review['date']))
+                            <p class="gratitude__date">{{ $review['date'] }}</p>
+                            @endif
+                            @if(isset($review['rating']))
+                            <div class="gratitude__rating">
+                                @for($i = 1; $i <= 5; $i++)
+                                <span class="star {{ $i <= $review['rating'] ? 'active' : '' }}">★</span>
+                                @endfor
+                            </div>
+                            @endif
+                        </div>
+                    </div>
+                </div>
+                @endforeach
+            </div>
+            <div class="slider-controls">
+                <button class="slider-btn prev-1"><</button>
+                <button class="slider-btn next-1">></button>
+            </div>
+        </div>
+    </section>
+    @endif
+
+    {{-- FAQ Section --}}
+    @if(!empty($landingPage->faq))
+    <section id="questions" class="questions">
+        <div class="container">
+            <h2 class="title one">{{ $landingPage->faq_title ?? 'Часто задаваемые вопросы' }}</h2>
+            <div class="faq-accordion" id="accordion">
+                @foreach($landingPage->faq as $index => $item)
+                @php
+                    $collapseId = 'collapse' . $index;
+                    $headingId = 'heading' . $index;
+                @endphp
+                <div class="accordion-item wow fadeInUp">
+                    <h2 class="accordion-header" id="{{ $headingId }}">
+                        <button class="accordion-button collapsed" type="button"
+                                data-bs-toggle="collapse"
+                                data-bs-target="#{{ $collapseId }}"
+                                aria-expanded="false"
+                                aria-controls="{{ $collapseId }}">
+                            {{ $item['question'] ?? '' }}
+                        </button>
+                    </h2>
+                    <div id="{{ $collapseId }}" class="accordion-collapse collapse" role="region" aria-labelledby="{{ $headingId }}" data-bs-parent="#accordion">
+                        <div class="accordion-body">
+                            <p>{!! $item['answer'] ?? '' !!}</p>
+                        </div>
+                    </div>
+                </div>
+                @endforeach
+            </div>
+        </div>
+    </section>
+    @endif
 @endsection
