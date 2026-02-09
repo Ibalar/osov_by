@@ -152,4 +152,142 @@
             </div>
         </div>
     </section>
+
+    {{-- Help Section --}}
+    @if($landingPage->help_text)
+    <section class="help">
+        <div class="container">
+            <div class="help__content">
+                {!! $landingPage->help_text !!}
+            </div>
+        </div>
+    </section>
+    @endif
+
+    {{-- Examples Section --}}
+    @if(!empty($landingPage->examples))
+    <section id="examples" class="examples">
+        <div class="container">
+            <h2 class="title one">{{ $landingPage->examples_title ?? 'Выполненные работы' }}</h2>
+            <div class="row">
+                @foreach($landingPage->examples as $example)
+                <div class="col-md-6 col-lg-4 p-md-0 mb-4">
+                    <div class="examples__item">
+                        @if(isset($example['image']))
+                        <div class="examples__img">
+                            <img src="{{ asset('storage/landings/' . $landingPage->slug . '/examples/' . $example['image']) }}" alt="{{ $example['title'] ?? '' }}">
+                        </div>
+                        @endif
+                        <div class="examples__content">
+                            <h3>{{ $example['title'] ?? '' }}</h3>
+                            <p>{{ $example['description'] ?? '' }}</p>
+                        </div>
+                    </div>
+                </div>
+                @endforeach
+            </div>
+        </div>
+    </section>
+    @endif
+
+    {{-- Gallery Section --}}
+    @if(!empty($landingPage->gallery_images))
+    <section id="gallery" class="gallery">
+        <div class="container">
+            <h2 class="title one">{{ $landingPage->gallery_title ?? 'Портфолио' }}</h2>
+            <div class="row">
+                @foreach($landingPage->gallery_images_urls ?? [] as $image)
+                <div class="col-md-6 col-lg-4 p-md-0 mb-4">
+                    <a href="{{ $image }}" data-fancybox="gallery" class="gallery__item">
+                        <img src="{{ $image }}" alt="Галерея">
+                    </a>
+                </div>
+                @endforeach
+            </div>
+        </div>
+    </section>
+    @endif
+
+    {{-- Price Table Section --}}
+    @if(!empty($landingPage->price_table))
+    <section id="price" class="price">
+        <div class="container">
+            <h2 class="title one">{{ $landingPage->price_title ?? 'Цены на фундаменты' }}</h2>
+            <div class="price__table">
+                <table class="table">
+                    <thead>
+                        <tr>
+                            @if(!empty($landingPage->price_table[0]))
+                            @foreach(array_keys($landingPage->price_table[0]) as $header)
+                            <th>{{ $header }}</th>
+                            @endforeach
+                            @endif
+                        </tr>
+                    </thead>
+                    <tbody>
+                        @foreach($landingPage->price_table as $row)
+                        <tr>
+                            @foreach($row as $cell)
+                            <td>{!! $cell !!}</td>
+                            @endforeach
+                        </tr>
+                        @endforeach
+                    </tbody>
+                </table>
+            </div>
+        </div>
+    </section>
+    @endif
+
+    {{-- Calculator Section --}}
+    @if($landingPage->calculator_text)
+    <section id="calculator" class="calculator">
+        <div class="container">
+            <h2 class="title one">{{ $landingPage->calculator_title ?? 'Калькулятор стоимости фундамента' }}</h2>
+            <div class="calculator__content">
+                {!! $landingPage->calculator_text !!}
+                
+                <!-- Здесь будет калькулятор из исходного HTML -->
+                <div class="calculator__form">
+                    <div class="form-group">
+                        <label>Тип фундамента:</label>
+                        <div class="radio-group">
+                            <input type="radio" id="base-1" name="check-type" value="250" checked>
+                            <label for="base-1">Ленточный</label>
+                        </div>
+                        <div class="radio-group">
+                            <input type="radio" id="base-2" name="check-type" value="55">
+                            <label for="base-2">Монолитная плита</label>
+                        </div>
+                        <!-- Остальные типы фундаментов -->
+                    </div>
+                    
+                    <div class="form-group">
+                        <label>Дополнительные услуги:</label>
+                        <div class="radio-group">
+                            <input type="radio" id="service-1" name="check-service" value="1" checked>
+                            <label for="service-1">Без услуг</label>
+                        </div>
+                        <div class="radio-group">
+                            <input type="radio" id="service-2" name="check-service" value="1.2">
+                            <label for="service-2">С гидроизоляцией</label>
+                        </div>
+                        <!-- Остальные услуги -->
+                    </div>
+                    
+                    <div class="form-group">
+                        <label>Объем работ (м³):</label>
+                        <input type="range" id="range-slider" min="10" max="500" value="100" step="10">
+                        <input type="number" class="form-control val2" value="100" min="10" max="500" step="10">
+                    </div>
+                    
+                    <div class="calculator__result">
+                        <p>Итоговая стоимость:</p>
+                        <h3 id="total">25 000 BYN</h3>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+    @endif
 @endsection
