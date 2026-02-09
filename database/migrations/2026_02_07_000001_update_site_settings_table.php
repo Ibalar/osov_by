@@ -11,10 +11,10 @@ return new class extends Migration
      */
     public function up(): void
     {
-        Schema::table('site_settings', function (Blueprint $table) {
-            $table->dropColumn('key');
-            $table->dropColumn('value');
-
+        Schema::dropIfExists('site_settings');
+        
+        Schema::create('site_settings', function (Blueprint $table) {
+            $table->id();
             $table->string('phone')->nullable();
             $table->string('email')->nullable();
             $table->text('address')->nullable();
@@ -22,6 +22,7 @@ return new class extends Migration
             $table->string('logo_path')->nullable();
             $table->string('logo_dark_path')->nullable();
             $table->string('logo_footer_path')->nullable();
+            $table->timestamps();
         });
     }
 
