@@ -1,5 +1,6 @@
 <?php
 
+use App\Http\Controllers\FoundationRequestController;
 use App\Http\Controllers\HomeController;
 use App\Http\Controllers\LandingController;
 use App\Http\Controllers\PageController;
@@ -60,6 +61,10 @@ Route::get('/sitemap.xml', [SitemapController::class, 'index'])
 
 Route::get('/landing/{slug}', [LandingController::class, 'show'])
     ->name('landings.show');
+
+// API маршруты (перед маршрутами filemanager)
+Route::post('/api/foundation-request', [FoundationRequestController::class, 'store'])
+    ->name('api.foundation-request.store');
 
 Route::prefix('laravel-filemanager')->group(function () {
     Lfm::routes();
