@@ -1,6 +1,7 @@
 <?php
 
 use App\Http\Controllers\HomeController;
+use App\Http\Controllers\LandingController;
 use App\Http\Controllers\PageController;
 use App\Http\Controllers\PortfolioController;
 use App\Http\Controllers\ProjectController;
@@ -57,6 +58,8 @@ Route::prefix('portfolio')->group(function () {
 Route::get('/sitemap.xml', [SitemapController::class, 'index'])
     ->name('sitemap');
 
+Route::get('/landing/{slug}', [LandingController::class, 'show'])
+    ->name('landings.show');
 
 Route::prefix('laravel-filemanager')->group(function () {
     Lfm::routes();
