@@ -1,5 +1,6 @@
 <?php
 
+use App\MoonShine\Resources\LandingPageResource;
 use Illuminate\Cookie\Middleware\AddQueuedCookiesToResponse;
 use Illuminate\Cookie\Middleware\EncryptCookies;
 use Illuminate\Foundation\Http\Middleware\VerifyCsrfToken;
@@ -99,6 +100,11 @@ return [
         'profile' => ProfilePage::class,
         'login' => LoginPage::class,
         'error' => ErrorPage::class,
+    ],
+
+    // Resources
+    'resources' => [
+        LandingPageResource::class,
     ],
 
     // Localizations
