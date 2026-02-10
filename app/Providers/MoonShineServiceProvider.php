@@ -19,6 +19,7 @@ use App\MoonShine\Resources\PortfolioCategory\PortfolioCategoryResource;
 use App\MoonShine\Resources\PortfolioItem\PortfolioItemResource;
 use App\MoonShine\Resources\Page\PageResource;
 use App\MoonShine\Resources\SiteSetting\SiteSettingResource;
+use App\MoonShine\Resources\LandingPage\LandingPageResource;
 
 class MoonShineServiceProvider extends ServiceProvider
 {
@@ -40,6 +41,7 @@ class MoonShineServiceProvider extends ServiceProvider
                 PortfolioItemResource::class,
                 PageResource::class,
                 SiteSettingResource::class,
+                LandingPageResource::class,
             ])
             ->pages([
                 ...$core->getConfig()->getPages(),

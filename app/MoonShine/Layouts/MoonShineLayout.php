@@ -20,6 +20,7 @@ use App\MoonShine\Resources\PortfolioCategory\PortfolioCategoryResource;
 use App\MoonShine\Resources\PortfolioItem\PortfolioItemResource;
 use App\MoonShine\Resources\Page\PageResource;
 use App\MoonShine\Resources\SiteSetting\SiteSettingResource;
+use App\MoonShine\Resources\LandingPage\LandingPageResource;
 
 final class MoonShineLayout extends AppLayout
 {
@@ -54,6 +55,7 @@ final class MoonShineLayout extends AppLayout
             MenuItem::make(PageResource::class, 'Страницы'),
             MenuItem::make(SiteSettingResource::class, 'SiteSettings'),
             ...parent::menu(),
+            MenuItem::make(LandingPageResource::class, 'LandingPages'),
         ];
     }
 
