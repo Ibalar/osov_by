@@ -210,98 +210,99 @@
 
                     <!-- Universal Calculator Section -->
                     @if($category->calculator_enabled && !empty($category->calculator_fields))
-                        <div class="our-amenities-prime bg-section calculator-section" style="margin-top: 4rem;">
+                        <section id="calculator" class="calculator" style="margin-top: 4rem;">
                             <div class="container">
-                                <div class="row section-row">
-                                    <div class="col-lg-12">
-                                        <div class="section-title">
-                                            <span class="section-sub-title wow fadeInUp fs-6">Калькулятор</span>
-                                            <h2 class="text-anime-style-3" data-cursor="-opaque">
-                                                {{ $category->calculator_title ?? 'Калькулятор стоимости услуг' }}
-                                            </h2>
-                                            @if($category->calculator_description)
-                                                <div class="calculator-description mt-3">
-                                                    {!! $category->calculator_description !!}
-                                                </div>
-                                            @endif
-                                        </div>
+                                <h2 class="title one">
+                                    {{ $category->calculator_title ?? 'Калькулятор стоимости услуг' }}
+                                </h2>
+                                @if($category->calculator_description)
+                                    <div class="calculator-description mb-4">
+                                        {!! $category->calculator_description !!}
                                     </div>
-                                </div>
+                                @endif
 
-                                <div class="row">
-                                    <div class="col-lg-12">
-                                        <div class="calculator-container">
-                                            <form id="universal-calculator" class="calculator-form">
-                                                <div class="row">
-                                                    <div class="col-lg-6">
-                                                        @foreach($category->calculator_fields as $fieldIndex => $field)
-                                                            <div class="calculator-field mb-3">
-                                                                <label for="calc-field-{{ $fieldIndex }}" class="form-label">
-                                                                    {{ $field['label'] ?? '' }}
-                                                                </label>
+                                <div class="calculator__container">
+                                    <div class="form">
+                                        <form id="universal-calculator" class="calculator-form">
+                                            <div class="row">
+                                                <div class="col-lg-6 col-xl-5 p-lg-0">
+                                                    @foreach($category->calculator_fields as $fieldIndex => $field)
+                                                        @php
+                                                            $fieldKey = $field['key'] ?? 'field_' . $fieldIndex;
+                                                            $fieldType = $field['type'] ?? 'number';
+                                                            $defaultValue = $field['default_value'] ?? '';
+                                                            $placeholder = $field['placeholder'] ?? '';
+                                                            $min = $field['min'] ?? '';
+                                                            $max = $field['max'] ?? '';
+                                                            $step = $field['step'] ?? '';
+                                                            $options = $field['options'] ?? [];
+                                                        @endphp
 
-                                                                @php
-                                                                    $fieldKey = $field['key'] ?? 'field_' . $fieldIndex;
-                                                                    $fieldType = $field['type'] ?? 'number';
-                                                                    $defaultValue = $field['default_value'] ?? '';
-                                                                    $placeholder = $field['placeholder'] ?? '';
-                                                                    $min = $field['min'] ?? '';
-                                                                    $max = $field['max'] ?? '';
-                                                                    $step = $field['step'] ?? '';
-                                                                    $options = $field['options'] ?? [];
-                                                                @endphp
+                                                        <div class="form__type">
+                                                            <p class="form__title">{{ $field['label'] ?? '' }}</p>
 
-                                                                @if($fieldType === 'select' || $fieldType === 'radio')
+                                                            @if($fieldType === 'radio')
+                                                                <div class="form-checked">
                                                                     @foreach($options as $optionIndex => $option)
                                                                         @php
                                                                             $optionKey = $fieldKey . '_' . $optionIndex;
                                                                             $optionValue = $option['value'] ?? '';
                                                                             $optionLabel = $option['label'] ?? '';
-                                                                            $isFirst = $loop->first;
                                                                         @endphp
-
-                                                                        @if($fieldType === 'radio')
-                                                                            <div class="form-check">
-                                                                                <input class="form-check-input calculator-input"
-                                                                                       type="radio"
-                                                                                       name="{{ $fieldKey }}"
-                                                                                       id="{{ $optionKey }}"
-                                                                                       value="{{ $optionValue }}"
-                                                                                       data-field-key="{{ $fieldKey }}"
-                                                                                       {{ $isFirst ? 'checked' : '' }}>
-                                                                                <label class="form-check-label" for="{{ $optionKey }}">
-                                                                                    {{ $optionLabel }}
-                                                                                </label>
-                                                                            </div>
-                                                                        @else
-                                                                            <select class="form-select calculator-input"
-                                                                                    id="calc-field-{{ $fieldIndex }}"
-                                                                                    name="{{ $fieldKey }}"
-                                                                                    data-field-key="{{ $fieldKey }}">
-                                                                                <option value="">Выберите...</option>
-                                                                                <option value="{{ $optionValue }}" {{ $isFirst ? 'selected' : '' }}>
-                                                                                    {{ $optionLabel }}
-                                                                                </option>
-                                                                            </select>
-                                                                        @endif
+                                                                        <div class="form-checked__item">
+                                                                            <input class="calculator-input"
+                                                                                   type="radio"
+                                                                                   name="{{ $fieldKey }}"
+                                                                                   id="{{ $optionKey }}"
+                                                                                   value="{{ $optionValue }}"
+                                                                                   data-field-key="{{ $fieldKey }}"
+                                                                                   {{ $loop->first ? 'checked' : '' }}>
+                                                                            <label for="{{ $optionKey }}">{{ $optionLabel }}</label>
+                                                                        </div>
                                                                     @endforeach
-                                                                @elseif($fieldType === 'checkbox')
-                                                                    <div class="form-check">
-                                                                        <input class="form-check-input calculator-input"
+                                                                </div>
+                                                            @elseif($fieldType === 'select')
+                                                                <div class="form-block__select">
+                                                                    <select class="calculator-input"
+                                                                            id="calc-field-{{ $fieldIndex }}"
+                                                                            name="{{ $fieldKey }}"
+                                                                            data-field-key="{{ $fieldKey }}">
+                                                                        <option value="">Выберите...</option>
+                                                                        @foreach($options as $optionIndex => $option)
+                                                                            <option value="{{ $option['value'] ?? '' }}" {{ $loop->first ? 'selected' : '' }}>
+                                                                                {{ $option['label'] ?? '' }}
+                                                                            </option>
+                                                                        @endforeach
+                                                                    </select>
+                                                                </div>
+                                                            @elseif($fieldType === 'checkbox')
+                                                                <div class="form-block__checkbox">
+                                                                    <label class="check">
+                                                                        <input class="check__input calculator-input"
                                                                                type="checkbox"
                                                                                id="calc-field-{{ $fieldIndex }}"
                                                                                name="{{ $fieldKey }}"
                                                                                value="1"
                                                                                data-field-key="{{ $fieldKey }}"
                                                                                {{ $defaultValue ? 'checked' : '' }}>
-                                                                        <label class="form-check-label" for="calc-field-{{ $fieldIndex }}">
-                                                                            {{ $field['checkbox_label'] ?? $field['label'] ?? '' }}
-                                                                        </label>
-                                                                    </div>
-                                                                @elseif($fieldType === 'range')
-                                                                    <div class="range-slider-wrapper">
+                                                                        <span class="check__box"></span>
+                                                                    </label>
+                                                                    <p>{{ $field['checkbox_label'] ?? $field['label'] ?? '' }}</p>
+                                                                </div>
+                                                            @elseif($fieldType === 'range')
+                                                                <div class="range-slider range-slider__modal">
+                                                                    <p class="rangelb">
+                                                                        <span class="rangeValues">
+                                                                            <span class="range__text">Значение:</span>
+                                                                            <span class="range__val">
+                                                                                <span class="range-value">{{ $defaultValue }}</span>
+                                                                                {{ $field['unit'] ?? '' }}
+                                                                            </span>
+                                                                        </span>
+                                                                    </p>
+                                                                    <div class="range-slider-ip-wrap">
                                                                         <input type="range"
-                                                                               class="form-range calculator-input"
+                                                                               class="calculator-input ip-range"
                                                                                id="calc-field-{{ $fieldIndex }}"
                                                                                name="{{ $fieldKey }}"
                                                                                data-field-key="{{ $fieldKey }}"
@@ -309,14 +310,17 @@
                                                                                max="{{ $max }}"
                                                                                step="{{ $step }}"
                                                                                value="{{ $defaultValue }}">
-                                                                        <div class="range-value-display">
-                                                                            <span class="range-value">{{ $defaultValue }}</span>
-                                                                            <span class="range-unit">{{ $field['unit'] ?? '' }}</span>
-                                                                        </div>
+                                                                        <span class="tracking-holder"></span>
                                                                     </div>
-                                                                @else
+                                                                    <div class="range-slider__value">
+                                                                        <span class="range-slider__item">{{ $min }} {{ $field['unit'] ?? '' }}</span>
+                                                                        <span class="range-slider__item">> {{ $max }} {{ $field['unit'] ?? '' }}</span>
+                                                                    </div>
+                                                                </div>
+                                                            @else
+                                                                <div class="form-block__input">
                                                                     <input type="{{ $fieldType }}"
-                                                                           class="form-control calculator-input"
+                                                                           class="calculator-input"
                                                                            id="calc-field-{{ $fieldIndex }}"
                                                                            name="{{ $fieldKey }}"
                                                                            data-field-key="{{ $fieldKey }}"
@@ -325,48 +329,49 @@
                                                                            @if($min !== '') min="{{ $min }}" @endif
                                                                            @if($max !== '') max="{{ $max }}" @endif
                                                                            @if($step !== '') step="{{ $step }}" @endif>
-                                                                @endif
-                                                            </div>
-                                                        @endforeach
-                                                    </div>
-
-                                                    <div class="col-lg-6">
-                                                        <div class="calculator-result">
-                                                            <div class="result-display">
-                                                                <div class="result-label">
-                                                                    {{ $category->calculator_result_label ?? 'Итоговая стоимость' }}
-                                                                </div>
-                                                                <div class="result-value">
-                                                                    <span id="calculator-total">0</span>
-                                                                    <span class="currency">{{ $category->calculator_currency ?? 'BYN' }}</span>
-                                                                </div>
-                                                            </div>
-
-                                                            <div class="calculator-actions mt-3">
-                                                                <button type="button" class="btn btn-primary" onclick="calculateResult()">
-                                                                    Пересчитать
-                                                                </button>
-                                                                <button type="button" class="btn btn-outline-secondary" onclick="resetCalculator()">
-                                                                    Сбросить
-                                                                </button>
-                                                            </div>
-
-                                                            @if($category->calculator_formula)
-                                                                <div class="formula-display mt-3">
-                                                                    <small class="text-muted">
-                                                                        Формула: {{ $category->calculator_formula }}
-                                                                    </small>
                                                                 </div>
                                                             @endif
                                                         </div>
-                                                    </div>
+                                                    @endforeach
                                                 </div>
-                                            </form>
-                                        </div>
+
+                                                <div class="col-lg-6 col-xl-7 pl-lg-5 pr-lg-0">
+                                                    <div class="form__box">
+                                                        <div class="form-total">
+                                                            <div class="form-total__container">
+                                                                <div class="form-total__approximate">
+                                                                    <p class="form-total__param">Расчет выполняется по введенным параметрам</p>
+                                                                    <span>{{ $category->calculator_result_label ?? 'Итоговая стоимость' }} <sup>*</sup></span>
+                                                                </div>
+                                                                <p class="form-total__count">
+                                                                    <span id="calculator-total">0</span>
+                                                                    <span class="currency">{{ $category->calculator_currency ?? 'BYN' }}</span>
+                                                                </p>
+                                                            </div>
+                                                        </div>
+                                                        <div class="form__button">
+                                                            <button type="button" class="button animat-1" onclick="calculateResult()">
+                                                                Пересчитать
+                                                            </button>
+                                                        </div>
+                                                    </div>
+                                                    <div class="form__button mt-3">
+                                                        <button type="button" class="button animat-2" onclick="resetCalculator()">
+                                                            Сбросить
+                                                        </button>
+                                                    </div>
+                                                    @if($category->calculator_formula)
+                                                        <div class="form-block__text mt-3">
+                                                            <p>Формула: {{ $category->calculator_formula }}</p>
+                                                        </div>
+                                                    @endif
+                                                </div>
+                                            </div>
+                                        </form>
                                     </div>
                                 </div>
                             </div>
-                        </div>
+                        </section>
                     @endif
 
                     {{-- Reviews Section --}}
@@ -616,29 +621,47 @@
         return result;
     }
 
+    function getFieldConfig(fieldKey) {
+        const matchedField = calculatorConfig.fields.find(field => field?.key === fieldKey);
+        if (matchedField) {
+            return matchedField;
+        }
+
+        if (fieldKey && fieldKey.startsWith('field_')) {
+            const index = parseInt(fieldKey.replace('field_', ''), 10);
+            return calculatorConfig.fields[index];
+        }
+
+        return null;
+    }
+
+    function getRangeDisplay(input) {
+        const slider = input.closest('.range-slider') || input.parentElement;
+        return slider ? slider.querySelector('.range-value') : null;
+    }
+
     // Reset calculator to default values
     function resetCalculator() {
         const inputs = getCalculatorInputs();
 
-        inputs.forEach((input, index) => {
-            const fieldConfig = calculatorConfig.fields[index];
+        inputs.forEach(input => {
+            const fieldKey = input.dataset.fieldKey || input.name;
+            const fieldConfig = getFieldConfig(fieldKey);
 
             if (input.type === 'checkbox') {
                 input.checked = fieldConfig?.default_value ? true : false;
             } else if (input.type === 'radio') {
-                // Reset to first option
                 const firstRadio = document.querySelector(`input[name="${input.name}"]`);
                 if (firstRadio) firstRadio.checked = true;
             } else if (input.tagName === 'SELECT') {
                 const firstOption = input.querySelector('option:not([value=""])');
                 if (firstOption) firstOption.selected = true;
             } else {
-                input.value = fieldConfig?.default_value || '';
+                input.value = fieldConfig?.default_value ?? '';
             }
 
-            // Update range display if applicable
             if (input.type === 'range') {
-                const display = input.parentElement.querySelector('.range-value');
+                const display = getRangeDisplay(input);
                 if (display) {
                     display.textContent = input.value;
                 }
@@ -657,7 +680,7 @@
             // For range sliders, update display value
             if (input.type === 'range') {
                 input.addEventListener('input', function() {
-                    const display = this.parentElement.querySelector('.range-value');
+                    const display = getRangeDisplay(this);
                     if (display) {
                         display.textContent = this.value;
                     }
