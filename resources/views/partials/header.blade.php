@@ -1,10 +1,10 @@
-<header class="main-header {{ Route::is('home') ? 'main-header-prime' : '' }}">
+<header class="main-header {{ Route::is('home') || Route::is('landing*') ? 'main-header-prime' : '' }}">
     <div class="header-sticky">
         <nav class="navbar navbar-expand-lg">
-            <div class="container{{ Route::is('home') ? '-fluid' : '' }}">
+            <div class="container{{ Route::is('home') || Route::is('landing*') ? '-fluid' : '' }}">
 
                 {{-- Logo --}}
-                @if(Route::is('home'))
+                @if(Route::is('home') || request()->is('landing*'))
                     <p class="navbar-brand">
                         <img src="{{ asset('storage/' . $siteSettings->logo_path) }}" alt="{{ config('app.name') }}">
                     </p>

@@ -77,7 +77,8 @@ class LandingPageFormPage extends FormPage
                             Text::make('Цена', 'price'),
                             Image::make('Изображение', 'image')
                                 ->disk('public'),
-                        ]),
+                        ])
+                    ->removable(),
                 ]),
                 Tab::make('Выполненные работы', [
                     Textarea::make('Заголовок', 'examples_title'),
