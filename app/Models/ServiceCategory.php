@@ -32,6 +32,20 @@ class ServiceCategory extends Model
         'calculator_formula',
         'calculator_currency',
         'calculator_result_label',
+        // Landing blocks
+        'hero_title',
+        'hero_subtitle',
+        'hero_items',
+        'types_title',
+        'types',
+        'examples_title',
+        'examples',
+        'gallery_title',
+        'gallery_images',
+        'price_title',
+        'price_table',
+        'reviews_title',
+        'reviews',
     ];
 
     /**
@@ -41,6 +55,12 @@ class ServiceCategory extends Model
         'is_active' => 'boolean',
         'calculator_enabled' => 'boolean',
         'calculator_fields' => 'array',
+        'hero_items' => 'array',
+        'types' => 'array',
+        'examples' => 'array',
+        'gallery_images' => 'array',
+        'price_table' => 'array',
+        'reviews' => 'array',
     ];
 
     /* -----------------------------------------------------------------
@@ -108,5 +128,46 @@ class ServiceCategory extends Model
     public function scopeBySlug(Builder $query, string $slug): Builder
     {
         return $query->where('slug', $slug);
+    }
+
+    /* -----------------------------------------------------------------
+     |  Accessors
+     | -----------------------------------------------------------------
+     */
+
+    /**
+     * URL изображений галереи
+     */
+    public function getGalleryImagesUrlsAttribute(): array
+    {
+        return collect($this->gallery_images ?? [])
+            ->map(fn($image) => asset('storage/services/categories/' . $this->slug . '/gallery/' . $image))
+            ->toArray();
+    }
+
+    /**
+     * Типы с URL изображений
+     */
+    public function getTypesImagesUrlsAttribute(): array
+    {
+        return collect($this->types ?? [])
+            ->map(function ($type) {
+                $type['image_url'] = isset($type['image']) ? asset('storage/services/categories/' . $this->slug . '/types/' . $type['image']) : null;
+                return $type;
+            })
+            ->toArray();
+    }
+
+    /**
+     * Примеры с URL изображений
+     */
+    public function getExamplesImagesUrlsAttribute(): array
+    {
+        return collect($this->examples ?? [])
+            ->map(function ($example) {
+                $example['image_url'] = isset($example['image']) ? asset('storage/services/categories/' . $this->slug . '/examples/' . $example['image']) : null;
+                return $example;
+            })
+            ->toArray();
     }
 }

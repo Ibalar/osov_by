@@ -2,6 +2,68 @@
 
 @section('content')
 
+    {{-- Hero Section --}}
+    @if($category->hero_title || !empty($category->hero_items))
+    <header class="header">
+        <div class="header-body">
+            <div class="header-body__img"></div>
+            <div class="container header-body__box">
+                <div class="row">
+                    <div class="col-lg-6 p-md-0">
+                        <h1 class="title header-body__title">
+                            {{ $category->hero_title ?? $category->title }}
+                        </h1>
+                        @if($category->hero_subtitle)
+                        <h3 class="header-body__subtitle">
+                            {{ $category->hero_subtitle }}
+                        </h3>
+                        @endif
+                        @if(!empty($category->hero_items))
+                        <div class="header-body__container">
+                            @foreach($category->hero_items as $item)
+                            <div class="header-body__item">
+                                <p>{!! $item['text'] ?? '' !!}</p>
+                            </div>
+                            @endforeach
+                        </div>
+                        @endif
+                    </div>
+
+                    {{-- Форма заявки --}}
+                    <div class="col-lg-6 p-0 p-sm-2 p-md-0 pr-lg-0">
+                        <div class="offset-xl-3 offset-md-2 offset-lg-0 col-md-8 col-lg-12 col-xl-9 mt-4 mt-lg-0 p-0">
+                            <div class="form-block b header-body__form rf">
+                                <form action="{{ route('api.foundation-request.store') }}" method="POST" class="form-block__container n form__form callback-form js-telegram-form" name="header_form">
+                                    @csrf
+                                    <fieldset class="form__fields form__hide-success">
+                                        <h3 class="form-block__title">Оставьте <span>заявку</span></h3>
+
+                                        <div class="form-block__input">
+                                            <input class="mask-phone zphone required" name="phone" type="tel" placeholder="Номер телефона +375...">
+                                        </div>
+                                        <br>
+                                        <div class="form-block__button">
+                                            <button type="submit" class="button animat-2 feedback">Отправить заявку</button>
+                                        </div>
+
+                                        <div class="form-block__checkbox">
+                                            <label class="check">
+                                                <input class="check__input required" type="checkbox" checked="">
+                                                <span class="check__box"></span>
+                                            </label>
+                                            <p>Я согласен(а) с <a href="{{ route('page.show', 'privacy') }}">политикой обработки персональных данных</a></p>
+                                        </div>
+                                    </fieldset>
+                                </form>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </header>
+    @endif
+
     <div class="page-single-post">
         <div class="container">
             <div class="row">
@@ -69,6 +131,112 @@
                                 </div>
                             </div>
                         </div>
+                    @endif
+
+                    {{-- Types Section --}}
+                    @if(!empty($category->types))
+                    <section id="types" class="foundations" style="margin-top: 4rem;">
+                        <div class="container">
+                            <h2 class="title one">{{ $category->types_title ?? 'Типы' }}</h2>
+                            <div class="row justify-content-center">
+                                @foreach($category->types_images_urls ?? [] as $index => $type)
+                                <div class="col-md-6 col-lg-4 p-md-0 @if($index % 2 == 0 && $index > 0) pl-md-1 pl-lg-0 @else pr-md-1 @endif">
+                                    <div class="foundations__item">
+                                        @if(isset($type['image_url']))
+                                        <div class="foundations__img">
+                                            <img src="{{ $type['image_url'] }}" alt="{{ $type['title'] ?? '' }}">
+                                        </div>
+                                        @endif
+                                        <div class="foundations__content">
+                                            <p class="foundations__title">{!! $type['title'] ?? '' !!}</p>
+                                            <div class="foundations__price">
+                                                <span>Цена от</span>
+                                                <p>{!! $type['price'] ?? '' !!}</p>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+                                @endforeach
+                            </div>
+                        </div>
+                    </section>
+                    @endif
+
+                    {{-- Examples Section --}}
+                    @if(!empty($category->examples))
+                    <section id="examples" class="examples" style="margin-top: 4rem;">
+                        <div class="container">
+                            <h2 class="title one">{{ $category->examples_title ?? 'Выполненные работы' }}</h2>
+                            <div class="row">
+                                @foreach($category->examples_images_urls ?? [] as $example)
+                                <div class="col-md-6 col-lg-4 p-md-0 mb-4">
+                                    <div class="examples__item">
+                                        @if(isset($example['image_url']))
+                                        <div class="examples__img">
+                                            <img src="{{ $example['image_url'] }}" alt="{{ $example['title'] ?? '' }}">
+                                        </div>
+                                        @endif
+                                        <div class="examples__content">
+                                            <h3>{{ $example['title'] ?? '' }}</h3>
+                                            @if(isset($example['description']))
+                                            <p>{{ $example['description'] }}</p>
+                                            @endif
+                                        </div>
+                                    </div>
+                                </div>
+                                @endforeach
+                            </div>
+                        </div>
+                    </section>
+                    @endif
+
+                    {{-- Gallery Section --}}
+                    @if(!empty($category->gallery_images))
+                    <section id="gallery" class="gallery" style="margin-top: 4rem;">
+                        <div class="container">
+                            <h2 class="title one">{{ $category->gallery_title ?? 'Галерея' }}</h2>
+                            <div class="row">
+                                @foreach($category->gallery_images_urls ?? [] as $image)
+                                <div class="col-md-6 col-lg-4 p-md-0 mb-4">
+                                    <a href="{{ $image }}" data-fancybox="gallery" class="gallery__item">
+                                        <img src="{{ $image }}" alt="Галерея">
+                                    </a>
+                                </div>
+                                @endforeach
+                            </div>
+                        </div>
+                    </section>
+                    @endif
+
+                    {{-- Price Table Section --}}
+                    @if(!empty($category->price_table))
+                    <section id="price" class="price" style="margin-top: 4rem;">
+                        <div class="container">
+                            <h2 class="title one">{{ $category->price_title ?? 'Цены' }}</h2>
+                            <div class="price__table">
+                                <table class="table">
+                                    <thead>
+                                        <tr>
+                                            @if(!empty($category->price_table[0]))
+                                            @foreach(array_keys($category->price_table[0]) as $header)
+                                            <th>{{ $header }}</th>
+                                            @endforeach
+                                            @endif
+                                        </tr>
+                                    </thead>
+                                    <tbody>
+                                        @foreach($category->price_table as $row)
+                                        <tr>
+                                            @foreach($row as $cell)
+                                            <td>{!! $cell !!}</td>
+                                            @endforeach
+                                        </tr>
+                                        @endforeach
+                                    </tbody>
+                                </table>
+                            </div>
+                        </div>
+                    </section>
                     @endif
 
                     <!-- Universal Calculator Section -->
@@ -232,6 +400,43 @@
                         </div>
                     @endif
 
+                    {{-- Reviews Section --}}
+                    @if(!empty($category->reviews))
+                    <section id="gratitude" class="gratitude" style="margin-top: 4rem;">
+                        <div class="container">
+                            <h2 class="title one">{{ $category->reviews_title ?? 'Отзывы клиентов' }}</h2>
+                            <div class="gratitude-slider" id="gratitude-slider">
+                                @foreach($category->reviews as $review)
+                                <div class="gratitude__item">
+                                    <div class="gratitude__content">
+                                        <div class="gratitude__text">
+                                            {!! $review['text'] ?? '' !!}
+                                        </div>
+                                        <div class="gratitude__author">
+                                            <h4>{{ $review['name'] ?? '' }}</h4>
+                                            @if(isset($review['date']))
+                                            <p class="gratitude__date">{{ $review['date'] }}</p>
+                                            @endif
+                                            @if(isset($review['rating']))
+                                            <div class="gratitude__rating">
+                                                @for($i = 1; $i <= 5; $i++)
+                                                <span class="star {{ $i <= $review['rating'] ? 'active' : '' }}">★</span>
+                                                @endfor
+                                            </div>
+                                            @endif
+                                        </div>
+                                    </div>
+                                </div>
+                                @endforeach
+                            </div>
+                            <div class="slider-controls">
+                                <button class="slider-btn prev-1"><</button>
+                                <button class="slider-btn next-1">></button>
+                            </div>
+                        </div>
+                    </section>
+                    @endif
+
                     @php
                         $faqs = [];
 
@@ -285,6 +490,84 @@
 @endsection
 
 @push('scripts')
+{{-- Inputmask for phone numbers --}}
+<script src="{{ asset('landing/jquery.inputmask.min.js') }}"></script>
+<script>
+    $(document).ready(function () {
+        $(".mask-phone").inputmask({
+            mask: "+375 (99) 999-99-99",
+            placeholder: "_",
+            showMaskOnHover: false,
+            clearIncomplete: true
+        });
+
+        $(".mask-phone").on("blur", function () {
+            let phone = $(this).val();
+            let validCodes = ["25", "29", "33", "44"]; // Разрешённые коды
+            let enteredCode = phone.substring(6, 8); // Извлекаем код
+
+            if (!validCodes.includes(enteredCode)) {
+                alert("Введите номер с кодом 25, 29, 33 или 44!");
+                $(this).val(""); // Очищаем поле
+            }
+        });
+    });
+</script>
+
+{{-- Gratitude Slider Initialization --}}
+@isset($category->reviews)
+    @if(!empty($category->reviews))
+        <link rel="stylesheet" href="{{ asset('landing/slick.css') }}">
+        <script src="{{ asset('landing/slick.min.js') }}"></script>
+        <script>
+            $(document).ready(function () {
+                // Инициализация слайдера отзывов
+                $('#gratitude-slider').slick({
+                    slidesToShow: 2,
+                    slidesToScroll: 1,
+                    infinite: true,
+                    dots: true,
+                    arrows: true,
+                    prevArrow: $('.prev-1'),
+                    nextArrow: $('.next-1'),
+                    autoplay: true,
+                    autoplaySpeed: 3000,
+                    responsive: [
+                        {
+                            breakpoint: 768,
+                            settings: {
+                                slidesToShow: 1
+                            }
+                        }
+                    ]
+                });
+            });
+        </script>
+    @endif
+@endisset
+
+@isset($category->gallery_images)
+    @if(!empty($category->gallery_images))
+        <script src="{{ asset('landing/jquery.fancybox.min.js') }}"></script>
+        <script>
+            $(document).ready(function() {
+                $('[data-fancybox="gallery"]').fancybox({
+                    loop: true,
+                    buttons: [
+                        'zoom',
+                        'share',
+                        'slideShow',
+                        'fullScreen',
+                        'download',
+                        'thumbs',
+                        'close'
+                    ]
+                });
+            });
+        </script>
+    @endif
+@endisset
+
 @if($category->calculator_enabled && !empty($category->calculator_fields))
 <script>
     // Calculator configuration from server

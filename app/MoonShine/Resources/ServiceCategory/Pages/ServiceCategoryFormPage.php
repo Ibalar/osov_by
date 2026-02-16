@@ -100,6 +100,118 @@ class ServiceCategoryFormPage extends FormPage
                         ->nullable()
                         ->hint('Блок FAQ для SEO и страницы услуги'),
                 ]),
+                Tab::make('Hero секция', [
+                    Textarea::make('Заголовок', 'hero_title')
+                        ->nullable()
+                        ->hint('Заголовок в hero секции'),
+                    Textarea::make('Подзаголовок', 'hero_subtitle')
+                        ->nullable()
+                        ->hint('Подзаголовок в hero секции'),
+                    Json::make('Преимущества', 'hero_items')
+                        ->fields([
+                            Text::make('Текст', 'text')
+                                ->hint('Текст преимущества'),
+                        ])
+                        ->removable()
+                        ->nullable()
+                        ->hint('4 преимущества в hero секции'),
+                ]),
+                Tab::make('Типы', [
+                    Textarea::make('Заголовок секции', 'types_title')
+                        ->nullable()
+                        ->hint('Заголовок секции типов'),
+                    Json::make('Типы', 'types')
+                        ->fields([
+                            Text::make('Название', 'title')
+                                ->hint('Название типа'),
+                            Text::make('Цена', 'price')
+                                ->hint('Цена типа'),
+                            Image::make('Изображение', 'image')
+                                ->disk('public')
+                                ->dir('services/categories/types')
+                                ->hint('Изображение типа'),
+                        ])
+                        ->removable()
+                        ->nullable()
+                        ->hint('Массив типов (название, цена, изображение)'),
+                ]),
+                Tab::make('Примеры работ', [
+                    Textarea::make('Заголовок', 'examples_title')
+                        ->nullable()
+                        ->hint('Заголовок секции выполненных работ'),
+                    Json::make('Примеры', 'examples')
+                        ->fields([
+                            Text::make('Название')
+                                ->hint('Название примера'),
+                            Textarea::make('Описание', 'description')
+                                ->hint('Описание примера')
+                                ->nullable(),
+                            Image::make('Изображение')
+                                ->disk('public')
+                                ->dir('services/categories/examples')
+                                ->hint('Изображение примера'),
+                        ])
+                        ->removable()
+                        ->nullable()
+                        ->hint('Выполненные работы'),
+                ]),
+                Tab::make('Галерея', [
+                    Textarea::make('Заголовок', 'gallery_title')
+                        ->nullable()
+                        ->hint('Заголовок галереи'),
+                    Json::make('Изображения', 'gallery_images')
+                        ->fields([
+                            Image::make('Фото')
+                                ->disk('public')
+                                ->dir('services/categories/gallery')
+                                ->hint('Изображение галереи'),
+                        ])
+                        ->removable()
+                        ->nullable()
+                        ->hint('Изображения галереи'),
+                ]),
+                Tab::make('Цены', [
+                    Textarea::make('Заголовок', 'price_title')
+                        ->nullable()
+                        ->hint('Заголовок таблицы цен'),
+                    Json::make('Таблица цен', 'price_table')
+                        ->fields([
+                            Text::make('Наименование')
+                                ->hint('Наименование услуги'),
+                            Text::make('Цена')
+                                ->hint('Цена услуги'),
+                            Text::make('Ед. изм.')
+                                ->hint('Единица измерения')
+                                ->nullable(),
+                        ])
+                        ->removable()
+                        ->nullable()
+                        ->hint('Таблица цен'),
+                ]),
+                Tab::make('Отзывы', [
+                    Textarea::make('Заголовок', 'reviews_title')
+                        ->nullable()
+                        ->hint('Заголовок отзывов'),
+                    Json::make('Отзывы', 'reviews')
+                        ->fields([
+                            Text::make('Имя')
+                                ->hint('Имя клиента'),
+                            Textarea::make('Текст')
+                                ->hint('Текст отзыва'),
+                            Text::make('Дата', 'date')
+                                ->hint('Дата отзыва')
+                                ->nullable(),
+                            Number::make('Рейтинг', 'rating')
+                                ->hint('Рейтинг от 1 до 5')
+                                ->min(1)
+                                ->max(5)
+                                ->default(5)
+                                ->nullable(),
+                        ])
+                        ->removable()
+                        ->nullable()
+                        ->hint('Отзывы (слайдер)'),
+                ]),
                 Tab::make('Калькулятор', [
                     Switcher::make('Включить калькулятор', 'calculator_enabled'),
                     
