@@ -65,8 +65,9 @@ class LandingPageFormPage extends FormPage
 
                     Json::make('Преимущества', 'hero_items')
                         ->fields([
-                            Text::make('Текст'),
+                            Text::make('Текст', 'text'),
                         ])
+                        ->removable()
                         ->nullable(),
                 ]),
                 Tab::make('Типы фундаментов', [

@@ -126,12 +126,12 @@
         <div class="container">
             <h2 class="title one">{{ $landingPage->foundations_title ?? 'Какой фундамент необходим?' }}</h2>
             <div class="row justify-content-center">
-                @foreach($landingPage->foundation_types_with_urls ?? [] as $index => $type)
+                @foreach($landingPage->foundation_types ?? [] as $index => $type)
                 <div class="col-md-6 col-lg-4 p-md-0 @if($index % 2 == 0 && $index > 0) pl-md-1 pl-lg-0 @else pr-md-1 @endif">
                     <div class="foundations__item">
-                        @if(isset($type['image_url']))
+                        @if(isset($type['image']))
                         <div class="foundations__img">
-                            <img src="{{ $type['image_url'] }}" alt="{{ $type['title'] ?? '' }}">
+                            <img src="{{ asset('storage/' . $type['image']) }}" alt="{{ $type['title'] ?? '' }}">
                         </div>
                         @endif
                         <div class="foundations__content">
@@ -246,7 +246,7 @@
             <h2 class="title one">{{ $landingPage->calculator_title ?? 'Калькулятор стоимости фундамента' }}</h2>
             <div class="calculator__content">
                 {!! $landingPage->calculator_text !!}
-                
+
                 <!-- Здесь будет калькулятор из исходного HTML -->
                 <div class="calculator__form">
                     <div class="form-group">
@@ -261,7 +261,7 @@
                         </div>
                         <!-- Остальные типы фундаментов -->
                     </div>
-                    
+
                     <div class="form-group">
                         <label>Дополнительные услуги:</label>
                         <div class="radio-group">
@@ -274,13 +274,13 @@
                         </div>
                         <!-- Остальные услуги -->
                     </div>
-                    
+
                     <div class="form-group">
                         <label>Объем работ (м³):</label>
                         <input type="range" id="range-slider" min="10" max="500" value="100" step="10">
                         <input type="number" class="form-control val2" value="100" min="10" max="500" step="10">
                     </div>
-                    
+
                     <div class="calculator__result">
                         <p>Итоговая стоимость:</p>
                         <h3 id="total">25 000 BYN</h3>
