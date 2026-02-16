@@ -66,6 +66,21 @@ class FoundationLandingSeeder extends Seeder
                 // Калькулятор
                 'calculator_title' => 'Калькулятор стоимости фундамента',
                 'calculator_text' => 'Рассчитайте примерную стоимость фундамента онлайн. Для точного расчета наш инженер выедет на замер бесплатно.',
+                'calculator_types' => [
+                    ['label' => 'Ленточный', 'value' => 350],
+                    ['label' => 'Монолитная плита', 'value' => 100],
+                    ['label' => 'Ростверк', 'value' => 250],
+                ],
+                'calculator_services' => [
+                    ['label' => 'Под ключ', 'value' => 4],
+                    ['label' => 'Только работа', 'value' => 1],
+                ],
+                'calculator_range' => [
+                    'min' => 0,
+                    'max' => 100,
+                    'step' => 1,
+                    'default' => 12,
+                ],
 
                 // Преимущества
                 'facility_title' => 'Наши преимущества',

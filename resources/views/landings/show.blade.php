@@ -240,52 +240,88 @@
     @endif
 
     {{-- Calculator Section --}}
-    @if($landingPage->calculator_text)
+    @if($landingPage->calculator_text || !empty($landingPage->calculator_types))
     <section id="calculator" class="calculator">
         <div class="container">
             <h2 class="title one">{{ $landingPage->calculator_title ?? 'Калькулятор стоимости фундамента' }}</h2>
             <div class="calculator__content">
-                {!! $landingPage->calculator_text !!}
+                @if($landingPage->calculator_text)
+                    {!! $landingPage->calculator_text !!}
+                @endif
 
-                <!-- Здесь будет калькулятор из исходного HTML -->
-                <div class="calculator__form">
-                    <div class="form-group">
-                        <label>Тип фундамента:</label>
-                        <div class="radio-group">
-                            <input type="radio" id="base-1" name="check-type" value="250" checked>
-                            <label for="base-1">Ленточный</label>
-                        </div>
-                        <div class="radio-group">
-                            <input type="radio" id="base-2" name="check-type" value="55">
-                            <label for="base-2">Монолитная плита</label>
-                        </div>
-                        <!-- Остальные типы фундаментов -->
-                    </div>
+                @if(!empty($landingPage->calculator_types) && !empty($landingPage->calculator_services))
+                <div class="calculator__container">
+                    <div class="form">
+                        <div class="row">
+                            <div class="col-lg-6 col-xl-5 p-lg-0">
+                                <div class="form__type">
+                                    <p class="form__title">Фундамент:</p>
+                                    <div id="checked" class="form-checked">
+                                        @foreach($landingPage->calculator_types as $index => $type)
+                                        <div class="form-checked__item">
+                                            <input value="{{ $type['value'] ?? 0 }}" type="radio" name="check-type" id="calc-type-{{ $index }}" {{ $loop->first ? 'checked' : '' }}>
+                                            <label for="calc-type-{{ $index }}">{{ $type['label'] ?? '' }}</label>
+                                        </div>
+                                        @endforeach
+                                    </div>
+                                </div>
+                                <div class="form__type">
+                                    <p class="form__title">Услуга:</p>
+                                    <div id="service" class="form-checked service">
+                                        @foreach($landingPage->calculator_services as $index => $service)
+                                        <div class="form-checked__item">
+                                            <input value="{{ $service['value'] ?? 1 }}" type="radio" name="check-service" id="calc-service-{{ $index }}" {{ $loop->first ? 'checked' : '' }}>
+                                            <label for="calc-service-{{ $index }}">{{ $service['label'] ?? '' }}</label>
+                                        </div>
+                                        @endforeach
+                                    </div>
+                                </div>
+                            </div>
 
-                    <div class="form-group">
-                        <label>Дополнительные услуги:</label>
-                        <div class="radio-group">
-                            <input type="radio" id="service-1" name="check-service" value="1" checked>
-                            <label for="service-1">Без услуг</label>
-                        </div>
-                        <div class="radio-group">
-                            <input type="radio" id="service-2" name="check-service" value="1.2">
-                            <label for="service-2">С гидроизоляцией</label>
-                        </div>
-                        <!-- Остальные услуги -->
-                    </div>
+                            <div class="col-lg-6 col-xl-7 pl-lg-5 pr-lg-0">
+                                <div class="range-slider range-slider__modal">
+                                    <p class="rangelb">
+                                        <span class="rangeValues">
+                                            <input type="text" class="val2 form-control" value="{{ $landingPage->calculator_range['default'] ?? 12 }}" oninput="getVals(this);">
+                                            <span class="range__text">Объём работ:</span>
+                                            <span class="range__val">м <sup>3</sup></span>
+                                        </span>
+                                    </p>
+                                    <div class="range-slider-ip-wrap">
+                                        <input value="1" min="{{ $landingPage->calculator_range['min'] ?? 0 }}" max="{{ $landingPage->calculator_range['max'] ?? 100 }}" step="{{ $landingPage->calculator_range['step'] ?? 1 }}" type="range" class="val1 ip-range">
+                                        <input id="range-slider" value="{{ $landingPage->calculator_range['default'] ?? 12 }}" min="{{ $landingPage->calculator_range['min'] ?? 0 }}" max="{{ $landingPage->calculator_range['max'] ?? 100 }}" step="{{ $landingPage->calculator_range['step'] ?? 1 }}" type="range" class="ip-range">
+                                        <span class="tracking-holder"></span>
+                                    </div>
 
-                    <div class="form-group">
-                        <label>Объем работ (м³):</label>
-                        <input type="range" id="range-slider" min="10" max="500" value="100" step="10">
-                        <input type="number" class="form-control val2" value="100" min="10" max="500" step="10">
-                    </div>
+                                    <div class="range-slider__value">
+                                        <span class="range-slider__item">{{ $landingPage->calculator_range['min'] ?? 0 }} м<sup>3</sup></span>
+                                        <span class="range-slider__item"> > {{ $landingPage->calculator_range['max'] ?? 100 }} м<sup>3</sup></span>
+                                    </div>
+                                </div>
 
-                    <div class="calculator__result">
-                        <p>Итоговая стоимость:</p>
-                        <h3 id="total">25 000 BYN</h3>
+                                <div class="form__box">
+                                    <div class="form-total">
+                                        <div class="form-total__container">
+                                            <div class="form-total__approximate">
+                                                <p class="form-total__param">Для расчета используются
+                                                    <br>рекомендуемые параметры
+                                                </p>
+                                                <span>Примерная стоимость <sup>*</sup>
+                                                </span>
+                                            </div>
+                                            <p class="form-total__count"><span id="total">{{ number_format((($landingPage->calculator_types[0]['value'] ?? 350) * ($landingPage->calculator_services[0]['value'] ?? 4) * ($landingPage->calculator_range['default'] ?? 12)), 0, ',', ' ') }} BYN</span></p>
+                                        </div>
+                                    </div>
+
+                                    <div class="form__button">
+                                        <button class="button animat-1" data-toggle="modal" data-target="#master">Вызвать замерщика</button>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
                     </div>
                 </div>
+                @endif
             </div>
         </div>
     </section>

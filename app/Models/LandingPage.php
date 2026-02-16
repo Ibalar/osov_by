@@ -30,6 +30,9 @@ class LandingPage extends Model
         'price_table',
         'calculator_title',
         'calculator_text',
+        'calculator_types',
+        'calculator_services',
+        'calculator_range',
         'facility_title',
         'facility_text',
         'reviews_title',
@@ -46,14 +49,17 @@ class LandingPage extends Model
      * Приведение типов
      */
     protected $casts = [
-        'hero_items'       => 'array',
-        'foundation_types' => 'array',
-        'examples'         => 'array',
-        'gallery_images'   => 'array',
-        'price_table'      => 'array',
-        'reviews'          => 'array',
-        'faq'              => 'array',
-        'is_active'        => 'boolean',
+        'hero_items'          => 'array',
+        'foundation_types'    => 'array',
+        'examples'            => 'array',
+        'gallery_images'      => 'array',
+        'price_table'         => 'array',
+        'calculator_types'    => 'array',
+        'calculator_services' => 'array',
+        'calculator_range'    => 'array',
+        'reviews'             => 'array',
+        'faq'                 => 'array',
+        'is_active'           => 'boolean',
     ];
 
     /* -----------------------------------------------------------------

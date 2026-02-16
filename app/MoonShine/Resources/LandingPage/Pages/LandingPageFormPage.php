@@ -107,6 +107,32 @@ class LandingPageFormPage extends FormPage
                             Text::make('Ед. изм.'),
                         ]),
                 ]),
+                Tab::make('Калькулятор', [
+                    Textarea::make('Заголовок калькулятора', 'calculator_title'),
+                    Textarea::make('Текст калькулятора', 'calculator_text'),
+                    Json::make('Типы фундамента', 'calculator_types')
+                        ->fields([
+                            Text::make('Название', 'label'),
+                            Number::make('Значение (цена)', 'value'),
+                        ])
+                        ->removable()
+                        ->nullable(),
+                    Json::make('Услуги', 'calculator_services')
+                        ->fields([
+                            Text::make('Название', 'label'),
+                            Number::make('Коэффициент', 'value'),
+                        ])
+                        ->removable()
+                        ->nullable(),
+                    Json::make('Параметры диапазона', 'calculator_range')
+                        ->fields([
+                            Number::make('Минимум', 'min')->default(0),
+                            Number::make('Максимум', 'max')->default(100),
+                            Number::make('Шаг', 'step')->default(1),
+                            Number::make('Значение по умолчанию', 'default')->default(12),
+                        ])
+                        ->nullable(),
+                ]),
                 Tab::make('Отзывы', [
                     Textarea::make('Заголовок', 'reviews_title'),
 
