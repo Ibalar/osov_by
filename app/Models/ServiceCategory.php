@@ -24,6 +24,14 @@ class ServiceCategory extends Model
         'sort_order',
         'is_active',
         'project_category_id',
+        // Calculator fields
+        'calculator_title',
+        'calculator_description',
+        'calculator_enabled',
+        'calculator_fields',
+        'calculator_formula',
+        'calculator_currency',
+        'calculator_result_label',
     ];
 
     /**
@@ -31,6 +39,8 @@ class ServiceCategory extends Model
      */
     protected $casts = [
         'is_active' => 'boolean',
+        'calculator_enabled' => 'boolean',
+        'calculator_fields' => 'array',
     ];
 
     /* -----------------------------------------------------------------
