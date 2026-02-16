@@ -43,19 +43,23 @@ final class MoonShineLayout extends AppLayout
                 MenuItem::make(ServiceResource::class, 'Услуги'),
                 MenuItem::make(ServiceCategoryResource::class, 'Категории услуг'),
                 MenuItem::make(ServiceSubcategoryResource::class, 'Подкатегории услуг'),
-            ]),
+            ])
+            ->icon('inbox-stack'),
             MenuGroup::make('Готовые проекты', [
                 MenuItem::make(ProjectResource::class, 'Проекты'),
                 MenuItem::make(ProjectCategoryResource::class, 'Категории проектов'),
-            ]),
+            ])
+            ->icon('home-modern'),
             MenuGroup::make('Портфолио', [
                 MenuItem::make(PortfolioCategoryResource::class, 'Категории портфолио'),
                 MenuItem::make(PortfolioItemResource::class, 'Альбомы'),
-            ]),
-            MenuItem::make(PageResource::class, 'Страницы'),
-            MenuItem::make(SiteSettingResource::class, 'SiteSettings'),
+            ])
+            ->icon('photo'),
+            MenuItem::make(LandingPageResource::class, 'Посадочные страницы')->icon('rectangle-group'),
+            MenuItem::make(PageResource::class, 'Инфо страницы')->icon('window'),
+            MenuItem::make(SiteSettingResource::class, 'Настройки сайта')->icon('wrench'),
             ...parent::menu(),
-            MenuItem::make(LandingPageResource::class, 'LandingPages'),
+
         ];
     }
 

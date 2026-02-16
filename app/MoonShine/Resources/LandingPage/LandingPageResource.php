@@ -20,8 +20,10 @@ class LandingPageResource extends ModelResource
 {
     protected string $model = LandingPage::class;
 
-    protected string $title = 'LandingPages';
-    
+    protected string $title = 'Лэндинг Пейдж';
+
+    protected string $column = 'title';
+
     /**
      * @return list<class-string<PageContract>>
      */
