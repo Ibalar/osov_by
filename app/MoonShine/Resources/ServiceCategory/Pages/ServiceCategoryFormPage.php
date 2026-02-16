@@ -214,27 +214,27 @@ class ServiceCategoryFormPage extends FormPage
                 ]),
                 Tab::make('Калькулятор', [
                     Switcher::make('Включить калькулятор', 'calculator_enabled'),
-                    
+
                     Text::make('Заголовок калькулятора', 'calculator_title')
                         ->nullable()
                         ->hint('Заголовок секции с калькулятором'),
-                    
+
                     Textarea::make('Описание калькулятора', 'calculator_description')
                         ->nullable()
                         ->hint('Текст под заголовком калькулятора'),
-                    
+
                     Text::make('Подпись результата', 'calculator_result_label')
                         ->default('Итоговая стоимость')
                         ->hint('Подпись под результатом расчета'),
-                    
+
                     Text::make('Валюта', 'calculator_currency')
                         ->default('BYN')
                         ->hint('Символ валюты (например: BYN, руб., $)'),
-                    
+
                     Textarea::make('Формула расчета', 'calculator_formula')
                         ->nullable()
                         ->hint('Формула: используйте {field_key} для подстановки значений. Например: {width} * {length} * {price}'),
-                    
+
                     Json::make('Поля калькулятора', 'calculator_fields')
                         ->fields([
                             Text::make('Ключ', 'key')

@@ -118,8 +118,15 @@
     <link href="{{ asset('css/mousecursor.css') }}"
           rel="stylesheet">
 
+    <link rel="stylesheet" href="{{ asset('landing/style.css') }}">
+
     <link href="{{ asset('css/custom.css') }}"
           rel="stylesheet">
+
+    <link rel="stylesheet" type="text/css" href="{{ asset('landing/slick.css') }}"/>
+    <link rel="stylesheet" type="text/css" href="{{ asset('landing/slick-theme.css') }}"/>
+
+
 
     {{-- Дополнительные стили со страниц --}}
     @stack('styles')
@@ -154,8 +161,15 @@
 
 {{-- JS --}}
 <script src="{{ asset('js/jquery-3.7.1.min.js') }}"></script>
-
 <script src="{{ asset('js/bootstrap.min.js') }}"></script>
+<script src="{{ asset('landing/jquery.inputmask.min.js') }}"></script>
+<script src="{{ asset('landing/slick.min.js') }}"></script>
+<script src="{{ asset('landing/jquery.fancybox.min.js') }}"></script>
+<script src="{{ asset('landing/main.js') }}"></script>
+
+
+
+
 
 <script src="{{ asset('js/validator.min.js') }}"></script>
 

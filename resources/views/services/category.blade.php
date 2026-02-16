@@ -79,87 +79,56 @@
                         </div>
                     @endif
 
-                    <!-- Services List -->
-                    @if($services->isNotEmpty())
-                        <div class="our-amenities-prime bg-section" style="margin-top: 4rem;">
+                    {{-- Types Section --}}
+                    @if(!empty($category->types))
+                        <div class="apartments-plans">
                             <div class="container">
                                 <div class="row section-row">
-                                    <div class="col-lg-12">
+                                    <div class="col-xl-12">
                                         <!-- Section Title Start -->
-                                        <div class="section-title">
-                                            <span class="section-sub-title wow fadeInUp fs-6">Наши услуги</span>
-                                            <h2 class="text-anime-style-3" data-cursor="-opaque">Услуги в категории «{{ $category->title }}»</h2>
+                                        <div class="section-title section-title-center">
+                                            <h2 class="text-anime-style-3" data-cursor="-opaque">{{ $category->types_title ?? 'Типы' }}</h2>
                                         </div>
                                         <!-- Section Title End -->
                                     </div>
                                 </div>
 
                                 <div class="row">
-                                    @foreach($services as $service)
-                                        <div class="col-xl-4 col-md-6">
-                                            <div class="amenity-item-prime wow fadeInUp">
-
-                                                <div class="amenity-item-body-prime">
-
-                                                    <div class="amenity-item-content-prime">
-                                                        <h2>
-                                                            <a href="{{ route('services.show', $service->slug) }}">
-                                                                {{ $service->title }}
-                                                            </a>
-                                                        </h2>
-                                                        <p>{{ $service->excerpt }}</p>
-                                                    </div>
-
-                                                    <div class="amenity-item-footer-prime">
-                                                        <div class="hero-content-btn wow fadeInUp" data-wow-delay="0.4s">
-                                                            <a href="{{ route('services.show', $service->slug) }}" class="btn-default btn-highlighted">
-                                                                подробнее
-                                                            </a>
-
-                                                            @if($service->category?->projectCategory)
-                                                                <a href="{{ route('projects.category', $service->category->projectCategory->slug) }}" class="btn-default">
-                                                                    проекты
-                                                                </a>
-                                                            @endif
-                                                        </div>
-                                                    </div>
-
-                                                </div>
+                                    @foreach($category->types_images_urls ?? [] as $index => $type)
+                                    <div class="col-xl-4 col-md-6">
+                                        <!-- Apartments Plan Item Start -->
+                                        <div class="apartments-plan-item wow fadeInUp">
+                                            <!-- Apartments Plan Item Content Start -->
+                                            <div class="apartments-plan-item-content">
+                                                <h3>{!! $type['title'] ?? '' !!}</h3>
                                             </div>
+                                            <!-- Apartments Plan Item Content End -->
+
+                                            <!-- Apartments Plan Item Image Start -->
+                                            @if(isset($type['image_url']))
+                                            <div class="apartments-plan-item-image">
+                                                <figure>
+                                                    <img src="{{ asset('storage/' . $type['image']) }}" alt="{{ $type['title'] ?? '' }}">
+                                                </figure>
+                                            </div>
+                                            @endif
+                                            <!-- Apartments Plan Item Image End -->
+
+                                            <!-- Apartments Amenity List Start -->
+                                            <div class="apartments-plan-item-list">
+                                                <ul>
+                                                    <li><span><img src="{{ asset('images/icon-apartments-amenity-2.svg') }}" alt="Цена от">Стоимость</span>от {!! $type['price'] ?? '' !!} BYN/м³</li>
+                                                </ul>
+                                            </div>
+                                            <!-- Apartments Amenity List End -->
                                         </div>
+                                        <!-- Apartments Plan Item End -->
+                                    </div>
                                     @endforeach
                                 </div>
-                            </div>
-                        </div>
-                    @endif
 
-                    {{-- Types Section --}}
-                    @if(!empty($category->types))
-                    <section id="types" class="foundations" style="margin-top: 4rem;">
-                        <div class="container">
-                            <h2 class="title one">{{ $category->types_title ?? 'Типы' }}</h2>
-                            <div class="row justify-content-center">
-                                @foreach($category->types_images_urls ?? [] as $index => $type)
-                                <div class="col-md-6 col-lg-4 p-md-0 @if($index % 2 == 0 && $index > 0) pl-md-1 pl-lg-0 @else pr-md-1 @endif">
-                                    <div class="foundations__item">
-                                        @if(isset($type['image_url']))
-                                        <div class="foundations__img">
-                                            <img src="{{ $type['image_url'] }}" alt="{{ $type['title'] ?? '' }}">
-                                        </div>
-                                        @endif
-                                        <div class="foundations__content">
-                                            <p class="foundations__title">{!! $type['title'] ?? '' !!}</p>
-                                            <div class="foundations__price">
-                                                <span>Цена от</span>
-                                                <p>{!! $type['price'] ?? '' !!}</p>
-                                            </div>
-                                        </div>
-                                    </div>
-                                </div>
-                                @endforeach
                             </div>
                         </div>
-                    </section>
                     @endif
 
                     {{-- Examples Section --}}
@@ -228,7 +197,7 @@
                                         @foreach($category->price_table as $row)
                                         <tr>
                                             @foreach($row as $cell)
-                                            <td>{!! $cell !!}</td>
+                                                <td>{!! is_array($cell) ? trim(implode(', ', Arr::flatten($cell))) : $cell !!}</td>
                                             @endforeach
                                         </tr>
                                         @endforeach
@@ -270,7 +239,7 @@
                                                                 <label for="calc-field-{{ $fieldIndex }}" class="form-label">
                                                                     {{ $field['label'] ?? '' }}
                                                                 </label>
-                                                                
+
                                                                 @php
                                                                     $fieldKey = $field['key'] ?? 'field_' . $fieldIndex;
                                                                     $fieldType = $field['type'] ?? 'number';
@@ -290,13 +259,13 @@
                                                                             $optionLabel = $option['label'] ?? '';
                                                                             $isFirst = $loop->first;
                                                                         @endphp
-                                                                        
+
                                                                         @if($fieldType === 'radio')
                                                                             <div class="form-check">
-                                                                                <input class="form-check-input calculator-input" 
-                                                                                       type="radio" 
-                                                                                       name="{{ $fieldKey }}" 
-                                                                                       id="{{ $optionKey }}" 
+                                                                                <input class="form-check-input calculator-input"
+                                                                                       type="radio"
+                                                                                       name="{{ $fieldKey }}"
+                                                                                       id="{{ $optionKey }}"
                                                                                        value="{{ $optionValue }}"
                                                                                        data-field-key="{{ $fieldKey }}"
                                                                                        {{ $isFirst ? 'checked' : '' }}>
@@ -305,8 +274,8 @@
                                                                                 </label>
                                                                             </div>
                                                                         @else
-                                                                            <select class="form-select calculator-input" 
-                                                                                    id="calc-field-{{ $fieldIndex }}" 
+                                                                            <select class="form-select calculator-input"
+                                                                                    id="calc-field-{{ $fieldIndex }}"
                                                                                     name="{{ $fieldKey }}"
                                                                                     data-field-key="{{ $fieldKey }}">
                                                                                 <option value="">Выберите...</option>
@@ -318,10 +287,10 @@
                                                                     @endforeach
                                                                 @elseif($fieldType === 'checkbox')
                                                                     <div class="form-check">
-                                                                        <input class="form-check-input calculator-input" 
-                                                                               type="checkbox" 
-                                                                               id="calc-field-{{ $fieldIndex }}" 
-                                                                               name="{{ $fieldKey }}" 
+                                                                        <input class="form-check-input calculator-input"
+                                                                               type="checkbox"
+                                                                               id="calc-field-{{ $fieldIndex }}"
+                                                                               name="{{ $fieldKey }}"
                                                                                value="1"
                                                                                data-field-key="{{ $fieldKey }}"
                                                                                {{ $defaultValue ? 'checked' : '' }}>
@@ -331,14 +300,14 @@
                                                                     </div>
                                                                 @elseif($fieldType === 'range')
                                                                     <div class="range-slider-wrapper">
-                                                                        <input type="range" 
-                                                                               class="form-range calculator-input" 
-                                                                               id="calc-field-{{ $fieldIndex }}" 
+                                                                        <input type="range"
+                                                                               class="form-range calculator-input"
+                                                                               id="calc-field-{{ $fieldIndex }}"
                                                                                name="{{ $fieldKey }}"
                                                                                data-field-key="{{ $fieldKey }}"
-                                                                               min="{{ $min }}" 
-                                                                               max="{{ $max }}" 
-                                                                               step="{{ $step }}" 
+                                                                               min="{{ $min }}"
+                                                                               max="{{ $max }}"
+                                                                               step="{{ $step }}"
                                                                                value="{{ $defaultValue }}">
                                                                         <div class="range-value-display">
                                                                             <span class="range-value">{{ $defaultValue }}</span>
@@ -346,9 +315,9 @@
                                                                         </div>
                                                                     </div>
                                                                 @else
-                                                                    <input type="{{ $fieldType }}" 
-                                                                           class="form-control calculator-input" 
-                                                                           id="calc-field-{{ $fieldIndex }}" 
+                                                                    <input type="{{ $fieldType }}"
+                                                                           class="form-control calculator-input"
+                                                                           id="calc-field-{{ $fieldIndex }}"
                                                                            name="{{ $fieldKey }}"
                                                                            data-field-key="{{ $fieldKey }}"
                                                                            placeholder="{{ $placeholder }}"
@@ -360,7 +329,7 @@
                                                             </div>
                                                         @endforeach
                                                     </div>
-                                                    
+
                                                     <div class="col-lg-6">
                                                         <div class="calculator-result">
                                                             <div class="result-display">
@@ -372,7 +341,7 @@
                                                                     <span class="currency">{{ $category->calculator_currency ?? 'BYN' }}</span>
                                                                 </div>
                                                             </div>
-                                                            
+
                                                             <div class="calculator-actions mt-3">
                                                                 <button type="button" class="btn btn-primary" onclick="calculateResult()">
                                                                     Пересчитать
@@ -381,7 +350,7 @@
                                                                     Сбросить
                                                                 </button>
                                                             </div>
-                                                            
+
                                                             @if($category->calculator_formula)
                                                                 <div class="formula-display mt-3">
                                                                     <small class="text-muted">
@@ -586,12 +555,12 @@
     function calculateResult() {
         const inputs = getCalculatorInputs();
         const values = {};
-        
+
         // Collect all field values
         inputs.forEach(input => {
             const fieldKey = input.dataset.fieldKey || input.name;
             let value;
-            
+
             if (input.type === 'checkbox') {
                 value = input.checked ? 1 : 0;
             } else if (input.type === 'radio') {
@@ -603,13 +572,13 @@
             } else {
                 value = parseFloat(input.value) || 0;
             }
-            
+
             values[fieldKey] = value;
         });
 
         // Replace formula placeholders with actual values
         let formula = calculatorConfig.formula || '';
-        
+
         // If no formula, calculate as sum of all field values multiplied
         if (!formula && Object.keys(values).length > 0) {
             // Default: multiply all values
@@ -650,10 +619,10 @@
     // Reset calculator to default values
     function resetCalculator() {
         const inputs = getCalculatorInputs();
-        
+
         inputs.forEach((input, index) => {
             const fieldConfig = calculatorConfig.fields[index];
-            
+
             if (input.type === 'checkbox') {
                 input.checked = fieldConfig?.default_value ? true : false;
             } else if (input.type === 'radio') {
@@ -666,7 +635,7 @@
             } else {
                 input.value = fieldConfig?.default_value || '';
             }
-            
+
             // Update range display if applicable
             if (input.type === 'range') {
                 const display = input.parentElement.querySelector('.range-value');
@@ -682,7 +651,7 @@
     // Initialize calculator on page load
     document.addEventListener('DOMContentLoaded', function() {
         const inputs = getCalculatorInputs();
-        
+
         // Add event listeners to all inputs
         inputs.forEach(input => {
             // For range sliders, update display value
@@ -695,7 +664,7 @@
                     calculateResult();
                 });
             }
-            
+
             // Add change/input listeners for real-time calculation
             input.addEventListener('change', calculateResult);
             if (input.type !== 'range') {
