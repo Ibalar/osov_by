@@ -124,8 +124,62 @@
     </div>
     <!-- About US Section End -->
 
-    <!-- Our Amenities Section Start -->
+    <!-- Popular Categories Section Start -->
     <div class="our-amenities-prime bg-section">
+        <div class="container">
+            <div class="row section-row">
+                <div class="col-lg-12">
+                    <!-- Section Title Start -->
+                    <div class="section-title section-title-center">
+                        <span class="section-sub-title wow fadeInUp fs-6">Популярные категории</span>
+                        <h2 class="text-anime-style-3" data-cursor="-opaque">Наши услуги</h2>
+                    </div>
+                    <!-- Section Title End -->
+                </div>
+            </div>
+
+            <div class="row">
+                @foreach($popularCategories as $category)
+                    <div class="col-xl-4 col-md-6">
+                        <div class="amenity-item-prime wow fadeInUp">
+                            <div class="amenity-item-image-prime">
+                                <a href="{{ route('services.category', $category->slug) }}">
+                                    @if($category->image)
+                                        <img src="{{ asset('storage/' . $category->image) }}" alt="{{ $category->title }}">
+                                    @else
+                                        <img src="{{ asset('images/default-category.jpg') }}" alt="{{ $category->title }}">
+                                    @endif
+                                </a>
+                            </div>
+
+                            <div class="amenity-item-body-prime">
+                                <div class="amenity-item-content-prime">
+                                    <h2>
+                                        <a href="{{ route('services.category', $category->slug) }}">
+                                            {{ $category->title }}
+                                        </a>
+                                    </h2>
+                                    <p>{{ Str::limit(strip_tags($category->description), 100) }}</p>
+                                </div>
+
+                                <div class="amenity-item-footer-prime">
+                                    <div class="hero-content-btn wow fadeInUp" data-wow-delay="0.4s">
+                                        <a href="{{ route('services.category', $category->slug) }}" class="btn-default btn-highlighted">
+                                            подробнее
+                                        </a>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                @endforeach
+            </div>
+        </div>
+    </div>
+    <!-- Popular Categories Section End -->
+
+    <!-- Our Amenities Section Start -->
+    <div class="our-amenities-prime">
         <div class="container">
             <div class="row section-row">
                 <div class="col-lg-12">

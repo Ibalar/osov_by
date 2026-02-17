@@ -23,6 +23,7 @@ class ServiceCategory extends Model
         'faq',
         'sort_order',
         'is_active',
+        'is_popular',
         'project_category_id',
         // Calculator fields
         'calculator_title',
@@ -54,6 +55,7 @@ class ServiceCategory extends Model
      */
     protected $casts = [
         'is_active' => 'boolean',
+        'is_popular' => 'boolean',
         'calculator_enabled' => 'boolean',
         'calculator_fields' => 'array',
         'hero_items' => 'array',
@@ -113,6 +115,14 @@ class ServiceCategory extends Model
     public function scopeActive(Builder $query): Builder
     {
         return $query->where('is_active', true);
+    }
+
+    /**
+     * Только популярные категории
+     */
+    public function scopePopular(Builder $query): Builder
+    {
+        return $query->where('is_popular', true);
     }
 
     /**
