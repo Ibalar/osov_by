@@ -107,6 +107,12 @@ class ServiceCategoryFormPage extends FormPage
                     Textarea::make('Подзаголовок', 'hero_subtitle')
                         ->nullable()
                         ->hint('Подзаголовок в hero секции'),
+                    Image::make('Фоновое изображение', 'hero_bg_image')
+                        ->dir('services/categories')
+                        ->disk('public')
+                        ->allowedExtensions(['jpg', 'jpeg', 'png', 'webp'])
+                        ->nullable()
+                        ->hint('Фоновое изображение для hero секции (header-body__img)'),
                     Json::make('Преимущества', 'hero_items')
                         ->fields([
                             Text::make('Текст', 'text')

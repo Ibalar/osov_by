@@ -35,6 +35,7 @@ class ServiceCategory extends Model
         // Landing blocks
         'hero_title',
         'hero_subtitle',
+        'hero_bg_image',
         'hero_items',
         'types_title',
         'types',
@@ -169,5 +170,15 @@ class ServiceCategory extends Model
                 return $example;
             })
             ->toArray();
+    }
+
+    /**
+     * URL фонового изображения hero секции
+     */
+    public function getHeroBgImageUrlAttribute(): ?string
+    {
+        return $this->hero_bg_image
+            ? asset('storage/services/categories/' . $this->slug . '/' . $this->hero_bg_image)
+            : null;
     }
 }

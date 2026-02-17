@@ -13,6 +13,7 @@ Added the following columns to `service_categories` table:
 #### Hero Section
 - `hero_title` (text, nullable) - Заголовок в hero секции
 - `hero_subtitle` (text, nullable) - Подзаголовок в hero секции
+- `hero_bg_image` (string, nullable) - Фоновое изображение hero секции
 - `hero_items` (json, nullable) - Преимущества в hero секции
 
 #### Types Section
@@ -40,7 +41,7 @@ Added the following columns to `service_categories` table:
 
 #### Updated Fillable Fields
 Added all new landing block fields to the `$fillable` array:
-- `hero_title`, `hero_subtitle`, `hero_items`
+- `hero_title`, `hero_subtitle`, `hero_bg_image`, `hero_items`
 - `types_title`, `types`
 - `examples_title`, `examples`
 - `gallery_title`, `gallery_images`
@@ -60,6 +61,7 @@ Added JSON casts for all JSON fields:
 - `getGalleryImagesUrlsAttribute()` - Returns array of full URLs for gallery images
 - `getTypesImagesUrlsAttribute()` - Returns array of types with image URLs
 - `getExamplesImagesUrlsAttribute()` - Returns array of examples with image URLs
+- `getHeroBgImageUrlAttribute()` - Returns full URL for hero background image
 
 ### 3. MoonShine Admin Interface
 **File:** `app/MoonShine/Resources/ServiceCategory/Pages/ServiceCategoryFormPage.php`
@@ -69,6 +71,7 @@ Added new tabs to the ServiceCategory form:
 #### Hero Section Tab
 - Textarea: Заголовок (hero_title)
 - Textarea: Подзаголовок (hero_subtitle)
+- Image: Фоновое изображение (hero_bg_image) - background image for header-body__img
 - Json: Преимущества (hero_items) - array of text items
 
 #### Types Tab
@@ -96,6 +99,7 @@ Added new tabs to the ServiceCategory form:
 
 #### Added Hero Section
 - Renders hero title, subtitle, and hero items
+- Supports configurable background image for `header-body__img` block via `hero_bg_image` field
 - Includes contact form with phone number input
 - Only renders if `hero_title` or `hero_items` is set
 
@@ -160,7 +164,8 @@ storage/services/categories/{slug}/
 │   └── {image_files}
 ├── gallery/
 │   └── {image_files}
-└── {category_image}
+├── {category_image}
+└── {hero_bg_image}
 ```
 
 ## Usage
