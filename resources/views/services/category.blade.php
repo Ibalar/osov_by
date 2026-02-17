@@ -4,9 +4,9 @@
 
     {{-- Hero Section --}}
     @if($category->hero_title || !empty($category->hero_items))
-    <header class="header">
+    <div class="hero__section">
         <div class="header-body">
-            <div class="header-body__img"@if($category->hero_bg_image_url) style="background-image: url('{{ $category->hero_bg_image_url }}')"@endif></div>
+            <div class="header-body__img"@if($category->hero_bg_image_url) style="background-image: url('{{ asset('storage/' . $category->hero_bg_image) }}'); border-radius: 20px;"@endif></div>
             <div class="container header-body__box">
                 <div class="row">
                     <div class="col-lg-6 p-md-0">
@@ -38,12 +38,39 @@
                                     <fieldset class="form__fields form__hide-success">
                                         <h3 class="form-block__title">Оставьте <span>заявку</span></h3>
 
+                                        <div class="form-block__number">
+                                            <div class="form-block__count">
+                                                <span>1</span>
+                                            </div>
+                                            <div class="form-block-text">
+                                                <p>Оставьте свой номер телефона</p>
+                                            </div>
+                                        </div>
+
                                         <div class="form-block__input">
                                             <input class="mask-phone zphone required" name="phone" type="tel" placeholder="Номер телефона +375...">
                                         </div>
                                         <br>
                                         <div class="form-block__button">
                                             <button type="submit" class="button animat-2 feedback">Отправить заявку</button>
+                                        </div>
+
+                                        <div class="form-block__number mt-4">
+                                            <div class="form-block__count">
+                                                <span>2</span>
+                                            </div>
+                                            <div class="form-block-text">
+                                                <p><span>Наш специалист свяжется с Вами в течение 30 минут</span>, задаст уточняющие вопросы и озвучит стоимость</p>
+                                            </div>
+                                        </div>
+
+                                        <div class="form-block__number mt-4">
+                                            <div class="form-block__count">
+                                                <span>3</span>
+                                            </div>
+                                            <div class="form-block-text">
+                                                <p><span>Если цена Вас устроит</span>, к Вам приедет инженер для замера и более предметного разговора и составления конечной сметы. <span class="form-block-text__ital">Выезд бесплатный.</span></p>
+                                            </div>
                                         </div>
 
                                         <div class="form-block__checkbox">
@@ -61,7 +88,7 @@
                 </div>
             </div>
         </div>
-    </header>
+    </div>
     @endif
 
     <div class="page-single-post">

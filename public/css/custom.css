@@ -2565,7 +2565,7 @@ header.main-header .header-sticky.active{
 	background-repeat: no-repeat;
 	background-size: cover;
 	border-radius: 20px;
-	padding: 235px 0 135px;
+	padding: 155px 0 85px;
 	margin: 15px 15px 0;
 	overflow: hidden;
 }
@@ -10592,24 +10592,24 @@ opacity: 0.8;
     .service-category-content {
         padding: 20px;
     }
-    
+
     .service-category-content h3 {
         font-size: 18px;
     }
-    
+
     .service-item {
         padding: 20px;
     }
-    
+
     .service-item-content h3 {
         font-size: 18px;
     }
-    
+
     .cta-box {
         padding: 20px;
         margin-bottom: 20px;
     }
-    
+
     .service-cta .col-lg-6:last-child .cta-box {
         margin-bottom: 0;
     }
@@ -10619,28 +10619,34 @@ opacity: 0.8;
     .service-category-footer {
         flex-direction: column;
     }
-    
+
     .service-category-footer .btn-default {
         width: 100%;
     }
-    
+
     .service-item {
         margin-bottom: 20px;
     }
-    
+
     .service-price {
         font-size: 14px;
     }
-    
+
     .service-price .price-value {
         font-size: 16px;
     }
-    
+
     .service-category-image img {
         aspect-ratio: 1 / 0.8;
     }
-    
+
     .service-breadcrumbs {
         font-size: 13px;
     }
+}
+
+
+
+.hero__section {
+    margin: 15px 15px 0;
 }
