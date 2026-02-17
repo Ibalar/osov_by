@@ -6,7 +6,7 @@
     @if($category->hero_title || !empty($category->hero_items))
     <header class="header">
         <div class="header-body">
-            <div class="header-body__img"></div>
+            <div class="header-body__img"@if($category->hero_bg_image_url) style="background-image: url('{{ $category->hero_bg_image_url }}')"@endif></div>
             <div class="container header-body__box">
                 <div class="row">
                     <div class="col-lg-6 p-md-0">
