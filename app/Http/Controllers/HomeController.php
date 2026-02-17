@@ -5,6 +5,7 @@ namespace App\Http\Controllers;
 use Illuminate\Http\Request;
 use App\Models\Page;
 use App\Models\Service;
+use App\Models\ServiceCategory;
 use App\Models\Project;
 
 class HomeController extends Controller
@@ -31,6 +32,15 @@ class HomeController extends Controller
             ->limit(6)
             ->get();
 
+        /**
+         * Популярные категории услуг
+         */
+        $popularCategories = ServiceCategory::query()
+            ->active()
+            ->popular()
+            ->orderBy('sort_order')
+            ->limit(6)
+            ->get();
 
         /**
          * Готовые проекты (для главной)
@@ -51,6 +61,7 @@ class HomeController extends Controller
 
             // Content
             'popularServices' => $popularServices,
+            'popularCategories' => $popularCategories,
             'projects' => $projects,
         ]);
     }

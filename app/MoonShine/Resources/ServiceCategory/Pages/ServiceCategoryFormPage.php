@@ -79,7 +79,10 @@ class ServiceCategoryFormPage extends FormPage
                         ->unwrap(),
 
 
-                    Switcher::make('Активность', 'is_active'),
+                    Flex::make([
+                        Switcher::make('Активность', 'is_active'),
+                        Switcher::make('Популярная', 'is_popular'),
+                    ])->unwrap(),
 
                     Image::make('Изображение', 'image')
                         ->dir('services/categories')
