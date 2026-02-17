@@ -124,111 +124,46 @@
     </div>
     <!-- About US Section End -->
 
-    <!-- Popular Categories Section Start -->
-    <div class="our-amenities-prime bg-section">
+    <div class="page-blog bg-section">
         <div class="container">
             <div class="row section-row">
-                <div class="col-lg-12">
+                <div class="col-xl-12">
                     <!-- Section Title Start -->
                     <div class="section-title section-title-center">
-                        <span class="section-sub-title wow fadeInUp fs-6">Популярные категории</span>
                         <h2 class="text-anime-style-3" data-cursor="-opaque">Наши услуги</h2>
                     </div>
                     <!-- Section Title End -->
                 </div>
             </div>
-
             <div class="row">
                 @foreach($popularCategories as $category)
-                    <div class="col-xl-4 col-md-6">
-                        <div class="amenity-item-prime wow fadeInUp">
-                            <div class="amenity-item-image-prime">
-                                <a href="{{ route('services.category', $category->slug) }}">
+                <div class="col-xl-4 col-md-6">
+                    <div class="post-item wow fadeInUp">
+                        <div class="post-featured-image">
+                            <a href="{{ route('services.category', $category->slug) }}" data-cursor-text="Подробнее">
+                                <figure class="image-anime">
                                     @if($category->image)
                                         <img src="{{ asset('storage/' . $category->image) }}" alt="{{ $category->title }}">
                                     @else
                                         <img src="{{ asset('images/default-category.jpg') }}" alt="{{ $category->title }}">
                                     @endif
-                                </a>
+                                </figure>
+                            </a>
+                        </div>
+                        <div class="post-item-body">
+                            <div class="post-item-body-content">
+                                <div class="post-item-content">
+                                    <h2><a href="{{ route('services.category', $category->slug) }}">{{ $category->hero_title }}</a></h2>
+                                </div>
                             </div>
-
-                            <div class="amenity-item-body-prime">
-                                <div class="amenity-item-content-prime">
-                                    <h2>
-                                        <a href="{{ route('services.category', $category->slug) }}">
-                                            {{ $category->title }}
-                                        </a>
-                                    </h2>
-                                    <p>{{ Str::limit(strip_tags($category->description), 100) }}</p>
-                                </div>
-
-                                <div class="amenity-item-footer-prime">
-                                    <div class="hero-content-btn wow fadeInUp" data-wow-delay="0.4s">
-                                        <a href="{{ route('services.category', $category->slug) }}" class="btn-default btn-highlighted">
-                                            подробнее
-                                        </a>
-                                    </div>
-                                </div>
+                            <div class="post-item-btn">
+                                <a href="{{ route('services.category', $category->slug) }}" class="readmore-btn">Подробнее</a>
                             </div>
                         </div>
                     </div>
-                @endforeach
-            </div>
-        </div>
-    </div>
-    <!-- Popular Categories Section End -->
-
-    <!-- Our Amenities Section Start -->
-    <div class="our-amenities-prime">
-        <div class="container">
-            <div class="row section-row">
-                <div class="col-lg-12">
-                    <!-- Section Title Start -->
-                    <div class="section-title section-title-center">
-                        <span class="section-sub-title wow fadeInUp fs-6">Наши услуги</span>
-                        <h2 class="text-anime-style-3" data-cursor="-opaque">От мечты до новоселья с уверенностью в результате</h2>
-                    </div>
-                    <!-- Section Title End -->
                 </div>
-            </div>
-
-            <div class="row">
-                @foreach($popularServices as $service)
-                    <div class="col-xl-4 col-md-6">
-                        <div class="amenity-item-prime wow fadeInUp">
-
-                            <div class="amenity-item-body-prime">
-
-                                <div class="amenity-item-content-prime">
-                                    <h2>
-                                        <a href="{{ route('services.show', $service->slug) }}">
-                                            {{ $service->title }}
-                                        </a>
-                                    </h2>
-                                    <p>{{ $service->excerpt }}</p>
-                                </div>
-
-                                <div class="amenity-item-footer-prime">
-                                    <div class="hero-content-btn wow fadeInUp" data-wow-delay="0.4s">
-                                        <a href="{{ route('services.show', $service->slug) }}" class="btn-default btn-highlighted">
-                                            подробнее
-                                        </a>
-
-                                        @if($service->category?->projectCategory)
-                                            <a href="{{ route('projects.category', $service->category->projectCategory->slug) }}" class="btn-default">
-                                                проекты
-                                            </a>
-                                        @endif
-                                    </div>
-                                </div>
-
-                            </div>
-                        </div>
-                    </div>
                 @endforeach
             </div>
-
         </div>
     </div>
-    <!-- Our Amenities Section End -->
 @endsection
