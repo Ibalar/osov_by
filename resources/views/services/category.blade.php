@@ -23,7 +23,7 @@
                             @foreach($category->hero_items_with_icons as $item)
                             <div class="header-body__item{{ isset($item['icon_url']) && $item['icon_url'] ? ' header-body__item--has-icon' : '' }}">
                                 @if(isset($item['icon_url']) && $item['icon_url'])
-                                <img src="{{ $item['icon_url'] }}" alt="" class="header-body__icon">
+                                <img src="{{ asset('storage/' .$item['icon']) }}" alt="" class="header-body__icon">
                                 @endif
                                 <p>{!! $item['text'] ?? '' !!}</p>
                             </div>
@@ -99,16 +99,6 @@
             <div class="row">
                 <div class="col-lg-12">
 
-                    <!-- Post Single Content Start -->
-
-                    @if(!empty($category->description))
-                        <div class="post-content">
-                            <div class="post-entry">
-                                {!! $category->description !!}
-                            </div>
-                        </div>
-                    @endif
-
                     {{-- Types Section --}}
                     @if(!empty($category->types))
                         <div class="apartments-plans">
@@ -125,41 +115,53 @@
 
                                 <div class="row">
                                     @foreach($category->types_images_urls ?? [] as $index => $type)
-                                    <div class="col-xl-4 col-md-6">
-                                        <!-- Apartments Plan Item Start -->
-                                        <div class="apartments-plan-item wow fadeInUp">
-                                            <!-- Apartments Plan Item Content Start -->
-                                            <div class="apartments-plan-item-content">
-                                                <h3>{!! $type['title'] ?? '' !!}</h3>
-                                            </div>
-                                            <!-- Apartments Plan Item Content End -->
+                                        <div class="col-xl-4 col-md-6">
+                                            <!-- Apartments Plan Item Start -->
+                                            <div class="apartments-plan-item wow fadeInUp">
+                                                <!-- Apartments Plan Item Content Start -->
+                                                <div class="apartments-plan-item-content">
+                                                    <h3>{!! $type['title'] ?? '' !!}</h3>
+                                                </div>
+                                                <!-- Apartments Plan Item Content End -->
 
-                                            <!-- Apartments Plan Item Image Start -->
-                                            @if(isset($type['image_url']))
-                                            <div class="apartments-plan-item-image">
-                                                <figure>
-                                                    <img src="{{ asset('storage/' . $type['image']) }}" alt="{{ $type['title'] ?? '' }}">
-                                                </figure>
-                                            </div>
-                                            @endif
-                                            <!-- Apartments Plan Item Image End -->
+                                                <!-- Apartments Plan Item Image Start -->
+                                                @if(isset($type['image_url']))
+                                                    <div class="apartments-plan-item-image">
+                                                        <figure>
+                                                            <img src="{{ asset('storage/' . $type['image']) }}" alt="{{ $type['title'] ?? '' }}">
+                                                        </figure>
+                                                    </div>
+                                                @endif
+                                                <!-- Apartments Plan Item Image End -->
 
-                                            <!-- Apartments Amenity List Start -->
-                                            <div class="apartments-plan-item-list">
-                                                <ul>
-                                                    <li><span><img src="{{ asset('images/icon-apartments-amenity-2.svg') }}" alt="Цена от">Стоимость</span>от {!! $type['price'] ?? '' !!} BYN/м³</li>
-                                                </ul>
+                                                <!-- Apartments Amenity List Start -->
+                                                <div class="apartments-plan-item-list">
+                                                    <ul>
+                                                        <li><span><img src="{{ asset('images/icon-apartments-amenity-2.svg') }}" alt="Цена от">Стоимость</span>от {!! $type['price'] ?? '' !!} BYN/м³</li>
+                                                    </ul>
+                                                </div>
+                                                <!-- Apartments Amenity List End -->
                                             </div>
-                                            <!-- Apartments Amenity List End -->
+                                            <!-- Apartments Plan Item End -->
                                         </div>
-                                        <!-- Apartments Plan Item End -->
-                                    </div>
                                     @endforeach
                                 </div>
 
                             </div>
                         </div>
                     @endif
+
+                    <!-- Post Single Content Start -->
+
+                    @if(!empty($category->description))
+                        <div class="post-content">
+                            <div class="post-entry">
+                                {!! $category->description !!}
+                            </div>
+                        </div>
+                    @endif
+
+
 
                     {{-- Examples Section --}}
                     @if(!empty($category->examples))
