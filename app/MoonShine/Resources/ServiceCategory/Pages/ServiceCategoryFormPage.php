@@ -155,7 +155,7 @@ class ServiceCategoryFormPage extends FormPage
                         ->hint('Заголовок галереи'),
                     Json::make('Изображения', 'gallery_images')
                         ->fields([
-                            Image::make('Фото')
+                            Image::make('Фото', 'image')
                                 ->disk('public')
                                 ->dir('services/categories/gallery')
                                 ->hint('Изображение галереи'),

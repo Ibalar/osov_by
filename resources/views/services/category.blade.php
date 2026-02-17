@@ -171,6 +171,25 @@
                         </div>
                     @endif
 
+                    {{-- Gallery Section --}}
+                    @dd($category->gallery_images, $category->gallery_images_urls)
+                    @if(!empty($category->gallery_images))
+                        <section id="gallery" class="gallery" style="margin-top: 4rem;">
+                            <div class="container">
+                                <h2 class="title one">{{ $category->gallery_title ?? 'Галерея' }}</h2>
+                                <div class="row">
+                                    @foreach($category->gallery_images_urls ?? [] as $image)
+                                        <div class="col-md-6 col-lg-4 p-md-0 mb-4">
+                                            <a href="{{ $image }}" data-fancybox="gallery" class="gallery__item">
+                                                <img src="{{ $image }}" alt="Галерея">
+                                            </a>
+                                        </div>
+                                    @endforeach
+                                </div>
+                            </div>
+                        </section>
+                    @endif
+
 
 
                     {{-- Examples Section --}}
@@ -201,23 +220,7 @@
                     </section>
                     @endif
 
-                    {{-- Gallery Section --}}
-                    @if(!empty($category->gallery_images))
-                    <section id="gallery" class="gallery" style="margin-top: 4rem;">
-                        <div class="container">
-                            <h2 class="title one">{{ $category->gallery_title ?? 'Галерея' }}</h2>
-                            <div class="row">
-                                @foreach($category->gallery_images_urls ?? [] as $image)
-                                <div class="col-md-6 col-lg-4 p-md-0 mb-4">
-                                    <a href="{{ $image }}" data-fancybox="gallery" class="gallery__item">
-                                        <img src="{{ $image }}" alt="Галерея">
-                                    </a>
-                                </div>
-                                @endforeach
-                            </div>
-                        </div>
-                    </section>
-                    @endif
+
 
                     {{-- Price Table Section --}}
                     @if(!empty($category->price_table))
