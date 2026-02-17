@@ -94,74 +94,72 @@
     </div>
     @endif
 
+    {{-- Types Section --}}
+    @if(!empty($category->types))
+        <div class="apartments-plans">
+            <div class="container">
+                <div class="row section-row">
+                    <div class="col-xl-12">
+                        <!-- Section Title Start -->
+                        <div class="section-title section-title-center">
+                            <h2 class="text-anime-style-3" data-cursor="-opaque">{{ $category->types_title ?? 'Типы' }}</h2>
+                        </div>
+                        <!-- Section Title End -->
+                    </div>
+                </div>
+
+                <div class="row">
+                    @foreach($category->types_images_urls ?? [] as $index => $type)
+                        <div class="col-xl-4 col-md-6">
+                            <!-- Apartments Plan Item Start -->
+                            <div class="apartments-plan-item wow fadeInUp">
+                                <!-- Apartments Plan Item Content Start -->
+                                <div class="apartments-plan-item-content">
+                                    <h3>{!! $type['title'] ?? '' !!}</h3>
+                                </div>
+                                <!-- Apartments Plan Item Content End -->
+
+                                <!-- Apartments Plan Item Image Start -->
+                                @if(isset($type['image_url']))
+                                    <div class="apartments-plan-item-image">
+                                        <figure>
+                                            <img src="{{ asset('storage/' . $type['image']) }}" alt="{{ $type['title'] ?? '' }}">
+                                        </figure>
+                                    </div>
+                                @endif
+                                <!-- Apartments Plan Item Image End -->
+
+                                <!-- Apartments Amenity List Start -->
+                                <div class="apartments-plan-item-list">
+                                    <ul>
+                                        @php
+                                            $unit = $type['unit'] ?? '';
+                                            $map = [
+                                                'value 1' => 'м²',
+                                                'value 2' => 'м³',
+                                                'value 3' => 'м.пог',
+                                                'value 4' => 'шт.',
+                                            ];
+                                            $unit = $map[$unit] ?? $unit;
+                                        @endphp
+                                        <li><span><img src="{{ asset('images/icon-apartments-amenity-2.svg') }}" alt="Цена от">Стоимость</span>от {!! $type['price'] ?? '' !!} BYN/{{ $unit ?? '' }}</li>
+                                    </ul>
+                                </div>
+                                <!-- Apartments Amenity List End -->
+                            </div>
+                            <!-- Apartments Plan Item End -->
+                        </div>
+                    @endforeach
+                </div>
+
+            </div>
+        </div>
+    @endif
+
     <div class="page-single-post">
         <div class="container">
             <div class="row">
                 <div class="col-lg-12">
-
-                    {{-- Types Section --}}
-                    @if(!empty($category->types))
-                        <div class="apartments-plans">
-                            <div class="container">
-                                <div class="row section-row">
-                                    <div class="col-xl-12">
-                                        <!-- Section Title Start -->
-                                        <div class="section-title section-title-center">
-                                            <h2 class="text-anime-style-3" data-cursor="-opaque">{{ $category->types_title ?? 'Типы' }}</h2>
-                                        </div>
-                                        <!-- Section Title End -->
-                                    </div>
-                                </div>
-
-                                <div class="row">
-                                    @foreach($category->types_images_urls ?? [] as $index => $type)
-                                        <div class="col-xl-4 col-md-6">
-                                            <!-- Apartments Plan Item Start -->
-                                            <div class="apartments-plan-item wow fadeInUp">
-                                                <!-- Apartments Plan Item Content Start -->
-                                                <div class="apartments-plan-item-content">
-                                                    <h3>{!! $type['title'] ?? '' !!}</h3>
-                                                </div>
-                                                <!-- Apartments Plan Item Content End -->
-
-                                                <!-- Apartments Plan Item Image Start -->
-                                                @if(isset($type['image_url']))
-                                                    <div class="apartments-plan-item-image">
-                                                        <figure>
-                                                            <img src="{{ asset('storage/' . $type['image']) }}" alt="{{ $type['title'] ?? '' }}">
-                                                        </figure>
-                                                    </div>
-                                                @endif
-                                                <!-- Apartments Plan Item Image End -->
-
-                                                <!-- Apartments Amenity List Start -->
-                                                <div class="apartments-plan-item-list">
-                                                    <ul>
-                                                        @php
-                                                            $unit = $type['unit'] ?? '';
-                                                            $map = [
-                                                                'value 1' => 'м²',
-                                                                'value 2' => 'м³',
-                                                                'value 3' => 'м.пог',
-                                                                'value 4' => 'шт.',
-                                                            ];
-                                                            $unit = $map[$unit] ?? $unit;
-                                                        @endphp
-                                                        <li><span><img src="{{ asset('images/icon-apartments-amenity-2.svg') }}" alt="Цена от">Стоимость</span>от {!! $type['price'] ?? '' !!} BYN/{{ $unit ?? '' }}</li>
-                                                    </ul>
-                                                </div>
-                                                <!-- Apartments Amenity List End -->
-                                            </div>
-                                            <!-- Apartments Plan Item End -->
-                                        </div>
-                                    @endforeach
-                                </div>
-
-                            </div>
-                        </div>
-                    @endif
-
-                    <!-- Post Single Content Start -->
 
                     @if(!empty($category->description))
                         <div class="post-content">
@@ -171,23 +169,7 @@
                         </div>
                     @endif
 
-                    {{-- Gallery Section --}}
-                    @if(!empty($category->gallery_images))
-                        <section id="gallery" class="gallery" style="margin-top: 4rem;">
-                            <div class="container">
-                                <h2 class="title one">{{ $category->gallery_title ?? 'Галерея' }}</h2>
-                                <div class="row">
-                                    @foreach($category->gallery_images_urls ?? [] as $image)
-                                        <div class="col-md-6 col-lg-4 p-md-0 mb-4">
-                                            <a href="{{ $image }}" data-fancybox="gallery" class="gallery__item">
-                                                <img src="{{ $image }}" alt="Галерея">
-                                            </a>
-                                        </div>
-                                    @endforeach
-                                </div>
-                            </div>
-                        </section>
-                    @endif
+
 
 
 
@@ -252,171 +234,7 @@
                     </section>
                     @endif
 
-                    <!-- Universal Calculator Section -->
-                    @if($category->calculator_enabled && !empty($category->calculator_fields))
-                        <section id="calculator" class="calculator" style="margin-top: 4rem;">
-                            <div class="container">
-                                <h2 class="title one">
-                                    {{ $category->calculator_title ?? 'Калькулятор стоимости услуг' }}
-                                </h2>
-                                @if($category->calculator_description)
-                                    <div class="calculator-description mb-4">
-                                        {!! $category->calculator_description !!}
-                                    </div>
-                                @endif
 
-                                <div class="calculator__container">
-                                    <div class="form">
-                                        <form id="universal-calculator" class="calculator-form">
-                                            <div class="row">
-                                                <div class="col-lg-6 col-xl-5 p-lg-0">
-                                                    @foreach($category->calculator_fields as $fieldIndex => $field)
-                                                        @php
-                                                            $fieldKey = $field['key'] ?? 'field_' . $fieldIndex;
-                                                            $fieldType = $field['type'] ?? 'number';
-                                                            $defaultValue = $field['default_value'] ?? '';
-                                                            $placeholder = $field['placeholder'] ?? '';
-                                                            $min = $field['min'] ?? '';
-                                                            $max = $field['max'] ?? '';
-                                                            $step = $field['step'] ?? '';
-                                                            $options = $field['options'] ?? [];
-                                                        @endphp
-
-                                                        <div class="form__type">
-                                                            <p class="form__title">{{ $field['label'] ?? '' }}</p>
-
-                                                            @if($fieldType === 'radio')
-                                                                <div class="form-checked">
-                                                                    @foreach($options as $optionIndex => $option)
-                                                                        @php
-                                                                            $optionKey = $fieldKey . '_' . $optionIndex;
-                                                                            $optionValue = $option['value'] ?? '';
-                                                                            $optionLabel = $option['label'] ?? '';
-                                                                        @endphp
-                                                                        <div class="form-checked__item">
-                                                                            <input class="calculator-input"
-                                                                                   type="radio"
-                                                                                   name="{{ $fieldKey }}"
-                                                                                   id="{{ $optionKey }}"
-                                                                                   value="{{ $optionValue }}"
-                                                                                   data-field-key="{{ $fieldKey }}"
-                                                                                   {{ $loop->first ? 'checked' : '' }}>
-                                                                            <label for="{{ $optionKey }}">{{ $optionLabel }}</label>
-                                                                        </div>
-                                                                    @endforeach
-                                                                </div>
-                                                            @elseif($fieldType === 'select')
-                                                                <div class="form-block__select">
-                                                                    <select class="calculator-input"
-                                                                            id="calc-field-{{ $fieldIndex }}"
-                                                                            name="{{ $fieldKey }}"
-                                                                            data-field-key="{{ $fieldKey }}">
-                                                                        <option value="">Выберите...</option>
-                                                                        @foreach($options as $optionIndex => $option)
-                                                                            <option value="{{ $option['value'] ?? '' }}" {{ $loop->first ? 'selected' : '' }}>
-                                                                                {{ $option['label'] ?? '' }}
-                                                                            </option>
-                                                                        @endforeach
-                                                                    </select>
-                                                                </div>
-                                                            @elseif($fieldType === 'checkbox')
-                                                                <div class="form-block__checkbox">
-                                                                    <label class="check">
-                                                                        <input class="check__input calculator-input"
-                                                                               type="checkbox"
-                                                                               id="calc-field-{{ $fieldIndex }}"
-                                                                               name="{{ $fieldKey }}"
-                                                                               value="1"
-                                                                               data-field-key="{{ $fieldKey }}"
-                                                                               {{ $defaultValue ? 'checked' : '' }}>
-                                                                        <span class="check__box"></span>
-                                                                    </label>
-                                                                    <p>{{ $field['checkbox_label'] ?? $field['label'] ?? '' }}</p>
-                                                                </div>
-                                                            @elseif($fieldType === 'range')
-                                                                <div class="range-slider range-slider__modal">
-                                                                    <p class="rangelb">
-                                                                        <span class="rangeValues">
-                                                                            <span class="range__text">Значение:</span>
-                                                                            <span class="range__val">
-                                                                                <span class="range-value">{{ $defaultValue }}</span>
-                                                                                {{ $field['unit'] ?? '' }}
-                                                                            </span>
-                                                                        </span>
-                                                                    </p>
-                                                                    <div class="range-slider-ip-wrap">
-                                                                        <input type="range"
-                                                                               class="calculator-input ip-range"
-                                                                               id="calc-field-{{ $fieldIndex }}"
-                                                                               name="{{ $fieldKey }}"
-                                                                               data-field-key="{{ $fieldKey }}"
-                                                                               min="{{ $min }}"
-                                                                               max="{{ $max }}"
-                                                                               step="{{ $step }}"
-                                                                               value="{{ $defaultValue }}">
-                                                                        <span class="tracking-holder"></span>
-                                                                    </div>
-                                                                    <div class="range-slider__value">
-                                                                        <span class="range-slider__item">{{ $min }} {{ $field['unit'] ?? '' }}</span>
-                                                                        <span class="range-slider__item">> {{ $max }} {{ $field['unit'] ?? '' }}</span>
-                                                                    </div>
-                                                                </div>
-                                                            @else
-                                                                <div class="form-block__input">
-                                                                    <input type="{{ $fieldType }}"
-                                                                           class="calculator-input"
-                                                                           id="calc-field-{{ $fieldIndex }}"
-                                                                           name="{{ $fieldKey }}"
-                                                                           data-field-key="{{ $fieldKey }}"
-                                                                           placeholder="{{ $placeholder }}"
-                                                                           value="{{ $defaultValue }}"
-                                                                           @if($min !== '') min="{{ $min }}" @endif
-                                                                           @if($max !== '') max="{{ $max }}" @endif
-                                                                           @if($step !== '') step="{{ $step }}" @endif>
-                                                                </div>
-                                                            @endif
-                                                        </div>
-                                                    @endforeach
-                                                </div>
-
-                                                <div class="col-lg-6 col-xl-7 pl-lg-5 pr-lg-0">
-                                                    <div class="form__box">
-                                                        <div class="form-total">
-                                                            <div class="form-total__container">
-                                                                <div class="form-total__approximate">
-                                                                    <p class="form-total__param">Расчет выполняется по введенным параметрам</p>
-                                                                    <span>{{ $category->calculator_result_label ?? 'Итоговая стоимость' }} <sup>*</sup></span>
-                                                                </div>
-                                                                <p class="form-total__count">
-                                                                    <span id="calculator-total">0</span>
-                                                                    <span class="currency">{{ $category->calculator_currency ?? 'BYN' }}</span>
-                                                                </p>
-                                                            </div>
-                                                        </div>
-                                                        <div class="form__button">
-                                                            <button type="button" class="button animat-1" onclick="calculateResult()">
-                                                                Пересчитать
-                                                            </button>
-                                                        </div>
-                                                    </div>
-                                                    <div class="form__button mt-3">
-                                                        <button type="button" class="button animat-2" onclick="resetCalculator()">
-                                                            Сбросить
-                                                        </button>
-                                                    </div>
-                                                    @if($category->calculator_formula)
-                                                        <div class="form-block__text mt-3">
-                                                            <p>Формула: {{ $category->calculator_formula }}</p>
-                                                        </div>
-                                                    @endif
-                                                </div>
-                                            </div>
-                                        </form>
-                                    </div>
-                                </div>
-                            </div>
-                        </section>
-                    @endif
 
                     {{-- Reviews Section --}}
                     @if(!empty($category->reviews))
@@ -455,17 +273,224 @@
                     </section>
                     @endif
 
-                    @php
-                        $faqs = [];
 
-                        if(!empty($category->faq)) {
-                            $faqs = json_decode($category->faq, true) ?: [];
-                        } elseif(!empty($subcategory->faq)) {
-                            $faqs = json_decode($subcategory->faq, true) ?: [];
-                        }
-                    @endphp
 
-                    @if(!empty($faqs))
+                </div>
+            </div>
+        </div>
+    </div>
+
+
+    <!-- Universal Calculator Section -->
+    @if($category->calculator_enabled && !empty($category->calculator_fields))
+        <section id="calculator" class="calculator">
+            <div class="container">
+                <h2 class="title one">
+                    {{ $category->calculator_title ?? 'Калькулятор стоимости услуг' }}
+                </h2>
+                @if($category->calculator_description)
+                    <div class="calculator-description mb-4">
+                        {!! $category->calculator_description !!}
+                    </div>
+                @endif
+
+                <div class="calculator__container">
+                    <div class="form">
+                        <form id="universal-calculator" class="calculator-form">
+                            <div class="row">
+                                <div class="col-lg-6 col-xl-5 p-lg-0">
+                                    @foreach($category->calculator_fields as $fieldIndex => $field)
+                                        @php
+                                            $fieldKey = $field['key'] ?? 'field_' . $fieldIndex;
+                                            $fieldType = $field['type'] ?? 'number';
+                                            $defaultValue = $field['default_value'] ?? '';
+                                            $placeholder = $field['placeholder'] ?? '';
+                                            $min = $field['min'] ?? '';
+                                            $max = $field['max'] ?? '';
+                                            $step = $field['step'] ?? '';
+                                            $options = $field['options'] ?? [];
+                                        @endphp
+
+                                        <div class="form__type">
+                                            <p class="form__title">{{ $field['label'] ?? '' }}</p>
+
+                                            @if($fieldType === 'radio')
+                                                <div class="form-checked">
+                                                    @foreach($options as $optionIndex => $option)
+                                                        @php
+                                                            $optionKey = $fieldKey . '_' . $optionIndex;
+                                                            $optionValue = $option['value'] ?? '';
+                                                            $optionLabel = $option['label'] ?? '';
+                                                        @endphp
+                                                        <div class="form-checked__item">
+                                                            <input class="calculator-input"
+                                                                   type="radio"
+                                                                   name="{{ $fieldKey }}"
+                                                                   id="{{ $optionKey }}"
+                                                                   value="{{ $optionValue }}"
+                                                                   data-field-key="{{ $fieldKey }}"
+                                                                {{ $loop->first ? 'checked' : '' }}>
+                                                            <label for="{{ $optionKey }}">{{ $optionLabel }}</label>
+                                                        </div>
+                                                    @endforeach
+                                                </div>
+                                            @elseif($fieldType === 'select')
+                                                <div class="form-block__select">
+                                                    <select class="calculator-input"
+                                                            id="calc-field-{{ $fieldIndex }}"
+                                                            name="{{ $fieldKey }}"
+                                                            data-field-key="{{ $fieldKey }}">
+                                                        <option value="">Выберите...</option>
+                                                        @foreach($options as $optionIndex => $option)
+                                                            <option value="{{ $option['value'] ?? '' }}" {{ $loop->first ? 'selected' : '' }}>
+                                                                {{ $option['label'] ?? '' }}
+                                                            </option>
+                                                        @endforeach
+                                                    </select>
+                                                </div>
+                                            @elseif($fieldType === 'checkbox')
+                                                <div class="form-block__checkbox">
+                                                    <label class="check">
+                                                        <input class="check__input calculator-input"
+                                                               type="checkbox"
+                                                               id="calc-field-{{ $fieldIndex }}"
+                                                               name="{{ $fieldKey }}"
+                                                               value="1"
+                                                               data-field-key="{{ $fieldKey }}"
+                                                            {{ $defaultValue ? 'checked' : '' }}>
+                                                        <span class="check__box"></span>
+                                                    </label>
+                                                    <p>{{ $field['checkbox_label'] ?? $field['label'] ?? '' }}</p>
+                                                </div>
+                                            @elseif($fieldType === 'range')
+                                                <div class="range-slider range-slider__modal">
+                                                    <p class="rangelb">
+                                                                        <span class="rangeValues">
+                                                                            <span class="range__text">Значение:</span>
+                                                                            <span class="range__val">
+                                                                                <span class="range-value">{{ $defaultValue }}</span>
+                                                                                {{ $field['unit'] ?? '' }}
+                                                                            </span>
+                                                                        </span>
+                                                    </p>
+                                                    <div class="range-slider-ip-wrap">
+                                                        <input type="range"
+                                                               class="calculator-input ip-range"
+                                                               id="calc-field-{{ $fieldIndex }}"
+                                                               name="{{ $fieldKey }}"
+                                                               data-field-key="{{ $fieldKey }}"
+                                                               min="{{ $min }}"
+                                                               max="{{ $max }}"
+                                                               step="{{ $step }}"
+                                                               value="{{ $defaultValue }}">
+                                                        <span class="tracking-holder"></span>
+                                                    </div>
+                                                    <div class="range-slider__value">
+                                                        <span class="range-slider__item">{{ $min }} {{ $field['unit'] ?? '' }}</span>
+                                                        <span class="range-slider__item">> {{ $max }} {{ $field['unit'] ?? '' }}</span>
+                                                    </div>
+                                                </div>
+                                            @else
+                                                <div class="form-block__input">
+                                                    <input type="{{ $fieldType }}"
+                                                           class="calculator-input"
+                                                           id="calc-field-{{ $fieldIndex }}"
+                                                           name="{{ $fieldKey }}"
+                                                           data-field-key="{{ $fieldKey }}"
+                                                           placeholder="{{ $placeholder }}"
+                                                           value="{{ $defaultValue }}"
+                                                           @if($min !== '') min="{{ $min }}" @endif
+                                                           @if($max !== '') max="{{ $max }}" @endif
+                                                           @if($step !== '') step="{{ $step }}" @endif>
+                                                </div>
+                                            @endif
+                                        </div>
+                                    @endforeach
+                                </div>
+
+                                <div class="col-lg-6 col-xl-7 pl-lg-5 pr-lg-0">
+                                    <div class="form__box">
+                                        <div class="form-total">
+                                            <div class="form-total__container">
+                                                <div class="form-total__approximate">
+                                                    <p class="form-total__param">Расчет выполняется по введенным параметрам</p>
+                                                    <span>{{ $category->calculator_result_label ?? 'Итоговая стоимость' }} <sup>*</sup></span>
+                                                </div>
+                                                <p class="form-total__count">
+                                                    <span id="calculator-total">0</span>
+                                                    <span class="currency">{{ $category->calculator_currency ?? 'BYN' }}</span>
+                                                </p>
+                                            </div>
+                                        </div>
+                                    </div>
+                                    <div class="form__box">
+                                        <div class="form__button">
+                                            <button type="button" class="button animat-1" onclick="calculateResult()">
+                                                Рассчитать
+                                            </button>
+                                        </div>
+                                        <div class="form__button">
+                                            <button type="button" class="button animat-2" onclick="resetCalculator()">
+                                                Сбросить
+                                            </button>
+                                        </div>
+                                    </div>
+                                    <div class="form__box">
+                                        <p>Стоимость ориентировочная. Точная сумма определяется после выезда специалиста, проведения полных замеров и изысканий.</p>
+                                    </div>
+
+
+                                </div>
+                            </div>
+                        </form>
+                    </div>
+                </div>
+            </div>
+        </section>
+    @endif
+
+
+    {{-- Gallery Section --}}
+    @if(!empty($category->gallery_images))
+
+        <div class="page-gallery bg-section">
+            <div class="container">
+                <h2 class="title one">{{ $category->gallery_title ?? 'Галерея' }}</h2>
+                <!-- gallery section start -->
+                <div class="row gallery-items page-gallery-box">
+                    @foreach($category->gallery_images_urls ?? [] as $image)
+                    <div class="col-lg-4 col-6">
+                        <!-- Image Gallery start -->
+                        <div class="photo-gallery wow fadeInUp" data-wow-delay="{{ ($loop->index * 0.2) }}s">
+                            <a href="{{ $image }}" data-cursor-text="Смотреть">
+                                <figure class="image-anime">
+                                    <img src="{{ $image }}" alt="Галерея">
+                                </figure>
+                            </a>
+                        </div>
+                        <!-- Image Gallery end -->
+                    </div>
+                    @endforeach
+                </div>
+            </div>
+        </div>
+    @endif
+
+    @php
+        $faqs = [];
+
+        if(!empty($category->faq)) {
+            $faqs = json_decode($category->faq, true) ?: [];
+        } elseif(!empty($subcategory->faq)) {
+            $faqs = json_decode($subcategory->faq, true) ?: [];
+        }
+    @endphp
+
+    @if(!empty($faqs))
+        <div class="page-single-post">
+            <div class="container">
+                <div class="row">
+                    <div class="col-lg-12">
                         <div class="page-single-faqs">
                             <div class="section-title">
                                 <h2 class="text-anime-style-3" data-cursor="-opaque">Популярные вопросы и ответы</h2>
@@ -495,13 +520,11 @@
                                 @endforeach
                             </div>
                         </div>
-                    @endif
-
-
+                    </div>
                 </div>
             </div>
         </div>
-    </div>
+    @endif
 
 
 

@@ -143,9 +143,8 @@ class ServiceCategory extends Model
     {
         return collect($this->gallery_images ?? [])
             ->map(function ($image) {
-                // Handle both formats: simple string or object with 'image' key
-                $filename = is_string($image) ? $image : ($image['image'] ?? null);
-                return $filename ? asset('storage/services/categories/' . $this->slug . '/gallery/' . $filename) : null;
+                $filename = is_array($image) ? ($image['image'] ?? $image['фото'] ?? null) : $image;
+                return $filename ? asset('storage/' . ltrim($filename, '/')) : null;
             })
             ->filter()
             ->toArray();
