@@ -181,4 +181,17 @@ class ServiceCategory extends Model
             ? asset('storage/services/categories/' . $this->slug . '/' . $this->hero_bg_image)
             : null;
     }
+
+    /**
+     * Hero items с URL иконок
+     */
+    public function getHeroItemsWithIconsAttribute(): array
+    {
+        return collect($this->hero_items ?? [])
+            ->map(function ($item) {
+                $item['icon_url'] = isset($item['icon']) ? asset('storage/services/categories/' . $this->slug . '/hero/' . $item['icon']) : null;
+                return $item;
+            })
+            ->toArray();
+    }
 }
