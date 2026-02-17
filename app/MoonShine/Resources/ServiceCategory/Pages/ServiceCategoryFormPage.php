@@ -27,6 +27,7 @@ use MoonShine\UI\Components\Layout\Box;
 use MoonShine\UI\Fields\Image;
 use MoonShine\UI\Fields\Json;
 use MoonShine\UI\Fields\Number;
+use MoonShine\UI\Fields\Select;
 use MoonShine\UI\Fields\Switcher;
 use MoonShine\UI\Fields\Text;
 use MoonShine\UI\Fields\Textarea;
@@ -86,20 +87,6 @@ class ServiceCategoryFormPage extends FormPage
                         ->allowedExtensions(['jpg', 'jpeg', 'png', 'webp'])
                         ->nullable(),
                 ]),
-                Tab::make('Описание', [
-                    TinyMce::make('Описание', 'description')
-                        ->addPlugins(['table', 'lists', 'link', 'image', 'media'])
-                        ->nullable(),
-                ]),
-                Tab::make('Вопрос-ответ', [
-                    Json::make('Вопрос–ответ', 'faq')
-                        ->fields([
-                            Text::make('Вопрос', 'question')->required(),
-                            TinyMce::make('Ответ', 'answer')->required(),
-                        ])
-                        ->nullable()
-                        ->hint('Блок FAQ для SEO и страницы услуги'),
-                ]),
                 Tab::make('Hero секция', [
                     Textarea::make('Заголовок', 'hero_title')
                         ->nullable()
@@ -112,6 +99,7 @@ class ServiceCategoryFormPage extends FormPage
                         ->disk('public')
                         ->allowedExtensions(['jpg', 'jpeg', 'png', 'webp'])
                         ->nullable()
+                        ->removable()
                         ->hint('Фоновое изображение для hero секции (header-body__img)'),
                     Json::make('Преимущества', 'hero_items')
                         ->fields([
@@ -121,13 +109,19 @@ class ServiceCategoryFormPage extends FormPage
                                 ->disk('public')
                                 ->dir('services/categories/hero')
                                 ->hint('Иконка преимущества (если не задана, будет использоваться стандартная через CSS)')
+                                ->removable()
                                 ->nullable(),
                         ])
                         ->removable()
                         ->nullable()
                         ->hint('4 преимущества в hero секции'),
                 ]),
-                Tab::make('Типы', [
+                Tab::make('Описание', [
+                    TinyMce::make('Описание', 'description')
+                        ->addPlugins(['table', 'lists', 'link', 'image', 'media'])
+                        ->nullable(),
+                ]),
+                Tab::make('Типы/Виды услуг', [
                     Textarea::make('Заголовок секции', 'types_title')
                         ->nullable()
                         ->hint('Заголовок секции типов'),
@@ -137,8 +131,14 @@ class ServiceCategoryFormPage extends FormPage
                                 ->hint('Название типа'),
                             Text::make('Цена', 'price')
                                 ->hint('Цена типа'),
-                            Text::make('Ед. изм.', 'unit')
-                                ->hint('Единица измерения (например: м³, м², п.м., шт.)')
+                            Select::make('Ед. изм.', 'unit')
+                                ->options([
+                                    'м²' => 'м²',
+                                    'м³' => 'м³',
+                                    'м.пог' => 'м.пог',
+                                    'шт.' => 'шт.',
+                                ])
+                                ->hint('Единица измерения')
                                 ->nullable(),
                             Image::make('Изображение', 'image')
                                 ->disk('public')
@@ -149,6 +149,32 @@ class ServiceCategoryFormPage extends FormPage
                         ->nullable()
                         ->hint('Массив типов (название, цена, единица измерения, изображение)'),
                 ]),
+                Tab::make('Галерея', [
+                    Textarea::make('Заголовок', 'gallery_title')
+                        ->nullable()
+                        ->hint('Заголовок галереи'),
+                    Json::make('Изображения', 'gallery_images')
+                        ->fields([
+                            Image::make('Фото')
+                                ->disk('public')
+                                ->dir('services/categories/gallery')
+                                ->hint('Изображение галереи'),
+                        ])
+                        ->removable()
+                        ->nullable()
+                        ->hint('Изображения галереи'),
+                ]),
+                Tab::make('Вопрос-ответ', [
+                    Json::make('Вопрос–ответ', 'faq')
+                        ->fields([
+                            Text::make('Вопрос', 'question')->required(),
+                            TinyMce::make('Ответ', 'answer')->required(),
+                        ])
+                        ->nullable()
+                        ->hint('Блок FAQ для SEO и страницы услуги'),
+                ]),
+
+
                 Tab::make('Примеры работ', [
                     Textarea::make('Заголовок', 'examples_title')
                         ->nullable()
@@ -169,21 +195,7 @@ class ServiceCategoryFormPage extends FormPage
                         ->nullable()
                         ->hint('Выполненные работы'),
                 ]),
-                Tab::make('Галерея', [
-                    Textarea::make('Заголовок', 'gallery_title')
-                        ->nullable()
-                        ->hint('Заголовок галереи'),
-                    Json::make('Изображения', 'gallery_images')
-                        ->fields([
-                            Image::make('Фото')
-                                ->disk('public')
-                                ->dir('services/categories/gallery')
-                                ->hint('Изображение галереи'),
-                        ])
-                        ->removable()
-                        ->nullable()
-                        ->hint('Изображения галереи'),
-                ]),
+
                 Tab::make('Цены', [
                     Textarea::make('Заголовок', 'price_title')
                         ->nullable()

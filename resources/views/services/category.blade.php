@@ -137,7 +137,17 @@
                                                 <!-- Apartments Amenity List Start -->
                                                 <div class="apartments-plan-item-list">
                                                     <ul>
-                                                        <li><span><img src="{{ asset('images/icon-apartments-amenity-2.svg') }}" alt="Цена от">Стоимость</span>от {!! $type['price'] ?? '' !!} BYN/{!! $type['unit'] ?? 'м³' !!}</li>
+                                                        @php
+                                                            $unit = $type['unit'] ?? '';
+                                                            $map = [
+                                                                'value 1' => 'м²',
+                                                                'value 2' => 'м³',
+                                                                'value 3' => 'м.пог',
+                                                                'value 4' => 'шт.',
+                                                            ];
+                                                            $unit = $map[$unit] ?? $unit;
+                                                        @endphp
+                                                        <li><span><img src="{{ asset('images/icon-apartments-amenity-2.svg') }}" alt="Цена от">Стоимость</span>от {!! $type['price'] ?? '' !!} BYN/{{ $unit ?? '' }}</li>
                                                     </ul>
                                                 </div>
                                                 <!-- Apartments Amenity List End -->
