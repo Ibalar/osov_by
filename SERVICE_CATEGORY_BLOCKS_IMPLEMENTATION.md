@@ -72,7 +72,7 @@ Added new tabs to the ServiceCategory form:
 - Textarea: Заголовок (hero_title)
 - Textarea: Подзаголовок (hero_subtitle)
 - Image: Фоновое изображение (hero_bg_image) - background image for header-body__img
-- Json: Преимущества (hero_items) - array of text items
+- Json: Преимущества (hero_items) - array with fields: text, icon (optional, uses CSS ::after if not set)
 
 #### Types Tab
 - Textarea: Заголовок секции (types_title)
@@ -100,6 +100,7 @@ Added new tabs to the ServiceCategory form:
 #### Added Hero Section
 - Renders hero title, subtitle, and hero items
 - Supports configurable background image for `header-body__img` block via `hero_bg_image` field
+- Hero items support custom icons via `icon` field; if not set, uses default CSS ::after pseudo-elements
 - Includes contact form with phone number input
 - Only renders if `hero_title` or `hero_items` is set
 
@@ -158,6 +159,8 @@ Added scripts for:
 
 ```
 storage/services/categories/{slug}/
+├── hero/
+│   └── {icon_files}
 ├── types/
 │   └── {image_files}
 ├── examples/

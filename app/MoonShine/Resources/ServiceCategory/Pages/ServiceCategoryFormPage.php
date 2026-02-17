@@ -117,6 +117,11 @@ class ServiceCategoryFormPage extends FormPage
                         ->fields([
                             Text::make('Текст', 'text')
                                 ->hint('Текст преимущества'),
+                            Image::make('Иконка', 'icon')
+                                ->disk('public')
+                                ->dir('services/categories/hero')
+                                ->hint('Иконка преимущества (если не задана, будет использоваться стандартная через CSS)')
+                                ->nullable(),
                         ])
                         ->removable()
                         ->nullable()

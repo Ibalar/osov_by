@@ -10655,6 +10655,20 @@
  .header-body__item:nth-child(4):after {
      background: url("../img/header/img-4.png") center no-repeat;
 }
+.header-body__item--has-icon::after {
+     content: none;
+}
+.header-body__icon {
+     position: absolute;
+     left: 0;
+     top: 50%;
+     -webkit-transform: translateY(-50%);
+     transform: translateY(-50%);
+     width: 64px;
+     height: 64px;
+     border-radius: 10px;
+     object-fit: contain;
+}
  .header-body__container {
      margin-top: 46px;
 }

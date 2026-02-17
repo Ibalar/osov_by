@@ -20,8 +20,11 @@
                         @endif
                         @if(!empty($category->hero_items))
                         <div class="header-body__container">
-                            @foreach($category->hero_items as $item)
-                            <div class="header-body__item">
+                            @foreach($category->hero_items_with_icons as $item)
+                            <div class="header-body__item{{ isset($item['icon_url']) && $item['icon_url'] ? ' header-body__item--has-icon' : '' }}">
+                                @if(isset($item['icon_url']) && $item['icon_url'])
+                                <img src="{{ $item['icon_url'] }}" alt="" class="header-body__icon">
+                                @endif
                                 <p>{!! $item['text'] ?? '' !!}</p>
                             </div>
                             @endforeach
