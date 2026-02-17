@@ -137,7 +137,7 @@
                                                 <!-- Apartments Amenity List Start -->
                                                 <div class="apartments-plan-item-list">
                                                     <ul>
-                                                        <li><span><img src="{{ asset('images/icon-apartments-amenity-2.svg') }}" alt="Цена от">Стоимость</span>от {!! $type['price'] ?? '' !!} BYN/м³</li>
+                                                        <li><span><img src="{{ asset('images/icon-apartments-amenity-2.svg') }}" alt="Цена от">Стоимость</span>от {!! $type['price'] ?? '' !!} BYN/{!! $type['unit'] ?? 'м³' !!}</li>
                                                     </ul>
                                                 </div>
                                                 <!-- Apartments Amenity List End -->

@@ -137,6 +137,9 @@ class ServiceCategoryFormPage extends FormPage
                                 ->hint('Название типа'),
                             Text::make('Цена', 'price')
                                 ->hint('Цена типа'),
+                            Text::make('Ед. изм.', 'unit')
+                                ->hint('Единица измерения (например: м³, м², п.м., шт.)')
+                                ->nullable(),
                             Image::make('Изображение', 'image')
                                 ->disk('public')
                                 ->dir('services/categories/types')
@@ -144,7 +147,7 @@ class ServiceCategoryFormPage extends FormPage
                         ])
                         ->removable()
                         ->nullable()
-                        ->hint('Массив типов (название, цена, изображение)'),
+                        ->hint('Массив типов (название, цена, единица измерения, изображение)'),
                 ]),
                 Tab::make('Примеры работ', [
                     Textarea::make('Заголовок', 'examples_title')
