@@ -172,7 +172,6 @@
                     @endif
 
                     {{-- Gallery Section --}}
-                    @dd($category->gallery_images, $category->gallery_images_urls)
                     @if(!empty($category->gallery_images))
                         <section id="gallery" class="gallery" style="margin-top: 4rem;">
                             <div class="container">

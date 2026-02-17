@@ -142,7 +142,12 @@ class ServiceCategory extends Model
     public function getGalleryImagesUrlsAttribute(): array
     {
         return collect($this->gallery_images ?? [])
-            ->map(fn($image) => asset('storage/services/categories/' . $this->slug . '/gallery/' . $image))
+            ->map(function ($image) {
+                // Handle both formats: simple string or object with 'image' key
+                $filename = is_string($image) ? $image : ($image['image'] ?? null);
+                return $filename ? asset('storage/services/categories/' . $this->slug . '/gallery/' . $filename) : null;
+            })
+            ->filter()
             ->toArray();
     }
 
