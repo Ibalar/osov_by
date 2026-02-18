@@ -15,7 +15,7 @@
                         </h1>
                         @if($category->hero_subtitle)
                         <h3 class="header-body__subtitle">
-                            {{ $category->hero_subtitle }}
+                            {!! $category->hero_subtitle !!}
                         </h3>
                         @endif
                         @if(!empty($category->hero_items))
