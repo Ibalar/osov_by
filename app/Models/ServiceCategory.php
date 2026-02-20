@@ -64,6 +64,7 @@ class ServiceCategory extends Model
         'gallery_images' => 'array',
         'price_table' => 'array',
         'reviews' => 'array',
+        'faq' => 'array',
     ];
 
     /* -----------------------------------------------------------------

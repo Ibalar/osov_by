@@ -477,12 +477,15 @@
     @endif
 
     @php
-        $faqs = [];
-
-        if(!empty($category->faq)) {
-            $faqs = json_decode($category->faq, true) ?: [];
-        } elseif(!empty($subcategory->faq)) {
-            $faqs = json_decode($subcategory->faq, true) ?: [];
+        $faqs = $category->faq ?? [];
+        if (is_string($faqs)) {
+            $faqs = json_decode($faqs, true) ?: [];
+        }
+        if (empty($faqs)) {
+            $faqs = $subcategory->faq ?? [];
+            if (is_string($faqs)) {
+                $faqs = json_decode($faqs, true) ?: [];
+            }
         }
     @endphp
 
