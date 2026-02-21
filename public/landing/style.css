@@ -9531,8 +9531,8 @@
 }
  @media screen and (max-width: 992px) {
      section {
-         padding-top: 55px;
-         padding-bottom: 25px;
+         padding-top: 15px;
+         padding-bottom: 15px;
     }
      .title {
          font-size: 32px;
@@ -9541,7 +9541,7 @@
 }
  @media screen and (max-width: 768px) {
      section {
-         padding-top: 65px;
+         padding-top: 15px;
          padding-bottom: 15px;
     }
      .row.marg {
@@ -9554,9 +9554,9 @@
 }
  @media screen and (max-width: 576px) {
      section {
-         padding-top: 70px;
+         padding-top: 10px;
          padding-bottom: 0px;
-         margin-bottom: -25px;
+         margin-bottom: 5px;
     }
      .title {
          font-size: 28px;

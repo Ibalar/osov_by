@@ -197,7 +197,13 @@ class ServiceFormPage extends FormPage
                                 ->hint('Наименование услуги'),
                             Text::make('Цена')
                                 ->hint('Цена услуги'),
-                            Text::make('Ед. изм.')
+                            Select::make('Ед. изм.')
+                                ->options([
+                                    'м²' => 'м²',
+                                    'м³' => 'м³',
+                                    'м.пог' => 'м.пог',
+                                    'шт.' => 'шт.',
+                                ])
                                 ->hint('Единица измерения')
                                 ->nullable(),
                         ])

@@ -145,7 +145,16 @@
                                             ];
                                             $unit = $map[$unit] ?? $unit;
                                         @endphp
-                                        <li><span><img src="{{ asset('images/icon-apartments-amenity-2.svg') }}" alt="Цена от">Стоимость</span>от {!! $type['price'] ?? '' !!} BYN/{{ $unit ?? '' }}</li>
+
+                                        @if(!empty($type['price']))
+                                            <li>
+                                                <span>
+                                                    <img src="{{ asset('images/icon-apartments-amenity-2.svg') }}" alt="Цена от">
+                                                    Стоимость
+                                                </span>
+                                                от {!! $type['price'] !!} BYN/{{ $unit }}
+                                            </li>
+                                        @endif
                                     </ul>
                                 </div>
                                 <!-- Apartments Amenity List End -->
@@ -206,38 +215,6 @@
 
 
 
-                    {{-- Price Table Section --}}
-                    @if(!empty($category->price_table))
-                    <section id="price" class="price" style="margin-top: 4rem;">
-                        <div class="container">
-                            <h2 class="title one">{{ $category->price_title ?? 'Цены' }}</h2>
-                            <div class="price__table">
-                                <table class="table">
-                                    <thead>
-                                        <tr>
-                                            @if(!empty($category->price_table[0]))
-                                            @foreach(array_keys($category->price_table[0]) as $header)
-                                            <th>{{ $header }}</th>
-                                            @endforeach
-                                            @endif
-                                        </tr>
-                                    </thead>
-                                    <tbody>
-                                        @foreach($category->price_table as $row)
-                                        <tr>
-                                            @foreach($row as $cell)
-                                                <td>{!! is_array($cell) ? trim(implode(', ', Arr::flatten($cell))) : $cell !!}</td>
-                                            @endforeach
-                                        </tr>
-                                        @endforeach
-                                    </tbody>
-                                </table>
-                            </div>
-                        </div>
-                    </section>
-                    @endif
-
-
 
                     {{-- Reviews Section --}}
                     @if(!empty($category->reviews))
@@ -285,25 +262,36 @@
 
     {{-- Price Table Section --}}
     @if(!empty($category->price_table))
-        <section id="price" class="price" style="margin-top: 4rem;">
+        @php
+            $columns = [
+                'наименование' => 'Наименование',
+                'цена' => 'Цена',
+                'ед' => 'Ед. изм.',
+            ];
+        @endphp
+        <section id="price" class="price my-4">
             <div class="container">
                 <h2 class="title one">{{ $category->price_title ?? 'Цены' }}</h2>
                 <div class="price__table">
                     <table class="table">
                         <thead>
                         <tr>
-                            @if(!empty($category->price_table[0]))
-                                @foreach(array_keys($category->price_table[0]) as $header)
-                                    <th>{{ $header }}</th>
-                                @endforeach
-                            @endif
+                            @foreach($columns as $label)
+                                <th>{{ $label }}</th>
+                            @endforeach
                         </tr>
                         </thead>
                         <tbody>
                         @foreach($category->price_table as $row)
                             <tr>
-                                @foreach($row as $cell)
-                                    <td>{!! is_array($cell) ? trim(implode(', ', Arr::flatten($cell))) : $cell !!}</td>
+                                @foreach($columns as $key => $label)
+                                    @php
+                                        $cell = $row[$key] ?? '';
+                                        $cell = is_array($cell)
+                                            ? trim(implode(', ', \Illuminate\Support\Arr::flatten($cell)))
+                                            : $cell;
+                                    @endphp
+                                    <td>{!! $cell !!}</td>
                                 @endforeach
                             </tr>
                         @endforeach
