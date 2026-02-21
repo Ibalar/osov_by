@@ -283,6 +283,37 @@
         </div>
     </div>
 
+    {{-- Price Table Section --}}
+    @if(!empty($category->price_table))
+        <section id="price" class="price" style="margin-top: 4rem;">
+            <div class="container">
+                <h2 class="title one">{{ $category->price_title ?? 'Цены' }}</h2>
+                <div class="price__table">
+                    <table class="table">
+                        <thead>
+                        <tr>
+                            @if(!empty($category->price_table[0]))
+                                @foreach(array_keys($category->price_table[0]) as $header)
+                                    <th>{{ $header }}</th>
+                                @endforeach
+                            @endif
+                        </tr>
+                        </thead>
+                        <tbody>
+                        @foreach($category->price_table as $row)
+                            <tr>
+                                @foreach($row as $cell)
+                                    <td>{!! is_array($cell) ? trim(implode(', ', Arr::flatten($cell))) : $cell !!}</td>
+                                @endforeach
+                            </tr>
+                        @endforeach
+                        </tbody>
+                    </table>
+                </div>
+            </div>
+        </section>
+    @endif
+
 
     <!-- Universal Calculator Section -->
     @if($category->calculator_enabled && !empty($category->calculator_fields))
