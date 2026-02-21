@@ -13913,7 +13913,7 @@
 }
  .table {
      margin-bottom: 0;
-     width: 1170px;
+     max-width: 1170px;
 }
  .table.b {
      border-bottom: 1px solid;
