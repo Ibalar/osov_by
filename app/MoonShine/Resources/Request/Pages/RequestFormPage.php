@@ -3,13 +3,11 @@
 declare(strict_types=1);
 
 namespace App\MoonShine\Resources\Request\Pages;
-
-use MoonShine\Laravel\Pages\EditPage;
-
+use MoonShine\Laravel\Pages\Crud\FormPage;
 /**
- * @extends EditPage<\App\Models\Request>
+ * @extends FormPage<\App\MoonShine\Resources\Request\RequestResource>
  */
-class RequestFormPage extends EditPage
+class RequestFormPage extends FormPage
 {
     protected string $title = 'Редактирование заявки';
 }

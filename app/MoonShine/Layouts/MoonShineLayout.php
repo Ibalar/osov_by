@@ -4,6 +4,7 @@ declare(strict_types=1);
 
 namespace App\MoonShine\Layouts;
 
+use App\MoonShine\Resources\Request\RequestResource;
 use MoonShine\Laravel\Layouts\AppLayout;
 use MoonShine\ColorManager\Palettes\PurplePalette;
 use MoonShine\ColorManager\ColorManager;
@@ -57,6 +58,7 @@ final class MoonShineLayout extends AppLayout
             ->icon('photo'),
             MenuItem::make(LandingPageResource::class, 'Посадочные страницы')->icon('rectangle-group'),
             MenuItem::make(PageResource::class, 'Инфо страницы')->icon('window'),
+            MenuItem::make(RequestResource::class, 'Заявки')->icon('chat-bubble-left-right'),
             MenuItem::make(SiteSettingResource::class, 'Настройки сайта')->icon('wrench'),
             ...parent::menu(),
 
