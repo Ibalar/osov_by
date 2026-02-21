@@ -65,7 +65,7 @@
                             <!-- Hero Image Box Start -->
                             <div class="hero-image-prime">
                                 <figure class="image-anime reveal">
-                                    <img src="{{ asset('images/about-us-image-1-prime.jpg') }}" alt="О компании OSOV">
+                                    <img src="{{ asset('images/hero-image-about.jpg') }}" alt="О компании OSOV">
                                 </figure>
                             </div>
                             <!-- Hero Image Box End -->
@@ -83,7 +83,6 @@
             <div class="row section-row">
                 <div class="col-lg-12">
                     <div class="section-title section-title-center">
-                        <span class="section-sub-title wow fadeInUp fs-5">Наша история</span>
                         <h2 class="text-anime-style-3" data-cursor="-opaque">
                             @if(!empty($page->content))
                                 {!! $page->content !!}
@@ -104,7 +103,6 @@
             <div class="row section-row">
                 <div class="col-lg-12">
                     <div class="section-title section-title-center">
-                        <span class="section-sub-title wow fadeInUp fs-6">Наши достижения</span>
                         <h2 class="text-anime-style-3" data-cursor="-opaque">Цифры говорят за нас</h2>
                     </div>
                 </div>
@@ -125,23 +123,15 @@
                             <div class="icon-box mb-3">
                                 <img src="{{ asset('images/icon-about-us-item-1-prime.svg') }}" alt="">
                             </div>
-                            <h2><span class="counter">500</span>+</h2>
+                            <h2><span class="counter">50</span>+</h2>
                             <p class="fs-4">Проектов выполнено</p>
-                        </div>
-
-                        <div class="about-us-counter-item">
-                            <div class="icon-box mb-3">
-                                <img src="{{ asset('images/icon-about-us-item-2-prime.svg') }}" alt="">
-                            </div>
-                            <h2><span class="counter">98</span>%</h2>
-                            <p class="fs-4">Довольных клиентов</p>
                         </div>
 
                         <div class="about-us-counter-item">
                             <div class="icon-box mb-3">
                                 <img src="{{ asset('images/icon-about-us-item-1-prime.svg') }}" alt="">
                             </div>
-                            <h2><span class="counter">50</span>+</h2>
+                            <h2><span class="counter">10</span>+</h2>
                             <p class="fs-4">Квалифицированных специалистов</p>
                         </div>
                     </div>
