@@ -8,6 +8,7 @@ use App\MoonShine\Fields\SeoFields;
 use MoonShine\Laravel\Pages\Crud\FormPage;
 use MoonShine\Contracts\UI\ComponentContract;
 use MoonShine\Contracts\UI\FormBuilderContract;
+use MoonShine\TinyMce\Fields\TinyMce;
 use MoonShine\UI\Components\FormBuilder;
 use MoonShine\Contracts\UI\FieldContract;
 use MoonShine\Contracts\Core\TypeCasts\DataWrapperContract;
@@ -53,7 +54,7 @@ class PageFormPage extends FormPage
                     Number::make('Порядок в меню', 'menu_order')
                         ->default(0),
 
-                    Textarea::make('Контент', 'content'),
+                    TinyMce::make('Контент', 'content'),
                 ]),
 
                 Tab::make('SEO', SeoFields::make()),
