@@ -11533,6 +11533,28 @@
          padding: 24px 20px 56px;
     }
 }
+ .price__table thead th {
+     background: #0C6F7C;
+     color: #ffffff;
+     font-family: 'Geometria Medium';
+     border-color: rgba(12, 111, 124, 0.2);
+ }
+ .price__table tbody tr:nth-child(odd) {
+     background: #f6f6f6;
+ }
+ .price__table tbody tr:nth-child(even) {
+     background: #ffffff;
+ }
+ @media screen and (max-width: 768px) {
+     .price__table {
+         overflow-x: auto;
+         -webkit-overflow-scrolling: touch;
+    }
+     .price__table table {
+         min-width: 640px;
+    }
+ }
+
  .price__item {
      margin-bottom: 15px;
      padding-bottom: 12px;
