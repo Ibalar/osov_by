@@ -10650,3 +10650,65 @@ opacity: 0.8;
 .hero__section {
     margin: 15px 15px 0;
 }
+
+/************************************/
+/***    Calculator Layout CSS      ***/
+/************************************/
+
+/* New calculator layout with two-column fields and summary row */
+.calculator__fields {
+    display: flex;
+    flex-wrap: wrap;
+    margin-right: -15px;
+    margin-left: -15px;
+}
+
+.calculator__fields > [class*="col-"] {
+    padding-right: 15px;
+    padding-left: 15px;
+}
+
+.calculator__summary {
+    display: flex;
+    flex-wrap: wrap;
+    margin-right: -15px;
+    margin-left: -15px;
+    margin-top: 30px;
+}
+
+.calculator__summary > [class*="col-"] {
+    padding-right: 15px;
+    padding-left: 15px;
+}
+
+/* Ensure form__box items stack properly in summary section */
+.calculator__summary .col-12.col-lg-6 > .form__box {
+    margin-bottom: 0;
+}
+
+/* Override flexbox for note box to align text to top */
+.form__box--note {
+    align-items: flex-start !important;
+}
+
+.form__box--note p {
+    margin: 0;
+    line-height: 1.6;
+}
+
+/* Adjust spacing for stacked layout on mobile */
+@media screen and (max-width: 991px) {
+    .calculator__summary {
+        margin-top: 20px;
+    }
+    
+    .calculator__fields > [class*="col-"] {
+        flex: 0 0 100%;
+        max-width: 100%;
+    }
+    
+    .calculator__summary > [class*="col-"] {
+        flex: 0 0 100%;
+        max-width: 100%;
+    }
+}

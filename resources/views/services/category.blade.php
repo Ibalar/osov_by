@@ -300,20 +300,20 @@
                 <div class="calculator__container">
                     <div class="form">
                         <form id="universal-calculator" class="calculator-form">
-                            <div class="row">
-                                <div class="col-lg-6 col-xl-5 p-lg-0">
-                                    @foreach($category->calculator_fields as $fieldIndex => $field)
-                                        @php
-                                            $fieldKey = $field['key'] ?? 'field_' . $fieldIndex;
-                                            $fieldType = $field['type'] ?? 'number';
-                                            $defaultValue = $field['default_value'] ?? '';
-                                            $placeholder = $field['placeholder'] ?? '';
-                                            $min = $field['min'] ?? '';
-                                            $max = $field['max'] ?? '';
-                                            $step = $field['step'] ?? '';
-                                            $options = $field['options'] ?? [];
-                                        @endphp
+                            <div class="calculator__fields">
+                                @foreach($category->calculator_fields as $fieldIndex => $field)
+                                    @php
+                                        $fieldKey = $field['key'] ?? 'field_' . $fieldIndex;
+                                        $fieldType = $field['type'] ?? 'number';
+                                        $defaultValue = $field['default_value'] ?? '';
+                                        $placeholder = $field['placeholder'] ?? '';
+                                        $min = $field['min'] ?? '';
+                                        $max = $field['max'] ?? '';
+                                        $step = $field['step'] ?? '';
+                                        $options = $field['options'] ?? [];
+                                    @endphp
 
+                                    <div class="col-12 col-lg-6">
                                         <div class="form__type">
                                             <p class="form__title">{{ $field['label'] ?? '' }}</p>
 
@@ -408,10 +408,12 @@
                                                 </div>
                                             @endif
                                         </div>
-                                    @endforeach
-                                </div>
+                                    </div>
+                                @endforeach
+                            </div>
 
-                                <div class="col-lg-6 col-xl-7 pl-lg-5 pr-lg-0">
+                            <div class="calculator__summary">
+                                <div class="col-12 col-lg-6">
                                     <div class="form__box">
                                         <div class="form-total">
                                             <div class="form-total__container">
@@ -433,11 +435,11 @@
                                             </button>
                                         </div>
                                     </div>
-                                    <div class="form__box">
+                                </div>
+                                <div class="col-12 col-lg-6">
+                                    <div class="form__box form__box--note">
                                         <p>Стоимость ориентировочная. Точная сумма определяется после выезда специалиста, проведения полных замеров и изысканий.</p>
                                     </div>
-
-
                                 </div>
                             </div>
                         </form>
