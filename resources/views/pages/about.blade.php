@@ -154,23 +154,6 @@
             </div>
 
             <div class="why-choose-us-box">
-                <!-- Image Box -->
-                <div class="why-choose-image-box">
-                    <div class="why-choose-image">
-                        <figure>
-                            <img src="{{ asset('images/about-us-image-2-prime.jpg') }}" alt="Наши преимущества">
-                        </figure>
-                    </div>
-
-                    <div class="working-hour-box">
-                        <h3>График работы</h3>
-                        <ul>
-                            <li><span>Пн - Пт</span><span>8:00 - 18:00</span></li>
-                            <li><span>Суббота</span><span>9:00 - 15:00</span></li>
-                            <li><span>Воскресенье</span><span>Выходной</span></li>
-                        </ul>
-                    </div>
-                </div>
 
                 <!-- Feature Items -->
                 <div class="why-choose-us-item">
@@ -185,7 +168,7 @@
                     </div>
                     <div class="why-choose-item-body-image">
                         <figure>
-                            <img src="{{ asset('images/amenity-image-1.jpg') }}" alt="">
+                            <img src="{{ asset('images/amenity-image-1-1.png') }}" alt="">
                         </figure>
                     </div>
                 </div>
@@ -202,7 +185,7 @@
                     </div>
                     <div class="why-choose-item-body-image">
                         <figure>
-                            <img src="{{ asset('images/amenity-image-1-prime.png') }}" alt="">
+                            <img src="{{ asset('images/amenity-image-1-2.png') }}" alt="">
                         </figure>
                     </div>
                 </div>
@@ -245,229 +228,6 @@
         </div>
     </div>
     <!-- Why Choose Us Section End -->
-
-    <!-- Our Values Section Start -->
-    <div class="our-amenities">
-        <div class="container">
-            <div class="row section-row">
-                <div class="col-xl-12">
-                    <div class="section-title section-title-center">
-                        <span class="section-sub-title wow fadeInUp">Наш подход</span>
-                        <h2 class="text-anime-style-3" data-cursor="-opaque">Ценности компании</h2>
-                    </div>
-                </div>
-            </div>
-
-            <div class="row">
-                <div class="col-lg-4 col-md-6">
-                    <div class="amenity-item active">
-                        <div class="amenity-item-image">
-                            <figure>
-                                <img src="{{ asset('images/amenity-image-1.jpg') }}" alt="">
-                            </figure>
-                        </div>
-                        <div class="amenity-item-content-box">
-                            <div class="amenity-item-header">
-                                <div class="icon-box">
-                                    <img src="{{ asset('images/icon-amenity-feature-item-1.svg') }}" alt="">
-                                </div>
-                            </div>
-                            <div class="amenity-item-content">
-                                <h2>Качество</h2>
-                                <p>Используем только проверенные материалы и современные технологии строительства.</p>
-                            </div>
-                            <div class="amenity-item-btn">
-                                <a href="{{ route('services.index') }}" class="readmore-btn">Подробнее</a>
-                            </div>
-                        </div>
-                    </div>
-                </div>
-
-                <div class="col-lg-4 col-md-6">
-                    <div class="amenity-item">
-                        <div class="amenity-item-image">
-                            <figure>
-                                <img src="{{ asset('images/amenity-image-1-prime.png') }}" alt="">
-                            </figure>
-                        </div>
-                        <div class="amenity-item-content-box">
-                            <div class="amenity-item-header">
-                                <div class="icon-box">
-                                    <img src="{{ asset('images/icon-amenity-feature-item-2.svg') }}" alt="">
-                                </div>
-                            </div>
-                            <div class="amenity-item-content">
-                                <h2>Надежность</h2>
-                                <p>Гарантируем выполнение всех обязательств. Наша репутация — наш главный актив.</p>
-                            </div>
-                            <div class="amenity-item-btn">
-                                <a href="{{ route('portfolio.index') }}" class="readmore-btn">Портфолио</a>
-                            </div>
-                        </div>
-                    </div>
-                </div>
-
-                <div class="col-lg-4 col-md-6">
-                    <div class="amenity-item">
-                        <div class="amenity-item-image">
-                            <figure>
-                                <img src="{{ asset('images/amenity-image-3-prime.png') }}" alt="">
-                            </figure>
-                        </div>
-                        <div class="amenity-item-content-box">
-                            <div class="amenity-item-header">
-                                <div class="icon-box">
-                                    <img src="{{ asset('images/icon-amenity-feature-item-3.svg') }}" alt="">
-                                </div>
-                            </div>
-                            <div class="amenity-item-content">
-                                <h2>Прозрачность</h2>
-                                <p>Четкая смета, поэтапная оплата и регулярные отчеты о ходе строительства.</p>
-                            </div>
-                            <div class="amenity-item-btn">
-                                <a href="{{ route('page.show', 'contacts') }}" class="readmore-btn">Контакты</a>
-                            </div>
-                        </div>
-                    </div>
-                </div>
-            </div>
-        </div>
-    </div>
-    <!-- Our Values Section End -->
-
-    <!-- Intro Video Section Start -->
-    <div class="intro-video">
-        <div class="container">
-            <div class="intro-video-box">
-                <div class="intro-video-image">
-                    <figure>
-                        <img src="{{ asset('images/amenity-entry-video-image.jpg') }}" alt="О нашей компании">
-                    </figure>
-                </div>
-                <div class="play-video-circle">
-                    <a href="https://www.youtube.com/watch?v=dQw4w9WgXcQ" data-bs-toggle="modal" data-bs-target="#videoModal">
-                        <h2><i class="fas fa-play"></i></h2>
-                    </a>
-                </div>
-            </div>
-        </div>
-    </div>
-    <!-- Intro Video Section End -->
-
-    <!-- Video Modal -->
-    <div class="modal fade" id="videoModal" tabindex="-1" aria-hidden="true">
-        <div class="modal-dialog modal-dialog-centered modal-lg">
-            <div class="modal-content bg-transparent border-0">
-                <div class="modal-body p-0">
-                    <div class="ratio ratio-16x9">
-                        <iframe id="videoIframe" src="" title="Video" allowfullscreen></iframe>
-                    </div>
-                </div>
-            </div>
-        </div>
-    </div>
-
-    <!-- CTA Section Start -->
-    <div class="cta-box">
-        <div class="container">
-            <div class="row">
-                <div class="col-lg-5">
-                    <div class="cta-box-content">
-                        <div class="cta-client-box">
-                            <div class="cta-client-images">
-                                <div class="satisfy-client-images">
-                                    <div class="satisfy-client-image">
-                                        <figure><img src="{{ asset('images/author-1.jpg') }}" alt=""></figure>
-                                    </div>
-                                    <div class="satisfy-client-image">
-                                        <figure><img src="{{ asset('images/author-2.jpg') }}" alt=""></figure>
-                                    </div>
-                                    <div class="satisfy-client-image">
-                                        <figure><img src="{{ asset('images/author-3.jpg') }}" alt=""></figure>
-                                    </div>
-                                    <div class="satisfy-client-image add-more">
-                                        <h3>+500</h3>
-                                    </div>
-                                </div>
-                            </div>
-                            <div class="cta-client-box-content">
-                                <h3>Более 500 довольных клиентов</h3>
-                                <p>Доверьте строительство своего дома профессионалам с проверенной репутацией.</p>
-                            </div>
-                        </div>
-
-                        <div class="section-footer-text section-footer-contact">
-                            <span>
-                                <img src="{{ asset('images/icon-phone-white.svg') }}" alt="">
-                            </span>
-                            <ul>
-                                <li><a href="tel:+375333196451">+375 (33) 319-64-51</a></li>
-                            </ul>
-                        </div>
-                    </div>
-                </div>
-
-                <div class="col-lg-7">
-                    <div class="cta-form-box">
-                        <div class="cta-form-title">
-                            <h3 class="text-anime-style-3" data-cursor="-opaque">Обсудить проект</h3>
-                        </div>
-
-                        <form action="{{ route('api.foundation-request.store') }}" method="POST" class="contact-form js-telegram-form">
-                            @csrf
-                            <input type="hidden" name="source_type" value="about">
-                            <input type="hidden" name="source_title" value="Страница О нас">
-
-                            <div class="row">
-                                <div class="col-lg-12">
-                                    <div class="form-group mb-3">
-                                        <label for="cta-name">Ваше имя *</label>
-                                        <input type="text" id="cta-name" name="name" class="form-control required" required>
-                                    </div>
-                                </div>
-
-                                <div class="col-lg-12">
-                                    <div class="form-group mb-3">
-                                        <label for="cta-phone">Телефон *</label>
-                                        <input type="tel" id="cta-phone" name="phone" class="form-control required mask-phone" placeholder="+375 (__) ___-__-__" required>
-                                    </div>
-                                </div>
-
-                                <div class="col-lg-12">
-                                    <div class="form-group mb-3">
-                                        <label for="cta-comment">Комментарий</label>
-                                        <textarea id="cta-comment" name="comment" class="form-control" rows="3"></textarea>
-                                    </div>
-                                </div>
-
-                                <div class="col-lg-12">
-                                    <button type="submit" class="btn-default btn-highlighted w-100">
-                                        Отправить заявку
-                                    </button>
-
-                                    <p class="form-note mt-3">
-                                        Нажимая кнопку, вы соглашаетесь с
-                                        <a href="{{ route('page.show', 'privacy') }}" class="text-decoration-underline">политикой конфиденциальности</a>
-                                    </p>
-                                </div>
-                            </div>
-                        </form>
-                    </div>
-                </div>
-            </div>
-        </div>
-    </div>
-    <!-- CTA Section End -->
-
-    <!-- Section Footer Text Start -->
-    <div class="section-footer-text">
-        <p>
-            <span>Есть вопросы?</span>
-            Свяжитесь с нами по телефону <a href="tel:+375333196451">+375 (33) 319-64-51</a> или
-            <a href="{{ route('page.show', 'contacts') }}">оставьте заявку</a>
-        </p>
-    </div>
-    <!-- Section Footer Text End -->
 @endsection
 
 @push('scripts')
