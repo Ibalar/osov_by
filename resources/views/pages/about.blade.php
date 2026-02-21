@@ -523,13 +523,6 @@
             $(this).find('iframe').attr('src', '');
         });
 
-        // Counter animation
-        if (typeof $.fn.counterUp !== 'undefined') {
-            $('.counter').counterUp({
-                delay: 10,
-                time: 2000
-            });
-        }
     });
 </script>
 @endpush
