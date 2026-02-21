@@ -88,4 +88,71 @@ document.addEventListener("DOMContentLoaded", function () {
     calculateTotal();
 });
 
+// AJAX form submission for js-telegram-form
+$(document).ready(function () {
+    $('form.js-telegram-form').on('submit', function (e) {
+        e.preventDefault();
+
+        const $form = $(this);
+        const $button = $form.find('button[type="submit"]');
+        const originalButtonText = $button.text();
+        const url = $form.attr('action');
+
+        // Validate required fields
+        let isValid = true;
+        $form.find('.required').each(function () {
+            const $field = $(this);
+            if ($field.attr('type') === 'checkbox') {
+                if (!$field.is(':checked')) {
+                    isValid = false;
+                }
+            } else {
+                if (!$field.val() || $field.val() === '0') {
+                    isValid = false;
+                }
+            }
+        });
+
+        if (!isValid) {
+            alert('Пожалуйста, заполните все обязательные поля.');
+            return;
+        }
+
+        // Disable button and show loading
+        $button.prop('disabled', true).text('Отправка...');
+
+        $.ajax({
+            url: url,
+            type: 'POST',
+            data: $form.serialize(),
+            dataType: 'json',
+            success: function (response) {
+                if (response.success) {
+                    // Hide form fields and show success message
+                    $form.find('.form__fields').addClass('form__hide-success');
+                    $form.find('.form__success').removeClass('form__hide-success');
+                    $form[0].reset();
+                } else {
+                    alert(response.message || 'Произошла ошибка. Пожалуйста, попробуйте еще раз.');
+                }
+            },
+            error: function (xhr, status, error) {
+                console.error('Form submission error:', error);
+                let message = 'Произошла ошибка. Пожалуйста, попробуйте еще раз.';
+                if (xhr.responseJSON && xhr.responseJSON.message) {
+                    message = xhr.responseJSON.message;
+                } else if (xhr.responseJSON && xhr.responseJSON.errors) {
+                    const errors = Object.values(xhr.responseJSON.errors).flat();
+                    message = errors.join('\n');
+                }
+                alert(message);
+            },
+            complete: function () {
+                // Re-enable button
+                $button.prop('disabled', false).text(originalButtonText);
+            }
+        });
+    });
+});
+
 
