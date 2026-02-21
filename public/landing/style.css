@@ -11533,6 +11533,10 @@
          padding: 24px 20px 56px;
     }
 }
+.price__table {
+    display: flex;
+    justify-content: center;
+}
  .price__table thead th {
      background: #0C6F7C;
      color: #ffffff;
@@ -11547,6 +11551,7 @@
  }
  @media screen and (max-width: 768px) {
      .price__table {
+         display: inherit;
          overflow-x: auto;
          -webkit-overflow-scrolling: touch;
     }
