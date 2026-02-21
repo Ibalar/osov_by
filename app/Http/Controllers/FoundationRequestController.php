@@ -60,6 +60,8 @@ class FoundationRequestController extends Controller
                 $sourceType = 'service_category';
             } elseif (str_contains($referer, '/landing/')) {
                 $sourceType = 'landing';
+            } elseif (str_contains($referer, '/page/contacts')) {
+                $sourceType = 'contact';
             }
         }
 
@@ -96,6 +98,8 @@ class FoundationRequestController extends Controller
             'service' => 'Услуга',
             'service_category' => 'Категория услуг',
             'landing' => 'Лендинг',
+            'contact' => 'Страница контактов',
+            'home' => 'Главная страница',
             default => 'Страница',
         };
 
