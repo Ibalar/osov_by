@@ -79,7 +79,7 @@
                             Оставить заявку
                         </h2>
                         
-                        <form action="{{ route('page.show', 'contacts') }}" method="POST" class="contact-form">
+                        <form action="{{ route('api.foundation-request.store') }}" method="POST" class="contact-form js-telegram-form">
                             @csrf
                             
                             <div class="form-group mb-3">
@@ -87,7 +87,7 @@
                                 <input type="text" 
                                        id="name" 
                                        name="name" 
-                                       class="form-control" 
+                                       class="form-control required" 
                                        required>
                             </div>
                             
@@ -96,26 +96,21 @@
                                 <input type="tel" 
                                        id="phone" 
                                        name="phone" 
-                                       class="form-control" 
+                                       class="form-control required" 
                                        required>
                             </div>
                             
                             <div class="form-group mb-3">
-                                <label for="email">Email</label>
-                                <input type="email" 
-                                       id="email" 
-                                       name="email" 
-                                       class="form-control">
-                            </div>
-                            
-                            <div class="form-group mb-3">
-                                <label for="message">Сообщение *</label>
-                                <textarea id="message" 
-                                          name="message" 
-                                          class="form-control" 
+                                <label for="comment">Сообщение *</label>
+                                <textarea id="comment" 
+                                          name="comment" 
+                                          class="form-control required" 
                                           rows="5" 
                                           required></textarea>
                             </div>
+                            
+                            <input type="hidden" name="source_type" value="contact">
+                            <input type="hidden" name="source_title" value="Страница контактов">
                             
                             <button type="submit" class="btn-default btn-highlighted w-100">
                                 Отправить заявку

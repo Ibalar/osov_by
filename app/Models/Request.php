@@ -57,6 +57,8 @@ class Request extends Model
             'service' => 'Услуга',
             'service_category' => 'Категория услуг',
             'landing' => 'Лендинг',
+            'contact' => 'Страница контактов',
+            'home' => 'Главная страница',
             default => 'Другое',
         };
     }
