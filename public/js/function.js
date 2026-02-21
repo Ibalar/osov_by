@@ -187,7 +187,12 @@
 
     /* Init Counter */
     if ($('.counter').length) {
-        $('.counter').counterUp({ delay: 6, time: 3000 });
+        $('.counter').each(function () {
+            var text = $.trim($(this).text()).replace(/,/g, '');
+            if (/^\d+(\.\d+)?$/.test(text) && !$(this).data('counterup-nums')) {
+                $(this).counterUp({ delay: 6, time: 3000 });
+            }
+        });
     }
 
     /* Image Reveal Animation */
