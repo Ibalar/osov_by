@@ -428,13 +428,8 @@
                                     </div>
                                     <div class="form__box">
                                         <div class="form__button">
-                                            <button type="button" class="button animat-1" onclick="calculateResult()">
-                                                Рассчитать
-                                            </button>
-                                        </div>
-                                        <div class="form__button">
-                                            <button type="button" class="button animat-2" onclick="resetCalculator()">
-                                                Сбросить
+                                            <button type="button" class="button animat-2" data-bs-toggle="modal" data-bs-target="#calculatorCallModal">
+                                                Вызвать замерщика
                                             </button>
                                         </div>
                                     </div>
@@ -450,6 +445,68 @@
                 </div>
             </div>
         </section>
+
+        <!-- Calculator Call Modal -->
+        <div class="modal fade" id="calculatorCallModal" tabindex="-1" role="dialog" aria-labelledby="calculatorCallModalTitle" aria-hidden="true">
+            <div class="modal-dialog modal-dialog-centered" role="document">
+                <div class="modal-content">
+                    <div class="modal-header">
+                        <button type="button" class="close" data-bs-dismiss="modal" aria-label="Close">
+                            <span aria-hidden="true"></span>
+                        </button>
+                    </div>
+                    <div class="modal-body">
+                        <div class="form-block b rf">
+                            <form action="{{ route('api.foundation-request.store') }}" method="POST" id="calculator-call-form" class="form-block__container n form__form callback-form" name="calculator_call_form">
+                                @csrf
+                                <input type="hidden" name="source_type" value="service_category">
+                                <input type="hidden" name="source_id" value="{{ $category->id }}">
+                                <input type="hidden" name="source_title" value="{{ $category->title }}">
+                                <input type="hidden" name="calculator_data" id="calculator-modal-data">
+                                <fieldset class="form__fields form__hide-success">
+                                    <h3 class="form-block__title">Вызвать <span>замерщика</span></h3>
+
+                                    <div class="form-block__number">
+                                        <div class="form-block__count">
+                                            <span>1</span>
+                                        </div>
+                                        <div class="form-block-text">
+                                            <p>Оставьте свой номер телефона</p>
+                                        </div>
+                                    </div>
+
+                                    <div class="form-block__input">
+                                        <input class="mask-phone-modal zphone required" name="phone" type="tel" placeholder="Номер телефона +375...">
+                                    </div>
+                                    <br>
+                                    <div class="form-block__button">
+                                        <button type="submit" class="button animat-2 feedback">Отправить заявку</button>
+                                    </div>
+
+                                    <div class="form-block__number mt-4">
+                                        <div class="form-block__count">
+                                            <span>2</span>
+                                        </div>
+                                        <div class="form-block-text">
+                                            <p><span>Наш специалист свяжется с Вами в течение 30 минут</span>, задаст уточняющие вопросы и озвучит стоимость</p>
+                                        </div>
+                                    </div>
+
+                                    <div class="form-block__checkbox">
+                                        <label class="check">
+                                            <input class="check__input required" type="checkbox" checked="">
+                                            <span class="check__box"></span>
+                                        </label>
+                                        <p>Я согласен(а) с <a href="{{ route('page.show', 'privacy') }}">политикой обработки персональных данных</a></p>
+                                    </div>
+                                </fieldset>
+                            </form>
+                        </div>
+                    </div>
+                    <div class="modal-footer"></div>
+                </div>
+            </div>
+        </div>
     @endif
 
 
@@ -617,81 +674,14 @@
 
 @if($category->calculator_enabled && !empty($category->calculator_fields))
 <script>
-    // Calculator configuration from server
     const calculatorConfig = {
         formula: '{{ $category->calculator_formula ?? "" }}',
         currency: '{{ $category->calculator_currency ?? "BYN" }}',
         fields: @json($category->calculator_fields ?? [])
     };
 
-    // Get all calculator input elements
     function getCalculatorInputs() {
         return document.querySelectorAll('.calculator-input');
-    }
-
-    // Calculate the result based on formula and input values
-    function calculateResult() {
-        const inputs = getCalculatorInputs();
-        const values = {};
-
-        // Collect all field values
-        inputs.forEach(input => {
-            const fieldKey = input.dataset.fieldKey || input.name;
-            let value;
-
-            if (input.type === 'checkbox') {
-                value = input.checked ? 1 : 0;
-            } else if (input.type === 'radio') {
-                if (input.checked) {
-                    value = parseFloat(input.value) || 0;
-                } else {
-                    return; // Skip unchecked radio buttons
-                }
-            } else {
-                value = parseFloat(input.value) || 0;
-            }
-
-            values[fieldKey] = value;
-        });
-
-        // Replace formula placeholders with actual values
-        let formula = calculatorConfig.formula || '';
-
-        // If no formula, calculate as sum of all field values multiplied
-        if (!formula && Object.keys(values).length > 0) {
-            // Default: multiply all values
-            formula = Object.keys(values).map(key => `{${key}}`).join(' * ');
-        }
-
-        // Replace placeholders with values
-        Object.keys(values).forEach(key => {
-            const placeholder = `{${key}}`;
-            formula = formula.replace(new RegExp(placeholder, 'g'), values[key]);
-        });
-
-        // Calculate the result using JavaScript eval (for simple math expressions)
-        let result = 0;
-        try {
-            // Sanitize: only allow numbers, operators, parentheses, and spaces
-            const sanitizedFormula = formula.replace(/[^0-9+\-*/().\s]/g, '');
-            if (sanitizedFormula) {
-                result = Function('"use strict";return (' + sanitizedFormula + ')')();
-            }
-        } catch (e) {
-            console.error('Calculation error:', e);
-            result = 0;
-        }
-
-        // Format and display result
-        const totalElement = document.getElementById('calculator-total');
-        if (totalElement) {
-            totalElement.textContent = result.toLocaleString('ru-RU', {
-                minimumFractionDigits: 0,
-                maximumFractionDigits: 2
-            });
-        }
-
-        return result;
     }
 
     function getFieldConfig(fieldKey) {
@@ -713,44 +703,131 @@
         return slider ? slider.querySelector('.range-value') : null;
     }
 
-    // Reset calculator to default values
-    function resetCalculator() {
+    function calculateResult() {
         const inputs = getCalculatorInputs();
+        const values = {};
 
         inputs.forEach(input => {
             const fieldKey = input.dataset.fieldKey || input.name;
-            const fieldConfig = getFieldConfig(fieldKey);
+            let value;
 
             if (input.type === 'checkbox') {
-                input.checked = fieldConfig?.default_value ? true : false;
+                value = input.checked ? 1 : 0;
             } else if (input.type === 'radio') {
-                const firstRadio = document.querySelector(`input[name="${input.name}"]`);
-                if (firstRadio) firstRadio.checked = true;
-            } else if (input.tagName === 'SELECT') {
-                const firstOption = input.querySelector('option:not([value=""])');
-                if (firstOption) firstOption.selected = true;
+                if (input.checked) {
+                    value = parseFloat(input.value) || 0;
+                } else {
+                    return;
+                }
             } else {
-                input.value = fieldConfig?.default_value ?? '';
+                value = parseFloat(input.value) || 0;
             }
 
-            if (input.type === 'range') {
-                const display = getRangeDisplay(input);
-                if (display) {
-                    display.textContent = input.value;
-                }
-            }
+            values[fieldKey] = value;
         });
 
-        calculateResult();
+        let formula = calculatorConfig.formula || '';
+
+        if (!formula && Object.keys(values).length > 0) {
+            formula = Object.keys(values).map(key => `{${key}}`).join(' * ');
+        }
+
+        Object.keys(values).forEach(key => {
+            const placeholder = `{${key}}`;
+            formula = formula.replace(new RegExp(placeholder, 'g'), values[key]);
+        });
+
+        let result = 0;
+        try {
+            const sanitizedFormula = formula.replace(/[^0-9+\-*/().\s]/g, '');
+            if (sanitizedFormula) {
+                result = Function('"use strict";return (' + sanitizedFormula + ')')();
+            }
+        } catch (e) {
+            console.error('Calculation error:', e);
+            result = 0;
+        }
+
+        const totalElement = document.getElementById('calculator-total');
+        if (totalElement) {
+            totalElement.textContent = result.toLocaleString('ru-RU', {
+                minimumFractionDigits: 0,
+                maximumFractionDigits: 2
+            });
+        }
+
+        return result;
     }
 
-    // Initialize calculator on page load
+    function collectCalculatorData() {
+        const inputs = getCalculatorInputs();
+        const data = [];
+        const seen = {};
+
+        inputs.forEach(input => {
+            const fieldKey = input.dataset.fieldKey || input.name;
+
+            if (input.type === 'radio' && !input.checked) {
+                return;
+            }
+
+            if (seen[fieldKey]) {
+                return;
+            }
+
+            seen[fieldKey] = true;
+
+            const fieldConfig = getFieldConfig(fieldKey);
+            const label = fieldConfig?.label || fieldKey;
+            const unit = fieldConfig?.unit || '';
+            let value;
+
+            if (input.type === 'checkbox') {
+                value = input.checked ? 1 : 0;
+            } else if (input.type === 'radio') {
+                const selectedOption = fieldConfig?.options?.find(o => String(o.value) === String(input.value));
+                value = selectedOption ? selectedOption.label : input.value;
+            } else if (input.tagName === 'SELECT') {
+                const selectedOption = input.options[input.selectedIndex];
+                value = selectedOption ? selectedOption.text : input.value;
+            } else {
+                value = input.value;
+            }
+
+            data.push({ key: fieldKey, label: label, value: value, unit: unit });
+        });
+
+        const totalElement = document.getElementById('calculator-total');
+        const total = totalElement ? totalElement.textContent : '0';
+        data.push({ key: 'total', label: 'Итоговая стоимость', value: total, unit: calculatorConfig.currency });
+
+        return data;
+    }
+
     document.addEventListener('DOMContentLoaded', function() {
+        if (typeof $.fn.inputmask !== 'undefined') {
+            $('.mask-phone-modal').inputmask({
+                mask: '+375 (99) 999-99-99',
+                placeholder: '_',
+                showMaskOnHover: false,
+                clearIncomplete: true
+            });
+
+            $('.mask-phone-modal').on('blur', function() {
+                let phone = $(this).val();
+                let validCodes = ['25', '29', '33', '44'];
+                let enteredCode = phone.substring(6, 8);
+
+                if (!validCodes.includes(enteredCode)) {
+                    alert('Введите номер с кодом 25, 29, 33 или 44!');
+                    $(this).val('');
+                }
+            });
+        }
+
         const inputs = getCalculatorInputs();
 
-        // Add event listeners to all inputs
         inputs.forEach(input => {
-            // For range sliders, update display value
             if (input.type === 'range') {
                 input.addEventListener('input', function() {
                     const display = getRangeDisplay(this);
@@ -761,15 +838,89 @@
                 });
             }
 
-            // Add change/input listeners for real-time calculation
             input.addEventListener('change', calculateResult);
             if (input.type !== 'range') {
                 input.addEventListener('input', calculateResult);
             }
         });
 
-        // Initial calculation
         calculateResult();
+
+        document.getElementById('calculatorCallModal').addEventListener('show.bs.modal', function() {
+            const data = collectCalculatorData();
+            document.getElementById('calculator-modal-data').value = JSON.stringify(data);
+        });
+
+        $('#calculator-call-form').on('submit', function(e) {
+            e.preventDefault();
+
+            const $form = $(this);
+            const $button = $form.find('button[type="submit"]');
+            const originalButtonText = $button.text();
+
+            let isValid = true;
+            $form.find('.required').each(function() {
+                const $field = $(this);
+
+                if ($field.attr('type') === 'checkbox') {
+                    if (!$field.is(':checked')) {
+                        isValid = false;
+                    }
+                    return;
+                }
+
+                if (!$field.val() || $field.val() === '0') {
+                    isValid = false;
+                }
+            });
+
+            if (!isValid) {
+                alert('Пожалуйста, заполните все обязательные поля.');
+                return;
+            }
+
+            $button.prop('disabled', true).text('Отправка...');
+
+            $.ajax({
+                url: $form.attr('action'),
+                type: 'POST',
+                data: $form.serialize(),
+                dataType: 'json',
+                success: function(response) {
+                    $('#calculatorCallModal').modal('hide');
+                    $form[0].reset();
+
+                    if (response.success) {
+                        const successHtml = `
+                            <div class="form-block__success" style="text-align: center; padding: 20px;">
+                                <div style="font-size: 48px; margin-bottom: 16px;">✅</div>
+                                <h3 style="color: #28a745; margin-bottom: 12px;">${response.message || 'Спасибо! Ваша заявка принята.'}</h3>
+                                <p style="color: #666;">Мы свяжемся с вами в ближайшее время.</p>
+                            </div>
+                        `;
+                        $form.append(successHtml);
+                        $form.find('.form__fields').hide();
+                    } else {
+                        alert(response.message || 'Произошла ошибка. Пожалуйста, попробуйте еще раз.');
+                    }
+                },
+                error: function(xhr) {
+                    let message = 'Произошла ошибка. Пожалуйста, попробуйте еще раз.';
+
+                    if (xhr.responseJSON && xhr.responseJSON.message) {
+                        message = xhr.responseJSON.message;
+                    } else if (xhr.responseJSON && xhr.responseJSON.errors) {
+                        const errors = Object.values(xhr.responseJSON.errors).flat();
+                        message = errors.join('\n');
+                    }
+
+                    alert(message);
+                },
+                complete: function() {
+                    $button.prop('disabled', false).text(originalButtonText);
+                }
+            });
+        });
     });
 </script>
 @endif

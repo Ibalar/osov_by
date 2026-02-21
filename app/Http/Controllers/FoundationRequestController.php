@@ -42,6 +42,7 @@ class FoundationRequestController extends Controller
             'source_title' => ['nullable', 'string', 'max:255'],
             'name' => ['nullable', 'string', 'max:255'],
             'comment' => ['nullable', 'string', 'max:1000'],
+            'calculator_data' => ['nullable', 'string', 'max:5000'],
         ]);
 
         // Определяем тип источника и название
@@ -111,6 +112,22 @@ class FoundationRequestController extends Controller
 
         if (!empty($data['comment'])) {
             $message .= "💬 Комментарий: {$data['comment']}\n";
+        }
+
+        if (!empty($data['calculator_data'])) {
+            $calculatorData = json_decode($data['calculator_data'], true);
+            if (is_array($calculatorData)) {
+                $message .= "\n🧮 <b>Данные калькулятора:</b>\n";
+                foreach ($calculatorData as $item) {
+                    if (!is_array($item)) {
+                        continue;
+                    }
+                    $label = $item['label'] ?? $item['key'] ?? '';
+                    $value = $item['value'] ?? '';
+                    $unit = $item['unit'] ?? '';
+                    $message .= "  • {$label}: {$value}" . ($unit ? " {$unit}" : '') . "\n";
+                }
+            }
         }
 
         // Дополнительные поля для фундаментов (legacy)
