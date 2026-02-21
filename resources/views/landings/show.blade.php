@@ -115,6 +115,10 @@
                                             <p>Я согласен(а) с <a href="{{ route('page.show', 'privacy') }}">политикой обработки персональных данных</a></p>
                                         </div>
                                     </fieldset>
+                                    <div class="form__success form__hide-success" style="text-align: center; padding: 40px 20px;">
+                                        <h3 class="form-block__title" style="margin-bottom: 20px;">Спасибо за заявку!</h3>
+                                        <p style="font-size: 16px; color: #666;">Наш специалист свяжется с Вами в течение 30 минут.</p>
+                                    </div>
                                 </form>
                             </div>
                         </div>

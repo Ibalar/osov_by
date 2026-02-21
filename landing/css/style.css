@@ -14072,3 +14072,16 @@ input[type=checkbox].required.error,
 
 
 
+
+/* Form success handling */
+.form__hide-success {
+    display: none !important;
+}
+
+.form__success:not(.form__hide-success) {
+    display: block !important;
+}
+
+.form__fields:not(.form__hide-success) {
+    display: block !important;
+}
