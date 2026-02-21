@@ -300,7 +300,7 @@
                 <div class="calculator__container">
                     <div class="form">
                         <form id="universal-calculator" class="calculator-form">
-                            <div class="calculator__fields">
+                            <div class="calculator__fields row">
                                 @foreach($category->calculator_fields as $fieldIndex => $field)
                                     @php
                                         $fieldKey = $field['key'] ?? 'field_' . $fieldIndex;
@@ -313,7 +313,7 @@
                                         $options = $field['options'] ?? [];
                                     @endphp
 
-                                    <div class="col-12 col-lg-6">
+                                    <div class="col-12 col-lg-6 my-3">
                                         <div class="form__type">
                                             <p class="form__title">{{ $field['label'] ?? '' }}</p>
 
@@ -412,7 +412,7 @@
                                 @endforeach
                             </div>
 
-                            <div class="calculator__summary">
+                            <div class="calculator__summary row">
                                 <div class="col-12 col-lg-6">
                                     <div class="form__box">
                                         <div class="form-total">
@@ -428,6 +428,9 @@
                                             </div>
                                         </div>
                                     </div>
+
+                                </div>
+                                <div class="col-12 col-lg-6">
                                     <div class="form__box">
                                         <div class="form__button">
                                             <button type="button" class="button animat-2" data-bs-toggle="modal" data-bs-target="#calculatorCallModal">
@@ -436,7 +439,7 @@
                                         </div>
                                     </div>
                                 </div>
-                                <div class="col-12 col-lg-6">
+                                <div class="col-12">
                                     <div class="form__box form__box--note">
                                         <p>Стоимость ориентировочная. Точная сумма определяется после выезда специалиста, проведения полных замеров и изысканий.</p>
                                     </div>
