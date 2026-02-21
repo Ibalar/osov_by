@@ -62,6 +62,9 @@ Route::get('/sitemap.xml', [SitemapController::class, 'index'])
 Route::get('/landing/{slug}', [LandingController::class, 'show'])
     ->name('landings.show');
 
+Route::view('/privacy-policy', 'privacy-policy')
+    ->name('privacy-policy');
+
 // API маршруты (перед маршрутами filemanager)
 Route::post('/api/foundation-request', [FoundationRequestController::class, 'store'])
     ->name('api.foundation-request.store');

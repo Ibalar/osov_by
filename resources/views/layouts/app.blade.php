@@ -160,6 +160,9 @@
 {{-- Footer --}}
 @include('partials.footer')
 
+{{-- Cookie Banner --}}
+@include('partials.cookie-banner')
+
 {{-- JS --}}
 <script src="{{ asset('js/jquery-3.7.1.min.js') }}"></script>
 <script src="{{ asset('js/bootstrap.min.js') }}"></script>
