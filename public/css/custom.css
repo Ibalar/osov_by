@@ -1866,6 +1866,21 @@ header.main-header .header-sticky.active{
 	opacity: 50%;
 }
 
+.contact-form .form-note{
+	font-size: 14px;
+	color: var(--text-color);
+	line-height: 1.5em;
+}
+
+.contact-form .form-note a{
+	color: var(--accent-color);
+	transition: all 0.3s ease-in-out;
+}
+
+.contact-form .form-note a:hover{
+	color: var(--primary-color);
+}
+
 /************************************/
 /*** 	   13. Our Team css	      ***/
 /************************************/
@@ -4466,6 +4481,7 @@ header.main-header .header-sticky.active{
 }
 
 .contact-us-content{
+	background-color: var(--primary-color);
 	background-image: none;
 	border-radius: 20px;
 	padding: 40px;
@@ -4950,6 +4966,7 @@ header.main-header .header-sticky.active{
 	}
 
 	.contact-us-content{
+	background-color: var(--primary-color);
 		margin: 0 0 30px;
 	}
 
@@ -5581,6 +5598,7 @@ header.main-header .header-sticky.active{
 	}
 
 	.contact-us-content{
+	background-color: var(--primary-color);
         padding: 20px;
     }
 
