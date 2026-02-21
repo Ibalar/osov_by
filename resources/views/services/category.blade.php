@@ -38,6 +38,9 @@
                             <div class="form-block b header-body__form rf">
                                 <form action="{{ route('api.foundation-request.store') }}" method="POST" class="form-block__container n form__form callback-form js-telegram-form" name="header_form">
                                     @csrf
+                                    <input type="hidden" name="source_type" value="service_category">
+                                    <input type="hidden" name="source_id" value="{{ $category->id }}">
+                                    <input type="hidden" name="source_title" value="{{ $category->title }}">
                                     <fieldset class="form__fields form__hide-success">
                                         <h3 class="form-block__title">Оставьте <span>заявку</span></h3>
 
