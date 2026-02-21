@@ -29,6 +29,9 @@
                             <div class="form-block b header-body__form rf">
                                 <form action="{{ route('api.foundation-request.store') }}" method="POST" class="form-block__container n form__form callback-form js-telegram-form" name="header_form">
                                     @csrf
+                                    <input type="hidden" name="source_type" value="landing">
+                                    <input type="hidden" name="source_id" value="{{ $landingPage->id }}">
+                                    <input type="hidden" name="source_title" value="{{ $landingPage->title }}">
                                     <fieldset class="form__fields form__hide-success">
                                         <h3 class="form-block__title">Получите <span>точную смету</span> фундамента</h3>
 
@@ -409,3 +412,29 @@
     </section>
     @endif
 @endsection
+
+@push('scripts')
+{{-- Inputmask for phone numbers --}}
+<script src="{{ asset('landing/jquery.inputmask.min.js') }}"></script>
+<script>
+    $(document).ready(function () {
+        $(".mask-phone").inputmask({
+            mask: "+375 (99) 999-99-99",
+            placeholder: "_",
+            showMaskOnHover: false,
+            clearIncomplete: true
+        });
+
+        $(".mask-phone").on("blur", function () {
+            let phone = $(this).val();
+            let validCodes = ["25", "29", "33", "44"]; // Разрешённые коды
+            let enteredCode = phone.substring(6, 8); // Извлекаем код
+
+            if (!validCodes.includes(enteredCode)) {
+                alert("Введите номер с кодом 25, 29, 33 или 44!");
+                $(this).val(""); // Очищаем поле
+            }
+        });
+    });
+</script>
+@endpush
