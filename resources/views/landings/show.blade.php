@@ -149,7 +149,7 @@
                             </div>
                         </div>
                         <div class="foundations__button">
-                            <button class="button animat-{{ ($index % 3) + 1 }}" data-toggle="modal" data-target="#foundations1" data-title="Расчет <span>{{ $type['title'] ?? '' }}</span>" data-theme="{{ $type['title'] ?? '' }}">
+                            <button class="button animat-{{ ($index % 3) + 1 }}" data-bs-toggle="modal" data-bs-target="#foundations1" data-title="Расчет <span>{{ $type['title'] ?? '' }}</span>" data-theme="{{ $type['title'] ?? '' }}">
                                 Рассчитать фундамент
                             </button>
                         </div>
@@ -321,7 +321,7 @@
                                     </div>
 
                                     <div class="form__button">
-                                        <button class="button animat-1" data-toggle="modal" data-target="#master">Вызвать замерщика</button>
+                                        <button class="button animat-1" data-bs-toggle="modal" data-bs-target="#master">Вызвать замерщика</button>
                                     </div>
                                 </div>
                             </div>
@@ -415,6 +415,220 @@
         </div>
     </section>
     @endif
+
+    {{-- Modal: Вызов замерщика --}}
+    <div class="modal fade" id="master" tabindex="-1" role="dialog" aria-labelledby="masterTitle" aria-hidden="true">
+        <div class="modal-dialog modal-dialog-centered" role="document">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <button type="button" class="close" data-bs-dismiss="modal" aria-label="Close">
+                        <span aria-hidden="true"></span>
+                    </button>
+                </div>
+                <div class="modal-body">
+                    <div class="form-block b rf">
+                        <form action="{{ route('api.foundation-request.store') }}" method="POST" class="form-block__container n form__form callback-form js-telegram-form" name="zamer_form">
+                            @csrf
+                            <input type="hidden" name="source_type" value="landing">
+                            <input type="hidden" name="source_id" value="{{ $landingPage->id }}">
+                            <input type="hidden" name="source_title" value="{{ $landingPage->title }}">
+                            <fieldset class="form__fields form__hide-success">
+                                <h3 class="form-block__title heavy up">Вызов замерщика</h3>
+
+                                <div class="form-block__number">
+                                    <div class="form-block-text">
+                                        <p>Оставьте свой номер телефона. Наш менеджер позвонит Вам в течение 30 минут и договорится о дате выезда.</p>
+                                    </div>
+                                </div>
+
+                                <div class="form-block__input mb-2">
+                                    <input type="text" class="required" name="name" placeholder="Ваше имя">
+                                </div>
+
+                                <div class="form-block__input">
+                                    <input type="tel" class="mask-phone zphone required" name="phone" placeholder="Номер телефона +375...">
+                                </div>
+
+                                <div class="form-block__button mb-4">
+                                    <button type="submit" class="button animat-2 feedback">Отправить</button>
+                                </div>
+
+                                <div class="form-block__checkbox">
+                                    <label class="check">
+                                        <input class="check__input required" type="checkbox" checked="">
+                                        <span class="check__box"></span>
+                                    </label>
+                                    <p>Я согласен(а) с <a href="{{ route('page.show', 'privacy') }}">политикой обработки персональных данных</a></p>
+                                </div>
+                            </fieldset>
+                            <div class="form__success form__hide-success" style="text-align: center; padding: 40px 20px;">
+                                <h3 class="form-block__title" style="margin-bottom: 20px;">Спасибо за заявку!</h3>
+                                <p style="font-size: 16px; color: #666;">Наш специалист свяжется с Вами в течение 30 минут.</p>
+                            </div>
+                        </form>
+                    </div>
+                </div>
+                <div class="modal-footer">
+                </div>
+            </div>
+        </div>
+    </div>
+
+    {{-- Modal: Расчёт фундамента --}}
+    <div class="modal fade" id="foundations1" tabindex="-1" role="dialog" aria-labelledby="foundations1Title" aria-hidden="true">
+        <div class="modal-dialog modal-dialog-centered" role="document">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <button type="button" class="close" data-bs-dismiss="modal" aria-label="Close">
+                        <span aria-hidden="true"></span>
+                    </button>
+                </div>
+                <div class="modal-body">
+                    <div class="form-block b rf">
+                        <form action="{{ route('api.foundation-request.store') }}" method="POST" class="form-block__container n form__form callback-form js-telegram-form" name="foundations_form">
+                            @csrf
+                            <input type="hidden" name="source_type" value="landing">
+                            <input type="hidden" name="source_id" value="{{ $landingPage->id }}">
+                            <input type="hidden" name="source_title" value="{{ $landingPage->title }}">
+                            <input type="hidden" name="theme" value="">
+                            <fieldset class="form__fields form__hide-success">
+                                <h3 class="form-block__title heavy up">Расчёт <br>фундамента</h3>
+
+                                <div class="form-block__number">
+                                    <div class="form-block__count">
+                                        <span>1</span>
+                                    </div>
+                                    <div class="form-block-text">
+                                        <p>Оставьте свой номер телефона</p>
+                                    </div>
+                                </div>
+
+                                <div class="form-block__select form-group">
+                                    <select name="typep" class="required">
+                                        <option value="0" class="form-block__disabled">Выберите тип постройки</option>
+                                        <option value="Дом">Дом</option>
+                                        <option value="Дача">Дача</option>
+                                        <option value="Гараж">Гараж</option>
+                                        <option value="Теплица">Теплица</option>
+                                    </select>
+                                </div>
+                               
+                                <br>
+
+                                <div class="form-block__input">
+                                    <div class="row mb-3">
+                                        <div class="col-6 pr-2">
+                                            <input class="mask-num required" name="size1" type="text" placeholder="Длина, м">
+                                        </div>
+                                        <div class="col-6 pl-2">
+                                            <input class="mask-num required" name="size2" type="text" placeholder="Ширина, м">
+                                        </div>
+                                    </div>
+                                </div>
+
+                                <div class="form-block__input">
+                                    <input class="mask-phone zphone required" name="phone" type="tel" placeholder="Номер телефона +375...">
+                                </div>
+
+                                <br>
+                                <div class="form-block__button">
+                                    <button type="submit" class="button animat-2 feedback">Получить расчет и смету</button>
+                                </div>
+
+                                <div class="form-block__number mt-4">
+                                    <div class="form-block__count">
+                                        <span>2</span>
+                                    </div>
+                                    <div class="form-block-text">
+                                        <p><span>Наш специалист свяжется с Вами в течение 30 минут</span>, задаст уточняющие вопросы и озвучит стоимость</p>
+                                    </div>
+                                </div>
+
+                                <div class="form-block__number mt-4">
+                                    <div class="form-block__count">
+                                        <span>3</span>
+                                    </div>
+                                    <div class="form-block-text">
+                                        <p><span>Если цена Вас устроит</span>, к Вам приедет инженер для замера и более предметного разговора и составления конечной сметы. <span class="form-block-text__ital">Выезд бесплатный.</span></p>
+                                    </div>
+                                </div>
+
+                                <div class="form-block__checkbox">
+                                    <label class="check">
+                                        <input class="check__input required" type="checkbox" checked="">
+                                        <span class="check__box"></span>
+                                    </label>
+                                    <p>Я согласен(а) с <a href="{{ route('page.show', 'privacy') }}">политикой обработки персональных данных</a></p>
+                                </div>
+                            </fieldset>
+                            <div class="form__success form__hide-success" style="text-align: center; padding: 40px 20px;">
+                                <h3 class="form-block__title" style="margin-bottom: 20px;">Спасибо за заявку!</h3>
+                                <p style="font-size: 16px; color: #666;">Наш специалист свяжется с Вами в течение 30 минут.</p>
+                            </div>
+                        </form>
+                    </div>
+                </div>
+                <div class="modal-footer">
+                </div>
+            </div>
+        </div>
+    </div>
+
+    {{-- Modal: Success --}}
+    <div class="modal fade" id="successModal" tabindex="-1" role="dialog" aria-labelledby="successModalTitle" aria-hidden="true">
+        <div class="modal-dialog modal-dialog-centered" role="document">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <button type="button" class="close" data-bs-dismiss="modal" aria-label="Close">
+                        <span aria-hidden="true"></span>
+                    </button>
+                </div>
+                <div class="modal-body">
+                    <div class="form-block b">
+                        <div class="form-block__container n thanks">
+                            <div class="form-block__thenks">✅</div>
+                            <h3 class="form-block__title heavy up">Спасибо!</h3>
+                            <div class="form-block__number">
+                                <div class="form-block-text">
+                                    <p>Ваша заявка принята! Ожидайте звонка от нашего менеджера.</p>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                <div class="modal-footer">
+                </div>
+            </div>
+        </div>
+    </div>
+
+    {{-- Modal: Error --}}
+    <div class="modal fade" id="errorModal" tabindex="-1" role="dialog" aria-labelledby="errorModalTitle" aria-hidden="true">
+        <div class="modal-dialog modal-dialog-centered" role="document">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <button type="button" class="close" data-bs-dismiss="modal" aria-label="Close">
+                        <span aria-hidden="true"></span>
+                    </button>
+                </div>
+                <div class="modal-body">
+                    <div class="form-block b">
+                        <div class="form-block__container n thanks">
+                            <div class="form-block__thenks">❌</div>
+                            <h3 class="form-block__title heavy up">Что-то пошло не так!</h3>
+                            <div class="form-block__number">
+                                <div class="form-block-text">
+                                    <p>Ваша заявка не отправлена! Попробуйте корректно заполнить все необходимые поля формы и повторить попытку.</p>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                <div class="modal-footer">
+                </div>
+            </div>
+        </div>
+    </div>
 @endsection
 
 @push('scripts')

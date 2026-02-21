@@ -21,7 +21,7 @@
                             <!-- Hero Content Button Start -->
                             <div class="hero-content-btn-prime wow fadeInUp" data-wow-delay="0.6s">
                                 <a href="{{ route('projects.index') }}" class="btn-default btn-highlighted">Каталог проектов</a>
-                                <a href="#" class="btn-default btn-light" data-toggle="modal" data-target="#calculationModal">Получить расчет</a>
+                                <a href="#" class="btn-default btn-light" data-bs-toggle="modal" data-bs-target="#calculationModal">Получить расчет</a>
                             </div>
                             <!-- Hero Content Button End -->
 
@@ -172,7 +172,7 @@
         <div class="modal-dialog modal-dialog-centered" role="document">
             <div class="modal-content">
                 <div class="modal-header">
-                    <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                    <button type="button" class="close" data-bs-dismiss="modal" aria-label="Close">
                         <span aria-hidden="true"></span>
                     </button>
                 </div>
@@ -239,7 +239,7 @@
         <div class="modal-dialog modal-dialog-centered" role="document">
             <div class="modal-content">
                 <div class="modal-header">
-                    <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                    <button type="button" class="close" data-bs-dismiss="modal" aria-label="Close">
                         <span aria-hidden="true"></span>
                     </button>
                 </div>
@@ -270,7 +270,7 @@
         <div class="modal-dialog modal-dialog-centered" role="document">
             <div class="modal-content">
                 <div class="modal-header">
-                    <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                    <button type="button" class="close" data-bs-dismiss="modal" aria-label="Close">
                         <span aria-hidden="true"></span>
                     </button>
                 </div>
