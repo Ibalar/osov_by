@@ -167,6 +167,7 @@
 <script src="{{ asset('landing/slick.min.js') }}"></script>
 <script src="{{ asset('landing/jquery.fancybox.min.js') }}"></script>
 <script src="{{ asset('landing/main.js') }}"></script>
+<script src="{{ asset('js/telegram-form.js') }}"></script>
 
 
 
