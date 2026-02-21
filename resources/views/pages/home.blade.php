@@ -21,7 +21,7 @@
                             <!-- Hero Content Button Start -->
                             <div class="hero-content-btn-prime wow fadeInUp" data-wow-delay="0.6s">
                                 <a href="{{ route('projects.index') }}" class="btn-default btn-highlighted">Каталог проектов</a>
-                                <a href="#" class="btn-default btn-light">Получить расчет</a>
+                                <a href="#" class="btn-default btn-light" data-toggle="modal" data-target="#calculationModal">Получить расчет</a>
                             </div>
                             <!-- Hero Content Button End -->
 
@@ -166,4 +166,204 @@
             </div>
         </div>
     </div>
+
+    <!-- Calculation Modal -->
+    <div class="modal fade" id="calculationModal" tabindex="-1" role="dialog" aria-labelledby="calculationModalTitle" aria-hidden="true">
+        <div class="modal-dialog modal-dialog-centered" role="document">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                        <span aria-hidden="true"></span>
+                    </button>
+                </div>
+                <div class="modal-body">
+                    <div class="form-block b rf">
+                        <form action="{{ route('api.foundation-request.store') }}" method="POST" class="form-block__container n form__form callback-form" name="calculation_form">
+                            @csrf
+                            <fieldset class="form__fields form__hide-success">
+                                <h3 class="form-block__title heavy up">
+                                    Получить <br> расчет
+                                </h3>
+
+                                <div class="form-block__number">
+                                    <div class="form-block__count">
+                                        <span>1</span>
+                                    </div>
+                                    <div class="form-block-text">
+                                        <p>Оставьте свои контактные данные</p>
+                                    </div>
+                                </div>
+
+                                <div class="form-block__input">
+                                    <input class="mask-name required" name="name" type="text" placeholder="Ваше имя" required>
+                                </div>
+
+                                <div class="form-block__input">
+                                    <input class="mask-phone zphone required" name="phone" type="tel" placeholder="Номер телефона +375..." required>
+                                </div>
+
+                                <div class="form-block__button">
+                                    <button type="submit" class="button animat-2 feedback">Получить расчет</button>
+                                </div>
+
+                                <div class="form-block__number mt-4">
+                                    <div class="form-block__count">
+                                        <span>2</span>
+                                    </div>
+                                    <div class="form-block-text">
+                                        <p><span>Наш специалист свяжется с Вами в течение 30 минут</span>, чтобы уточнить детали</p>
+                                    </div>
+                                </div>
+
+                                <div class="form-block__checkbox">
+                                    <label class="check">
+                                        <input class="check__input required" type="checkbox" checked required>
+                                        <span class="check__box"></span>
+                                    </label>
+                                    <p>Я согласен(а) с <a href="#">политикой обработки персональных данных</a></p>
+                                </div>
+                                <input type="hidden" name="source_title" value="Получить расчет (Главная страница)">
+                                <input type="hidden" name="source_type" value="home">
+                            </fieldset>
+                        </form>
+                    </div>
+                </div>
+                <div class="modal-footer">
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!-- Success Modal -->
+    <div class="modal fade" id="successModal" tabindex="-1" role="dialog" aria-labelledby="thanksTitle" aria-hidden="true">
+        <div class="modal-dialog modal-dialog-centered" role="document">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                        <span aria-hidden="true"></span>
+                    </button>
+                </div>
+                <div class="modal-body">
+                    <div class="form-block b">
+                        <div class="form-block__container n thanks">
+                            <div class="form-block__thenks">✅</div>
+
+                            <h3 class="form-block__title heavy up">Спасибо!</h3>
+
+                            <div class="form-block__number">
+                                <div class="form-block-text">
+                                    <p>Ваша заявка принята! Ожидайте звонка от нашего менеджера.</p>
+                                </div>
+                            </div>
+
+                        </div>
+                    </div>
+                </div>
+                <div class="modal-footer">
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!-- Error Modal -->
+    <div class="modal fade" id="errorModal" tabindex="-1" role="dialog" aria-labelledby="thanksTitle" aria-hidden="true">
+        <div class="modal-dialog modal-dialog-centered" role="document">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                        <span aria-hidden="true"></span>
+                    </button>
+                </div>
+                <div class="modal-body">
+                    <div class="form-block b">
+                        <div class="form-block__container n thanks">
+                            <div class="form-block__thenks">❌</div>
+
+                            <h3 class="form-block__title heavy up">Что-то пошло не так!</h3>
+
+                            <div class="form-block__number">
+                                <div class="form-block-text">
+                                    <p>Ваша заявка не отправлена! Попробуйте корректно заполнить все необходимые поля формы и повторить попытку.</p>
+                                </div>
+                            </div>
+
+                        </div>
+                    </div>
+                </div>
+                <div class="modal-footer">
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <script>
+    $(document).ready(function() {
+        // Обработчик формы в модальном окне
+        $('#calculationModal form').on('submit', function(e) {
+            e.preventDefault();
+
+            const $form = $(this);
+            const $button = $form.find('button[type="submit"]');
+            const originalButtonText = $button.text();
+
+            // Валидация
+            let isValid = true;
+            $form.find('.required').each(function() {
+                const $field = $(this);
+
+                if ($field.attr('type') === 'checkbox') {
+                    if (!$field.is(':checked')) {
+                        isValid = false;
+                    }
+                    return;
+                }
+
+                if (!$field.val() || $field.val() === '0') {
+                    isValid = false;
+                }
+            });
+
+            if (!isValid) {
+                alert('Пожалуйста, заполните все обязательные поля.');
+                return;
+            }
+
+            $button.prop('disabled', true).text('Отправка...');
+
+            $.ajax({
+                url: $form.attr('action'),
+                type: 'POST',
+                data: $form.serialize(),
+                dataType: 'json',
+                success: function(response) {
+                    // Закрываем модальное окно формы
+                    $('#calculationModal').modal('hide');
+
+                    // Сбрасываем форму
+                    $form[0].reset();
+
+                    // Показываем модальное окно успеха
+                    if (response.success) {
+                        $('#successModal').modal('show');
+                    } else {
+                        $('#errorModal').modal('show');
+                    }
+                },
+                error: function(xhr) {
+                    // Закрываем модальное окно формы
+                    $('#calculationModal').modal('hide');
+
+                    // Сбрасываем форму
+                    $form[0].reset();
+
+                    // Показываем модальное окно ошибки
+                    $('#errorModal').modal('show');
+                },
+                complete: function() {
+                    $button.prop('disabled', false).text(originalButtonText);
+                }
+            });
+        });
+    });
+    </script>
 @endsection
