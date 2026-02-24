@@ -233,11 +233,30 @@
                     </thead>
                     <tbody>
                         @foreach($landingPage->price_table as $row)
+                            @php
+                                $keys = array_keys($row);
+                                $firstKey = $keys[0] ?? null;
+                                $firstValue = $firstKey ? ($row[$firstKey] ?? '') : '';
+                                $firstValue = is_array($firstValue) ? trim(implode(', ', \Illuminate\Support\Arr::flatten($firstValue))) : $firstValue;
+                                $otherValues = [];
+                                foreach (array_slice($keys, 1) as $key) {
+                                    $val = $row[$key] ?? '';
+                                    $val = is_array($val) ? trim(implode(', ', \Illuminate\Support\Arr::flatten($val))) : $val;
+                                    $otherValues[] = $val;
+                                }
+                                $isSectionHeader = !empty(trim($firstValue)) && empty(array_filter($otherValues, fn($v) => !empty(trim($v))));
+                            @endphp
+                            @if($isSectionHeader)
+                        <tr class="price__section-header">
+                            <td colspan="{{ count($row) }}">{!! $firstValue !!}</td>
+                        </tr>
+                            @else
                         <tr>
                             @foreach($row as $cell)
                             <td>{!! $cell !!}</td>
                             @endforeach
                         </tr>
+                            @endif
                         @endforeach
                     </tbody>
                 </table>

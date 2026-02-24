@@ -11549,6 +11549,16 @@
  .price__table tbody tr:nth-child(even) {
      background: #ffffff;
  }
+
+ .price__table tbody tr.price__section-header {
+     background: #0C6F7C;
+ }
+ .price__table tbody tr.price__section-header td {
+     color: #ffffff;
+     font-family: 'Geometria Medium';
+     border-color: rgba(12, 111, 124, 0.2);
+     text-align: left;
+ }
  @media screen and (max-width: 768px) {
      .price__table {
          display: inherit;

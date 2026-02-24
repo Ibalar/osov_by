@@ -283,6 +283,26 @@
                         </thead>
                         <tbody>
                         @foreach($category->price_table as $row)
+                            @php
+                                $nameValue = $row['наименование'] ?? '';
+                                $nameValue = is_array($nameValue)
+                                    ? trim(implode(', ', \Illuminate\Support\Arr::flatten($nameValue)))
+                                    : $nameValue;
+                                $priceValue = $row['цена'] ?? '';
+                                $priceValue = is_array($priceValue)
+                                    ? trim(implode(', ', \Illuminate\Support\Arr::flatten($priceValue)))
+                                    : $priceValue;
+                                $unitValue = $row['ед'] ?? '';
+                                $unitValue = is_array($unitValue)
+                                    ? trim(implode(', ', \Illuminate\Support\Arr::flatten($unitValue)))
+                                    : $unitValue;
+                                $isSectionHeader = !empty(trim($nameValue)) && empty(trim($priceValue)) && empty(trim($unitValue));
+                            @endphp
+                            @if($isSectionHeader)
+                            <tr class="price__section-header">
+                                <td colspan="{{ count($columns) }}">{!! $nameValue !!}</td>
+                            </tr>
+                            @else
                             <tr>
                                 @foreach($columns as $key => $label)
                                     @php
@@ -294,6 +314,7 @@
                                     <td>{!! $cell !!}</td>
                                 @endforeach
                             </tr>
+                            @endif
                         @endforeach
                         </tbody>
                     </table>
