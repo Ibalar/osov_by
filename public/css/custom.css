@@ -10922,3 +10922,9 @@ body.cookie-banner-open {
     background-color: transparent !important;
 }
 
+.price-table__header-cell {
+    color: var(--white) !important;
+    font-weight: 600;
+    background: #1b8a99 !important;
+}
+
