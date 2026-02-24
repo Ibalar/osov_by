@@ -10899,3 +10899,26 @@ body.cookie-banner-open {
         padding-bottom: 120px;
     }
 }
+
+/* FAQ Accordion Fixes - Override Bootstrap defaults */
+.faq-accordion .accordion-item {
+    background-color: var(--secondary-color) !important;
+    border: none !important;
+}
+
+.faq-accordion .accordion-button {
+    background-color: transparent !important;
+}
+
+.faq-accordion .accordion-button:not(.collapsed) {
+    background-color: var(--accent-color) !important;
+}
+
+.faq-accordion .accordion-collapse {
+    background-color: transparent !important;
+}
+
+.faq-accordion .accordion-body {
+    background-color: transparent !important;
+}
+
