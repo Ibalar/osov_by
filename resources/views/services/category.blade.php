@@ -579,11 +579,11 @@
                             <div class="section-title">
                                 <h2 class="text-anime-style-3" data-cursor="-opaque">Популярные вопросы и ответы</h2>
                             </div>
-                            <div class="faq-accordion" id="accordion">
+                            <div class="faq-accordion" id="faq-accordion-category">
                                 @foreach($faqs as $index => $item)
                                     @php
-                                        $collapseId = 'collapse' . $index;
-                                        $headingId = 'heading' . $index;
+                                        $collapseId = 'faq-category-collapse-' . $index;
+                                        $headingId = 'faq-category-heading-' . $index;
                                     @endphp
                                     <div class="accordion-item wow fadeInUp">
                                         <h2 class="accordion-header" id="{{ $headingId }}">
@@ -595,7 +595,7 @@
                                                 {{ $item['question'] ?? '' }}
                                             </button>
                                         </h2>
-                                        <div id="{{ $collapseId }}" class="accordion-collapse collapse" role="region" aria-labelledby="{{ $headingId }}" data-bs-parent="#accordion">
+                                        <div id="{{ $collapseId }}" class="accordion-collapse collapse" role="region" aria-labelledby="{{ $headingId }}" data-bs-parent="#faq-accordion-category">
                                             <div class="accordion-body">
                                                 <p>{!! $item['answer'] ?? '' !!}</p>
                                             </div>

@@ -388,11 +388,11 @@
     <section id="questions" class="questions">
         <div class="container">
             <h2 class="title one">{{ $landingPage->faq_title ?? 'Часто задаваемые вопросы' }}</h2>
-            <div class="faq-accordion" id="accordion">
+            <div class="faq-accordion" id="faq-accordion-landing">
                 @foreach($landingPage->faq as $index => $item)
                 @php
-                    $collapseId = 'collapse' . $index;
-                    $headingId = 'heading' . $index;
+                    $collapseId = 'faq-landing-collapse-' . $index;
+                    $headingId = 'faq-landing-heading-' . $index;
                 @endphp
                 <div class="accordion-item wow fadeInUp">
                     <h2 class="accordion-header" id="{{ $headingId }}">
@@ -404,7 +404,7 @@
                             {{ $item['question'] ?? '' }}
                         </button>
                     </h2>
-                    <div id="{{ $collapseId }}" class="accordion-collapse collapse" role="region" aria-labelledby="{{ $headingId }}" data-bs-parent="#accordion">
+                    <div id="{{ $collapseId }}" class="accordion-collapse collapse" role="region" aria-labelledby="{{ $headingId }}" data-bs-parent="#faq-accordion-landing">
                         <div class="accordion-body">
                             <p>{!! $item['answer'] ?? '' !!}</p>
                         </div>
