@@ -14072,3 +14072,69 @@ input[type=checkbox].required.error,
 
 
 
+
+/* Price Table with Header Rows - Added for price_table header support */
+.price-table {
+    width: 100%;
+    border-collapse: collapse;
+}
+
+.price-table thead th {
+    background-color: var(--accent-color, #0C6F7C);
+    color: #ffffff;
+    font-weight: 600;
+    padding: 16px 20px;
+    text-align: left;
+    border: none;
+}
+
+.price-table tbody tr {
+    border-bottom: 1px solid rgba(31, 31, 31, 0.1);
+}
+
+.price-table tbody tr:last-child {
+    border-bottom: none;
+}
+
+.price-table tbody td {
+    padding: 14px 20px;
+    vertical-align: middle;
+}
+
+/* Header Row Styles - Stronger specificity to override .table styles */
+.price-table tbody tr.price-table__header {
+    background-color: rgba(12, 111, 124, 0.1) !important;
+    border-bottom: 2px solid rgba(12, 111, 124, 0.3) !important;
+}
+
+.price-table tbody tr.price-table__header:hover {
+    background-color: rgba(12, 111, 124, 0.15) !important;
+}
+
+.price-table tbody tr.price-table__header td.price-table__header-cell {
+    font-weight: 700 !important;
+    font-size: 16px !important;
+    color: var(--primary-color, #1A1A1A) !important;
+    text-align: center !important;
+    padding: 16px 20px !important;
+    background-color: transparent !important;
+    border: none !important;
+}
+
+/* Ensure header rows don't have hover effects from .table */
+.table.price-table tbody tr.price-table__header:hover {
+    background-color: rgba(12, 111, 124, 0.15) !important;
+}
+
+.table.price-table tbody tr.price-table__header td {
+    border: none !important;
+}
+
+@media screen and (max-width: 576px) {
+    .price-table thead th,
+    .price-table tbody td,
+    .price-table tbody tr.price-table__header td.price-table__header-cell {
+        padding: 12px 15px;
+        font-size: 14px;
+    }
+}

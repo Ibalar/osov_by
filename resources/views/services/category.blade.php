@@ -273,7 +273,7 @@
             <div class="container">
                 <h2 class="title one">{{ $category->price_title ?? 'Цены' }}</h2>
                 <div class="price__table">
-                    <table class="table">
+                    <table class="table price-table">
                         <thead>
                         <tr>
                             @foreach($columns as $label)
@@ -284,6 +284,7 @@
                         <tbody>
                         @foreach($category->price_table as $row)
                             @php
+                                $isHeader = !empty($row['is_header']);
                                 $nameValue = $row['наименование'] ?? '';
                                 $nameValue = is_array($nameValue)
                                     ? trim(implode(', ', \Illuminate\Support\Arr::flatten($nameValue)))
@@ -296,11 +297,10 @@
                                 $unitValue = is_array($unitValue)
                                     ? trim(implode(', ', \Illuminate\Support\Arr::flatten($unitValue)))
                                     : $unitValue;
-                                $isSectionHeader = !empty(trim($nameValue)) && empty(trim($priceValue)) && empty(trim($unitValue));
                             @endphp
-                            @if($isSectionHeader)
-                            <tr class="price__section-header">
-                                <td colspan="{{ count($columns) }}">{!! $nameValue !!}</td>
+                            @if($isHeader)
+                            <tr class="price-table__header">
+                                <td colspan="{{ count($columns) }}" class="price-table__header-cell">{!! $nameValue !!}</td>
                             </tr>
                             @else
                             <tr>

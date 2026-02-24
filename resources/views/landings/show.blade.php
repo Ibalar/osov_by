@@ -221,40 +221,34 @@
         <div class="container">
             <h2 class="title one">{{ $landingPage->price_title ?? 'Цены на фундаменты' }}</h2>
             <div class="price__table">
-                <table class="table">
+                <table class="table price-table">
                     <thead>
                         <tr>
-                            @if(!empty($landingPage->price_table[0]))
-                            @foreach(array_keys($landingPage->price_table[0]) as $header)
-                            <th>{{ $header }}</th>
-                            @endforeach
-                            @endif
+                            <th>Наименование</th>
+                            <th>Цена</th>
+                            <th>Ед. изм.</th>
                         </tr>
                     </thead>
                     <tbody>
                         @foreach($landingPage->price_table as $row)
                             @php
-                                $keys = array_keys($row);
-                                $firstKey = $keys[0] ?? null;
-                                $firstValue = $firstKey ? ($row[$firstKey] ?? '') : '';
-                                $firstValue = is_array($firstValue) ? trim(implode(', ', \Illuminate\Support\Arr::flatten($firstValue))) : $firstValue;
-                                $otherValues = [];
-                                foreach (array_slice($keys, 1) as $key) {
-                                    $val = $row[$key] ?? '';
-                                    $val = is_array($val) ? trim(implode(', ', \Illuminate\Support\Arr::flatten($val))) : $val;
-                                    $otherValues[] = $val;
-                                }
-                                $isSectionHeader = !empty(trim($firstValue)) && empty(array_filter($otherValues, fn($v) => !empty(trim($v))));
+                                $isHeader = !empty($row['is_header']);
+                                $nameValue = $row['наименование'] ?? '';
+                                $nameValue = is_array($nameValue) ? trim(implode(', ', \Illuminate\Support\Arr::flatten($nameValue))) : $nameValue;
+                                $priceValue = $row['цена'] ?? '';
+                                $priceValue = is_array($priceValue) ? trim(implode(', ', \Illuminate\Support\Arr::flatten($priceValue))) : $priceValue;
+                                $unitValue = $row['ед'] ?? '';
+                                $unitValue = is_array($unitValue) ? trim(implode(', ', \Illuminate\Support\Arr::flatten($unitValue))) : $unitValue;
                             @endphp
-                            @if($isSectionHeader)
-                        <tr class="price__section-header">
-                            <td colspan="{{ count($row) }}">{!! $firstValue !!}</td>
+                            @if($isHeader)
+                        <tr class="price-table__header">
+                            <td colspan="3" class="price-table__header-cell">{!! $nameValue !!}</td>
                         </tr>
                             @else
                         <tr>
-                            @foreach($row as $cell)
-                            <td>{!! $cell !!}</td>
-                            @endforeach
+                            <td>{!! $nameValue !!}</td>
+                            <td>{!! $priceValue !!}</td>
+                            <td>{!! $unitValue !!}</td>
                         </tr>
                             @endif
                         @endforeach
