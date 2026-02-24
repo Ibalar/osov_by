@@ -114,34 +114,16 @@ document.addEventListener("DOMContentLoaded", function () {
     calculateTotal();
 });
 
-// Bootstrap 5 Modal Compatibility
-// Handle both Bootstrap 4 (data-toggle/data-target) and Bootstrap 5 (data-bs-toggle/data-bs-target) syntax
+// Bootstrap 4 Modal Enhancement
+// Handle dynamic data attributes for modals (data-title, data-theme, data-flength, data-fwidth)
 document.addEventListener("DOMContentLoaded", function () {
-    // Convert Bootstrap 4 modal triggers to Bootstrap 5 format
-    document.querySelectorAll('[data-toggle="modal"]').forEach(function (element) {
-        const target = element.getAttribute('data-target');
-        if (target && !element.hasAttribute('data-bs-toggle')) {
-            element.setAttribute('data-bs-toggle', 'modal');
-            element.setAttribute('data-bs-target', target);
-        }
-    });
-
-    // Convert Bootstrap 4 dismiss buttons to Bootstrap 5 format
-    document.querySelectorAll('[data-dismiss="modal"]').forEach(function (element) {
-        if (!element.hasAttribute('data-bs-dismiss')) {
-            element.setAttribute('data-bs-dismiss', 'modal');
-        }
-    });
-
     // Handle modal trigger buttons with dynamic data
-    document.querySelectorAll('[data-target^="#"], [data-bs-target^="#"]').forEach(function (element) {
+    document.querySelectorAll('[data-toggle="modal"][data-target^="#"]').forEach(function (element) {
         element.addEventListener('click', function (e) {
-            const target = this.getAttribute('data-target') || this.getAttribute('data-bs-target');
+            const target = this.getAttribute('data-target');
             if (target && target.startsWith('#')) {
                 const modalElement = document.querySelector(target);
-                if (modalElement && typeof bootstrap !== 'undefined' && bootstrap.Modal) {
-                    e.preventDefault();
-                    
+                if (modalElement) {
                     // Handle data-title and data-theme attributes
                     const title = this.getAttribute('data-title');
                     const theme = this.getAttribute('data-theme');
@@ -175,9 +157,6 @@ document.addEventListener("DOMContentLoaded", function () {
                         if (fwidthElement) fwidthElement.textContent = fwidth;
                         if (fwidthInput) fwidthInput.value = fwidth;
                     }
-                    
-                    const modal = bootstrap.Modal.getOrCreateInstance(modalElement);
-                    modal.show();
                 }
             }
         });
