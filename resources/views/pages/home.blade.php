@@ -296,6 +296,7 @@
         </div>
     </div>
 
+@push('scripts')
     <script>
     $(document).ready(function() {
         // Обработчик формы в модальном окне
@@ -366,4 +367,5 @@
         });
     });
     </script>
+@endpush
 @endsection

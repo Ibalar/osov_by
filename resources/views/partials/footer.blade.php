@@ -123,7 +123,7 @@
                     <div class="footer-privacy-policy-prime">
                         <ul>
                             <li><a href="{{ route('page.show', 'privacy') }}">Политика конфиденциальности</a></li>
-                            <li><a href="{{ route('page.show', 'terms') }}">Условия использования</a></li>
+                            <li><a href="https://webart.by" target="_blank">Разработка сайта WebArt.BY</a></li>
                         </ul>
                     </div>
                     <!-- Footer Privacy Policy End -->

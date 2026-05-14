@@ -7,6 +7,7 @@ use App\Models\Page;
 use App\Models\Service;
 use App\Models\ServiceCategory;
 use App\Models\Project;
+use Illuminate\Support\Facades\Cache;
 
 class HomeController extends Controller
 {
@@ -15,41 +16,49 @@ class HomeController extends Controller
         /**
          * Главная страница (SEO + hero + описание)
          */
-        $page = Page::query()
-            ->where('key', 'home')
-            ->first();
+        $page = Cache::remember('home:page', now()->addMinutes(10), function () {
+            return Page::query()
+                ->where('key', 'home')
+                ->first();
+        });
 
         /**
          * Популярные услуги
          */
-        $popularServices = Service::query()
-            ->where('is_popular', true)
-            ->with([
-                'parentCategory.projectCategory',
-                'subcategory.category.projectCategory',
-            ])
-            ->orderBy('sort_order')
-            ->limit(6)
-            ->get();
+        $popularServices = Cache::remember('home:popular_services', now()->addMinutes(10), function () {
+            return Service::query()
+                ->where('is_popular', true)
+                ->with([
+                    'parentCategory.projectCategory',
+                    'subcategory.category.projectCategory',
+                ])
+                ->orderBy('sort_order')
+                ->limit(6)
+                ->get();
+        });
 
         /**
          * Популярные категории услуг
          */
-        $popularCategories = ServiceCategory::query()
-            ->active()
-            ->popular()
-            ->orderBy('sort_order')
-            ->limit(6)
-            ->get();
+        $popularCategories = Cache::remember('home:popular_categories', now()->addMinutes(10), function () {
+            return ServiceCategory::query()
+                ->active()
+                ->popular()
+                ->orderBy('sort_order')
+                ->limit(6)
+                ->get();
+        });
 
         /**
          * Готовые проекты (для главной)
          */
-        $projects = Project::query()
-            ->where('show_on_home', true)
-            ->orderByDesc('created_at')
-            ->limit(6)
-            ->get();
+        $projects = Cache::remember('home:projects', now()->addMinutes(10), function () {
+            return Project::query()
+                ->where('show_on_home', true)
+                ->orderByDesc('created_at')
+                ->limit(6)
+                ->get();
+        });
 
         return view('pages.home', [
             'page' => $page,
