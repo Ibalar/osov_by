@@ -64,9 +64,9 @@
 
                             <!-- Hero Image Box Start -->
                             <div class="hero-image-prime">
-                                <figure class="image-anime reveal">
-                                    <img src="{{ asset('images/hero-image-about.jpg') }}" alt="О компании OSOV">
-                                </figure>
+                            <figure class="image-anime reveal">
+                                <img src="{{ asset('images/hero-image-about.jpg') }}" alt="О компании OSOV" fetchpriority="high" width="720" height="800">
+                            </figure>
                             </div>
                             <!-- Hero Image Box End -->
                         </div>
@@ -113,7 +113,7 @@
                     <div class="about-us-counter-list wow fadeInUp">
                         <div class="about-us-counter-item">
                             <div class="icon-box mb-3">
-                                <img src="{{ asset('images/icon-about-counter-1-prime.svg') }}" alt="">
+                                <img src="{{ asset('images/icon-about-counter-1-prime.svg') }}" alt="" width="48" height="48">
                             </div>
                             <h2><span class="counter">8</span>+</h2>
                             <p class="fs-4">Лет опыта</p>
@@ -121,7 +121,7 @@
 
                         <div class="about-us-counter-item">
                             <div class="icon-box mb-3">
-                                <img src="{{ asset('images/icon-about-us-item-1-prime.svg') }}" alt="">
+                                <img src="{{ asset('images/icon-about-us-item-1-prime.svg') }}" alt="" width="48" height="48">
                             </div>
                             <h2><span class="counter">50</span>+</h2>
                             <p class="fs-4">Проектов выполнено</p>
@@ -129,7 +129,7 @@
 
                         <div class="about-us-counter-item">
                             <div class="icon-box mb-3">
-                                <img src="{{ asset('images/icon-about-us-item-1-prime.svg') }}" alt="">
+                                <img src="{{ asset('images/icon-about-us-item-1-prime.svg') }}" alt="" width="48" height="48">
                             </div>
                             <h2><span class="counter">10</span>+</h2>
                             <p class="fs-4">Квалифицированных специалистов</p>
@@ -159,7 +159,7 @@
                 <div class="why-choose-us-item">
                     <div class="why-choose-item-header">
                         <div class="icon-box">
-                            <img src="{{ asset('images/icon-amenity-item-1-prime.svg') }}" alt="">
+                            <img src="{{ asset('images/icon-amenity-item-1-prime.svg') }}" alt="" width="48" height="48">
                         </div>
                     </div>
                     <div class="why-choose-item-content">
@@ -168,7 +168,7 @@
                     </div>
                     <div class="why-choose-item-body-image">
                         <figure>
-                            <img src="{{ asset('images/amenity-image-1-1.png') }}" alt="">
+                            <img src="{{ asset('images/amenity-image-1-1.png') }}" alt="" loading="lazy" decoding="async" width="400" height="300">
                         </figure>
                     </div>
                 </div>
@@ -176,7 +176,7 @@
                 <div class="why-choose-us-item">
                     <div class="why-choose-item-header">
                         <div class="icon-box">
-                            <img src="{{ asset('images/icon-amenity-item-2-prime.svg') }}" alt="">
+                            <img src="{{ asset('images/icon-amenity-item-2-prime.svg') }}" alt="" width="48" height="48">
                         </div>
                     </div>
                     <div class="why-choose-item-content">
@@ -185,7 +185,7 @@
                     </div>
                     <div class="why-choose-item-body-image">
                         <figure>
-                            <img src="{{ asset('images/amenity-image-1-2.png') }}" alt="">
+                            <img src="{{ asset('images/amenity-image-1-2.png') }}" alt="" loading="lazy" decoding="async" width="400" height="300">
                         </figure>
                     </div>
                 </div>
@@ -231,9 +231,9 @@
 @endsection
 
 @push('scripts')
+<script defer src="{{ asset('landing/jquery.inputmask.min.js') }}"></script>
 <script>
-    $(document).ready(function() {
-        // Phone input mask
+    document.addEventListener('DOMContentLoaded', function() {
         if (typeof $.fn.inputmask !== 'undefined') {
             $('.mask-phone').inputmask({
                 mask: '+375 (99) 999-99-99',

@@ -16,7 +16,10 @@
                                     <figure>
                                         <img src="{{ asset('storage/' . $category->image) }}"
                                              alt="{{ $category->title }}"
-                                             loading="lazy">
+                                             loading="lazy"
+                                             decoding="async"
+                                             width="400"
+                                             height="300">
                                     </figure>
                                 </div>
                             @endif

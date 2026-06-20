@@ -40,7 +40,10 @@
                                     <figure class="reveal">
                                         <img src="{{ $image['url'] }}"
                                              alt="{{ $image['title'] ?? $item->title }}"
-                                             loading="lazy">
+                                             loading="lazy"
+                                             decoding="async"
+                                             width="400"
+                                             height="300">
                                     </figure>
                                 </a>
                             </div>
@@ -50,7 +53,10 @@
                                     <figure class="reveal">
                                         <img src="{{ $image }}"
                                              alt="{{ $item->title }}"
-                                             loading="lazy">
+                                             loading="lazy"
+                                             decoding="async"
+                                             width="400"
+                                             height="300">
                                     </figure>
                                 </a>
                             </div>

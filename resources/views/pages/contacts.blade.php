@@ -22,7 +22,7 @@
                             <!-- Contact Info Item Start -->
                             <div class="contact-info-item location-item">
                                 <div class="icon-box">
-                                    <img src="{{ asset('images/icon-phone-white.svg') }}" alt="Телефон">
+                                    <img src="{{ asset('images/icon-phone-white.svg') }}" alt="Телефон" width="24" height="24">
                                 </div>
                                 <div class="contact-info-item-content">
                                     <h3>Телефон</h3>
@@ -36,7 +36,7 @@
                             <!-- Contact Info Item Start -->
                             <div class="contact-info-item location-item">
                                 <div class="icon-box">
-                                    <img src="{{ asset('images/icon-mail-white.svg') }}" alt="Email">
+                                    <img src="{{ asset('images/icon-mail-white.svg') }}" alt="Email" width="24" height="24">
                                 </div>
                                 <div class="contact-info-item-content">
                                     <h3>Email</h3>

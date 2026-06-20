@@ -7,7 +7,7 @@
                     <!-- Footer Contact Item Start -->
                     <div class="footer-contact-item-prime">
                         <div class="icon-box">
-                            <img src="{{ asset('images/icon-mail-white.svg') }}" alt="">
+                            <img src="{{ asset('images/icon-mail-white.svg') }}" alt="" width="24" height="24" loading="lazy" decoding="async">
                         </div>
                         <div class="footer-contact-item-content-prime">
                             <h3>Email</h3>
@@ -19,7 +19,7 @@
                     <!-- Footer Contact Item Start -->
                     <div class="footer-contact-item-prime">
                         <div class="icon-box">
-                            <img src="{{ asset('images/icon-phone-white.svg') }}" alt="">
+                            <img src="{{ asset('images/icon-phone-white.svg') }}" alt="" width="24" height="24" loading="lazy" decoding="async">
                         </div>
                         <div class="footer-contact-item-content-prime">
                             <h3>Телефон</h3>
@@ -31,7 +31,7 @@
                     <!-- Footer Contact Item Start -->
                     <div class="footer-contact-item-prime">
                         <div class="icon-box">
-                            <img src="{{ asset('images/icon-location-white.svg') }}" alt="">
+                            <img src="{{ asset('images/icon-location-white.svg') }}" alt="" width="24" height="24" loading="lazy" decoding="async">
                         </div>
                         <div class="footer-contact-item-content-prime">
                             <h3>Адрес</h3>
@@ -48,7 +48,7 @@
                 <div class="about-footer-prime">
                     <!-- Footer Logo Start -->
                     <div class="footer-logo-prime">
-                        <img src="{{ asset('storage/' . $siteSettings->logo_footer_path) }}" alt="{{ config('app.name') }}">
+                        <img src="{{ asset('storage/' . $siteSettings->logo_footer_path) }}" alt="{{ config('app.name') }}" loading="lazy" decoding="async" width="180" height="50">
                     </div>
                     <!-- Footer Logo End -->
 

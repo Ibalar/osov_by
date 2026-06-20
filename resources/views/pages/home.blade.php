@@ -30,7 +30,7 @@
                                 <!-- Hero Body Item Start -->
                                 <div class="hero-body-item-prime">
                                     <div class="icon-box">
-                                        <img src="{{ asset('images/icon-hero-body-item-1-prime.svg') }}" alt="">
+                                        <img src="{{ asset('images/icon-hero-body-item-1-prime.svg') }}" alt="" width="48" height="48">
                                     </div>
                                     <div class="hero-body-item-content-prime">
                                         <h2>Фиксированная цена в договоре</h2>
@@ -41,7 +41,7 @@
                                 <!-- Hero Body Item Start -->
                                 <div class="hero-body-item-prime">
                                     <div class="icon-box">
-                                        <img src="{{ asset('images/icon-hero-body-item-2-prime.svg') }}" alt="">
+                                        <img src="{{ asset('images/icon-hero-body-item-2-prime.svg') }}" alt="" width="48" height="48">
                                     </div>
                                     <div class="hero-body-item-content-prime">
                                         <h2>Подбор участка «под ключ»</h2>
@@ -52,7 +52,7 @@
                                 <!-- Hero Body Item Start -->
                                 <div class="hero-body-item-prime">
                                     <div class="icon-box">
-                                        <img src="{{ asset('images/icon-hero-body-item-3-prime.svg') }}" alt="">
+                                        <img src="{{ asset('images/icon-hero-body-item-3-prime.svg') }}" alt="" width="48" height="48">
                                     </div>
                                     <div class="hero-body-item-content-prime">
                                         <h2>Расширенная гарантия 7 лет</h2>
@@ -67,7 +67,7 @@
                         <!-- Hero Image Box Start -->
                         <div class="hero-image-prime">
                             <figure class="image-anime reveal">
-                                <img src="{{ asset('images/hero-image-prime.jpg') }}" alt="">
+                                <img src="{{ asset('images/hero-image-prime.jpg') }}" alt="Строительство домов под ключ" fetchpriority="high" width="720" height="800">
                             </figure>
                         </div>
                         <!-- Hero Image Box End -->
@@ -143,9 +143,9 @@
                             <a href="{{ route('services.category', $category->slug) }}" data-cursor-text="Подробнее">
                                 <figure class="image-anime">
                                     @if($category->image)
-                                        <img src="{{ asset('storage/' . $category->image) }}" alt="{{ $category->title }}">
+                                        <img src="{{ asset('storage/' . $category->image) }}" alt="{{ $category->title }}" loading="lazy" decoding="async" width="400" height="300">
                                     @else
-                                        <img src="{{ asset('images/default-category.jpg') }}" alt="{{ $category->title }}">
+                                        <img src="{{ asset('images/default-category.jpg') }}" alt="{{ $category->title }}" loading="lazy" decoding="async" width="400" height="300">
                                     @endif
                                 </figure>
                             </a>
@@ -297,9 +297,28 @@
     </div>
 
 @push('scripts')
+    <script defer src="{{ asset('landing/jquery.inputmask.min.js') }}"></script>
     <script>
-    $(document).ready(function() {
-        // Обработчик формы в модальном окне
+    document.addEventListener('DOMContentLoaded', function() {
+        if (typeof $.fn.inputmask !== 'undefined') {
+            $('.mask-phone').inputmask({
+                mask: '+375 (99) 999-99-99',
+                placeholder: '_',
+                showMaskOnHover: false,
+                clearIncomplete: true
+            });
+
+            $('.mask-phone').on('blur', function () {
+                let phone = $(this).val();
+                let validCodes = ['25', '29', '33', '44'];
+                let enteredCode = phone.substring(6, 8);
+                if (!validCodes.includes(enteredCode)) {
+                    alert('Введите номер с кодом 25, 29, 33 или 44!');
+                    $(this).val('');
+                }
+            });
+        }
+
         $('#calculationModal form').on('submit', function(e) {
             e.preventDefault();
 

@@ -91,41 +91,22 @@
           type="image/x-icon"
           href="{{ asset('images/favicon.png') }}">
 
-    {{-- Google Fonts --}}
-    <link rel="preconnect" href="https://fonts.googleapis.com">
-    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-    <link href="https://fonts.googleapis.com/css2?family=Inter+Tight:ital,wght@0,100..900;1,100..900&display=swap"
-          rel="stylesheet">
+    {{-- Google Fonts (self-hosted) --}}
+    <link rel="stylesheet" href="{{ asset('css/inter-tight.css') }}">
 
-    {{-- CSS --}}
-    <link href="{{ asset('css/bootstrap.min.css') }}"
-          rel="stylesheet">
+    {{-- Preload critical vendor CSS --}}
+    <link rel="preload" href="{{ asset('css/bootstrap.min.css') }}" as="style">
 
-    <link href="{{ asset('css/slicknav.min.css') }}"
-          rel="stylesheet">
-
-    <link href="{{ asset('css/swiper-bundle.min.css') }}"
-          rel="stylesheet">
-
-    <link href="{{ asset('css/all.min.css') }}"
-          rel="stylesheet">
-
-    <link href="{{ asset('css/animate.css') }}"
-          rel="stylesheet">
-
-    <link href="{{ asset('css/magnific-popup.css') }}"
-          rel="stylesheet">
-
-    <link href="{{ asset('css/mousecursor.css') }}"
-          rel="stylesheet">
-
+    {{-- CSS (order matters: base → components → theme) --}}
+    <link href="{{ asset('css/bootstrap.min.css') }}" rel="stylesheet">
+    <link href="{{ asset('css/slicknav.min.css') }}" rel="stylesheet">
+    <link href="{{ asset('css/swiper-bundle.min.css') }}" rel="stylesheet">
+    <link href="{{ asset('css/all.min.css') }}" rel="stylesheet">
+    <link href="{{ asset('css/animate.css') }}" rel="stylesheet">
+    <link href="{{ asset('css/magnific-popup.css') }}" rel="stylesheet">
+    <link href="{{ asset('css/mousecursor.css') }}" rel="stylesheet">
     <link rel="stylesheet" href="{{ asset('landing/style.css') }}">
-
-    <link href="{{ asset('css/custom.css') }}"
-          rel="stylesheet">
-
-    <link rel="stylesheet" type="text/css" href="{{ asset('landing/slick.css') }}"/>
-    <link rel="stylesheet" type="text/css" href="{{ asset('landing/slick-theme.css') }}"/>
+    <link href="{{ asset('css/custom.css') }}" rel="stylesheet">
 
 
 
@@ -139,7 +120,7 @@
 <div class="preloader">
     <div class="loading-container">
         <div class="loading"></div>
-        <div id="loading-icon"><img src="{{ asset('images/loader.svg') }}" alt="Идет загрузка..."></div>
+        <div id="loading-icon"><img src="{{ asset('images/loader.svg') }}" alt="" width="60" height="60"></div>
     </div>
 </div>
 {{-- Preloader End --}}
@@ -163,46 +144,27 @@
 {{-- Cookie Banner --}}
 @include('partials.cookie-banner')
 
-{{-- JS --}}
+{{-- JS: jQuery synchronous (foundation), rest deferred --}}
 <script src="{{ asset('js/jquery-3.7.1.min.js') }}"></script>
-<script src="{{ asset('js/bootstrap.min.js') }}"></script>
-<script src="{{ asset('landing/jquery.inputmask.min.js') }}"></script>
-<script src="{{ asset('landing/slick.min.js') }}"></script>
-<script src="{{ asset('landing/jquery.fancybox.min.js') }}"></script>
-<script src="{{ asset('landing/main.js') }}"></script>
-<script src="{{ asset('js/telegram-form.js') }}"></script>
+<script defer src="{{ asset('js/bootstrap.min.js') }}"></script>
+<script defer src="{{ asset('js/telegram-form.js') }}"></script>
+<script defer src="{{ asset('js/validator.min.js') }}"></script>
+<script defer src="{{ asset('js/jquery.slicknav.js') }}"></script>
+<script defer src="{{ asset('js/swiper-bundle.min.js') }}"></script>
+<script defer src="{{ asset('js/jquery.waypoints.min.js') }}"></script>
+<script defer src="{{ asset('js/jquery.counterup.min.js') }}"></script>
+<script defer src="{{ asset('js/jquery.magnific-popup.min.js') }}"></script>
+<script defer src="{{ asset('js/SmoothScroll.js') }}"></script>
+<script defer src="{{ asset('js/parallaxie.js') }}"></script>
+<script defer src="{{ asset('js/gsap.min.js') }}"></script>
+<script defer src="{{ asset('js/magiccursor.js') }}"></script>
+<script defer src="{{ asset('js/SplitText.min.js') }}"></script>
+<script defer src="{{ asset('js/ScrollTrigger.min.js') }}"></script>
+<script defer src="{{ asset('js/jquery.mb.YTPlayer.min.js') }}"></script>
+<script defer src="{{ asset('js/wow.min.js') }}"></script>
 
-
-
-
-
-<script src="{{ asset('js/validator.min.js') }}"></script>
-
-<script src="{{ asset('js/jquery.slicknav.js') }}"></script>
-
-<script src="{{ asset('js/swiper-bundle.min.js') }}"></script>
-
-<script src="{{ asset('js/jquery.waypoints.min.js') }}"></script>
-<script src="{{ asset('js/jquery.counterup.min.js') }}"></script>
-
-<script src="{{ asset('js/jquery.magnific-popup.min.js') }}"></script>
-
-<script src="{{ asset('js/SmoothScroll.js') }}"></script>
-
-<script src="{{ asset('js/parallaxie.js') }}"></script>
-
-<script src="{{ asset('js/gsap.min.js') }}"></script>
-<script src="{{ asset('js/magiccursor.js') }}"></script>
-
-<script src="{{ asset('js/SplitText.min.js') }}"></script>
-<script src="{{ asset('js/ScrollTrigger.min.js') }}"></script>
-
-<script src="{{ asset('js/jquery.mb.YTPlayer.min.js') }}"></script>
-
-<script src="{{ asset('js/wow.min.js') }}"></script>
-
-{{-- Main --}}
-<script src="{{ asset('js/function.js') }}"></script>
+{{-- Vite JS (function.js — bundled & minified) --}}
+@vite(['resources/js/function.js'])
 
 {{-- Скрипты конкретных страниц --}}
 @stack('scripts')

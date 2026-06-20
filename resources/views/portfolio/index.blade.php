@@ -35,7 +35,10 @@
                                         <figure class="image-anime">
                                             <img src="{{ $image['url'] }}"
                                                  alt="{{ $image['title'] }}"
-                                                 loading="lazy">
+                                                 loading="lazy"
+                                                 decoding="async"
+                                                 width="400"
+                                                 height="300">
                                         </figure>
                                     </a>
                                 </div>
@@ -48,7 +51,10 @@
                                         <figure class="image-anime">
                                             <img src="{{ $image }}"
                                                  alt="Portfolio image"
-                                                 loading="lazy">
+                                                 loading="lazy"
+                                                 decoding="async"
+                                                 width="400"
+                                                 height="300">
                                         </figure>
                                     </a>
                                 </div>

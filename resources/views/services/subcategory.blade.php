@@ -9,7 +9,7 @@
                     @if(!empty($subcategory->image))
                         <div class="post-image mb-4">
                             <figure class="image-anime reveal">
-                                <img src="{{ asset('storage/' . $subcategory->image) }}" alt="{{ $subcategory->title }}">
+                                <img src="{{ asset('storage/' . $subcategory->image) }}" alt="{{ $subcategory->title }}" loading="lazy" decoding="async" width="800" height="400">
                             </figure>
                         </div>
                     @endif

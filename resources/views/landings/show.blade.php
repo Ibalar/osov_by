@@ -138,7 +138,7 @@
                     <div class="foundations__item">
                         @if(isset($type['image']))
                         <div class="foundations__img">
-                            <img src="{{ asset('storage/' . $type['image']) }}" alt="{{ $type['title'] ?? '' }}">
+                            <img src="{{ asset('storage/' . $type['image']) }}" alt="{{ $type['title'] ?? '' }}" loading="lazy" decoding="async">
                         </div>
                         @endif
                         <div class="foundations__content">
@@ -182,7 +182,7 @@
                     <div class="examples__item">
                         @if(isset($example['image']))
                         <div class="examples__img">
-                            <img src="{{ asset('storage/landings/' . $landingPage->slug . '/examples/' . $example['image']) }}" alt="{{ $example['title'] ?? '' }}">
+                            <img src="{{ asset('storage/landings/' . $landingPage->slug . '/examples/' . $example['image']) }}" alt="{{ $example['title'] ?? '' }}" loading="lazy" decoding="async">
                         </div>
                         @endif
                         <div class="examples__content">
@@ -206,7 +206,7 @@
                 @foreach($landingPage->gallery_images_urls ?? [] as $image)
                 <div class="col-md-6 col-lg-4 p-md-0 mb-4">
                     <a href="{{ $image }}" data-fancybox="gallery" class="gallery__item">
-                        <img src="{{ $image }}" alt="Галерея">
+                        <img src="{{ $image }}" alt="Галерея" loading="lazy" decoding="async">
                     </a>
                 </div>
                 @endforeach
@@ -645,11 +645,11 @@
 @endsection
 
 @push('scripts')
-{{-- Inputmask for phone numbers --}}
-<script src="{{ asset('landing/jquery.inputmask.min.js') }}"></script>
+<script defer src="{{ asset('landing/jquery.fancybox.min.js') }}"></script>
 <script>
-    $(document).ready(function () {
-        $(".mask-phone").inputmask({
+    document.addEventListener('DOMContentLoaded', function() {
+        if (typeof $.fn.inputmask !== 'undefined') {
+            $(".mask-phone").inputmask({
             mask: "+375 (99) 999-99-99",
             placeholder: "_",
             showMaskOnHover: false,

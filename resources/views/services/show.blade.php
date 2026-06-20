@@ -125,7 +125,7 @@
                                 @if(isset($type['image_url']))
                                     <div class="apartments-plan-item-image">
                                         <figure>
-                                            <img src="{{ $type['image_url'] }}" alt="{{ $type['title'] ?? '' }}">
+                                            <img src="{{ $type['image_url'] }}" alt="{{ $type['title'] ?? '' }}" loading="lazy" decoding="async">
                                         </figure>
                                     </div>
                                 @endif
@@ -185,7 +185,7 @@
                                     <div class="examples__item">
                                         @if(isset($example['image_url']))
                                         <div class="examples__img">
-                                            <img src="{{ $example['image_url'] }}" alt="{{ $example['title'] ?? '' }}">
+                                            <img src="{{ $example['image_url'] }}" alt="{{ $example['title'] ?? '' }}" loading="lazy" decoding="async">
                                         </div>
                                         @endif
                                         <div class="examples__content">
@@ -537,7 +537,7 @@
                         <div class="photo-gallery wow fadeInUp" data-wow-delay="{{ ($loop->index * 0.2) }}s">
                             <a href="{{ $image }}" data-cursor-text="Смотреть">
                                 <figure class="image-anime">
-                                    <img src="{{ $image }}" alt="Галерея">
+                                    <img src="{{ $image }}" alt="Галерея" loading="lazy" decoding="async">
                                 </figure>
                             </a>
                         </div>
@@ -552,10 +552,9 @@
 @endsection
 
 @push('scripts')
-{{-- Inputmask for phone numbers --}}
-<script src="{{ asset('landing/jquery.inputmask.min.js') }}"></script>
+<script defer src="{{ asset('landing/jquery.inputmask.min.js') }}"></script>
 <script>
-    $(document).ready(function () {
+    document.addEventListener('DOMContentLoaded', function() {
         $(".mask-phone").inputmask({
             mask: "+375 (99) 999-99-99",
             placeholder: "_",
@@ -580,10 +579,9 @@
 @isset($service->reviews)
     @if(!empty($service->reviews))
         <link rel="stylesheet" href="{{ asset('landing/slick.css') }}">
-        <script src="{{ asset('landing/slick.min.js') }}"></script>
+        <script defer src="{{ asset('landing/slick.min.js') }}"></script>
         <script>
-            $(document).ready(function () {
-                // Инициализация слайдера отзывов
+            document.addEventListener('DOMContentLoaded', function() {
                 $('#gratitude-slider').slick({
                     slidesToShow: 2,
                     slidesToScroll: 1,
@@ -610,9 +608,9 @@
 
 @isset($service->gallery_images)
     @if(!empty($service->gallery_images))
-        <script src="{{ asset('landing/jquery.fancybox.min.js') }}"></script>
+        <script defer src="{{ asset('landing/jquery.fancybox.min.js') }}"></script>
         <script>
-            $(document).ready(function() {
+            document.addEventListener('DOMContentLoaded', function() {
                 $('[data-fancybox="gallery"]').fancybox({
                     loop: true,
                     buttons: [
@@ -638,8 +636,7 @@
         fields: @json($service->calculator_fields ?? [])
     };
 
-    function getCalculatorInputs() {
-        return document.querySelectorAll('.calculator-input');
+    function getCalculatorInputs() {        return document.querySelectorAll('.calculator-input');
     }
 
     function getFieldConfig(fieldKey) {
